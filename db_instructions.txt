@@ -1,0 +1,10 @@
+Backup database: 
+pg_dump DBNAME -U postgres -h localhost -F p>FILENAME.sql
+
+Import an sql file to postgres:
+(Enter this command after clearing the current database that you have)
+psql -h localhost -d DBNAME -U postgres -f FILENAME.sql
+
+
+To push an sql file to Heroku:
+heroku pg:psql --app APPNAME < FILENAME.sql
