@@ -1,6 +1,5 @@
 class AccountsController < ApplicationController
   def login
-  	@student=Student.new
   end
 
   def authenticate
@@ -11,7 +10,7 @@ class AccountsController < ApplicationController
   		redirect_to student_dash_path
   	else
   		flash[:alert] = "Email or password is invalid"
-  		redirect_to login_path,notice: "error logging in"
+  		redirect_to login_path
   	end
 
   end
@@ -24,7 +23,7 @@ class AccountsController < ApplicationController
 
 
   def signupStudent
-  	@student||=Student.new
+  	@student=Student.new
   end
   def createStudent
     @student=Student.new(student_params)
@@ -33,11 +32,8 @@ class AccountsController < ApplicationController
       session[:user_id]=@student.rollno
       redirect_to student_dash_path()
     else
-      redirect_to signup_student_path
+      render "signupStudent"
     end
-  end
-  def show
-    @post=Student.find(params[:id])
   end
 
 
