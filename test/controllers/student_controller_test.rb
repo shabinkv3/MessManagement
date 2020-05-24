@@ -1,8 +1,8 @@
 require 'test_helper'
 
 class StudentControllerTest < ActionDispatch::IntegrationTest
-  test "should get dashboard" do
-    get student_dashboard_url
+  test "should get dashboardd" do
+    get student_dashboardd_url
     assert_response :success
   end
 

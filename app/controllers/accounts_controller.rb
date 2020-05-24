@@ -1,5 +1,8 @@
 class AccountsController < ApplicationController
   def login
+    if session['logged_in']
+      redirect_to student_dash_path
+    end
   end
 
   def authenticate
@@ -24,6 +27,9 @@ class AccountsController < ApplicationController
 
   def signupStudent
   	@student=Student.new
+    if session['logged_in']
+      redirect_to student_dash_path
+    end
   end
   def createStudent
     @student=Student.new(student_params)

@@ -1,2 +1,179 @@
-<p>HI <%= @student.name %>
-<%= link_to "Logout", logout_path %>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="assets/img/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Light Bootstrap Dashboard by Creative Tim</title>
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="assets/css/animate.min.css" rel="stylesheet"/>
+
+    <link href="assets/css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet"/>
+
+
+    <link href="assets/css/demo.css" rel="stylesheet" />
+
+
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="sidebar" data-color="purple">
+
+    <!--
+
+        Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+        Tip 2: you can also add an image using data-image tag
+
+    -->
+
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="http://www.creative-tim.com" class="simple-text">
+                    Student Dashboard
+                </a>
+            </div>
+
+            <ul class="nav">
+                <li class="tablinks">
+                <a onClick="viewOption(event,'profile')" id="defaultOpen">
+                        <ion-icon name="person-outline" style="font-size: 25px;"></ion-icon>
+                        <label style="position: relative; left: 15px;bottom: 5px">PROFILE</label>
+                    </a>
+                </li>
+                <li class="tablinks">
+                    <a onClick="viewOption(event,'extras')">
+                        <ion-icon name="beer-outline" style="font-size: 25px;"></ion-icon>
+                        <label style="position: relative; left: 15px;bottom: 5px">EXTRAS TAKEN</label>
+                    </a>
+                </li>
+                <li class="tablinks">
+                    <a onClick="viewOption(event,'guests')">
+                        <ion-icon name="people-outline" style="font-size: 25px;"></ion-icon>
+                        <label style="position: relative; left: 15px;bottom: 5px">GUESTS</label>
+                    </a>
+                </li>
+                <li class="tablinks">
+                    <a onClick="viewOption(event,'messcut')">
+                        <ion-icon name="home-outline" style="font-size: 25px;"></ion-icon>
+                        <label style="position: relative; left: 15px;bottom: 5px">MARK MESS CUT</label>
+                    </a>
+                </li>
+                <li class="tablinks">
+                    <a onClick="viewOption(event,'fee')">
+                        <ion-icon name="newspaper-outline" style="font-size: 25px;"></ion-icon>
+                        <label style="position: relative; left: 15px;bottom: 5px">CHECK MESS FEE</label>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-panel">
+        <nav class="navbar navbar-default navbar-fixed">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <p class="navbar-brand" href="#">MESS MANAGEMENT</p>
+                </div>
+                <div class="collapse navbar-collapse">
+                  
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                           <a href="">
+                               <p>Change Password</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/accounts/logout">
+                                <p>Log out</p>
+                            </a>
+                        </li>
+                        <li class="separator hidden-lg"></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <div>
+            <div>
+                <div>
+                    <div id="profile" class="tabcontent" style="display:none;">
+                    <h3>Profile</h3>
+                    <p>Profile Data Goes Here</p>
+                    </div>
+
+                    <div id="extras" class="tabcontent" style="display:none;">
+                    <h3>Extras</h3>
+                    <p>List of all extras goes here</p> 
+                    </div>
+
+                    <div id="guests" class="tabcontent" style="display:none;">
+                    <h3>Guests</h3>
+                    <p>Monthly data of guests goes here</p>
+                    </div>
+                    <div id="messcut" class="tabcontent" style="display:none;">
+                    <h3>Mess Cut</h3>
+                    <p>This is the place to mark mess cuts</p>
+                    </div>
+                    <div id="fee" class="tabcontent" style="display:none;">
+                    <h3>Fee</h3>
+                    <p>Updates about mess fee happens here</p>
+                    </div>
+                </div>
+
+
+
+                
+
+
+
+
+    </div>
+</div>
+</div>
+</div>
+
+
+
+<script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+</body>
+
+
+<script>
+function viewOption(evt, option) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(option).style.display = "block";
+  evt.currentTarget.parentElement.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+
+</script>
+
+</html>
