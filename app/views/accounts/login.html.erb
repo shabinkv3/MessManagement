@@ -1,0 +1,23 @@
+<%= form_with scope: :student, url: login_path, local: true do |form| %>
+<p id=”alert”><%= flash.alert %></p>
+
+
+  <div>
+    <%= form.label "Roll No" %><br>
+    <%= form.text_field :rollno %><br>
+  </div>
+
+
+
+  <div>
+    <%= form.label :password %><br>
+    <%= form.password_field :password %><br>
+  </div>
+
+
+
+  <div>
+    <%= form.submit "Log in" %>
+  </div>
+<% end %>
+
