@@ -140,9 +140,13 @@
                     <div id="student_list" class="tabcontent" style="display:none;">
                         <ion-grid>
                             <ion-row>
-                                <ion-col size=3 offset=4>
+                                <ion-col size=5 offset=4>
                                     <h3 style="text-align: center">Student List</h3><br>
-                                    <ion-searchbar id="searchbar" onInput="filterStudents(event)"></ion-searchbar>
+                                    <ion-row><ion-col size=6>
+                                    <ion-searchbar placeholder="Type Name" id="searchbar" onInput="filterStudents(event)"></ion-searchbar></ion-col>
+                                    <ion-col size=6>
+                                    <ion-searchbar placeholder="Type Roll No" id="searchbar" onInput="filterStudents(event)"></ion-searchbar></ion-col>
+                                    </ion-row>
                                     <div id="list">hi</div>
                                 </ion-col>
                             </ion-row>
@@ -207,9 +211,9 @@ function getStudents()
         myObj = JSON.parse(this.responseText);
         txt += "<ion-card><ion-list>"
         for (x in myObj) {
-            txt += "<ion-item lines='none' detail='true' class='student_item' href='/accounts/login'><ion-icon name='person'></ion-icon>" + myObj[x].name + "</ion-item>";
+            txt += "<ion-item lines='none' detail='true' class='student_item' href='/accounts/login'><ion-icon name='person' style='color: #8f15f4;'></ion-icon><ion-grid><ion-row><ion-col size='6'><label style='padding-left: 15px; font-size: 17px; font-weight: 500;'>" + myObj[x].name + "</label></ion-col><ion-col size='4' offset='2'><label>"+myObj[x].rollno+"</label></ion-col></ion-row></ion-item>";
         }
-    txt += "</ion-list></ion-card>";  
+    txt += "</ion-list></ion-card></ion-grid>";  
     document.getElementById("list").innerHTML = txt;
   }
 };
