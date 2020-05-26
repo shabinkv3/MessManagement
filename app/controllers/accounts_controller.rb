@@ -62,6 +62,7 @@ class AccountsController < ApplicationController
   def createStudent
     @params=student_params
     @params[:mess_id]=0
+    @params[:name]=@params[:name].split.map(&:capitalize).join(' ')
     @mess=Mess.find_by_mess_name(student_params[:mess_id].downcase)
     if @mess
       @params[:mess_id]=@mess.id

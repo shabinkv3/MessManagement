@@ -58,7 +58,7 @@
             <ion-col class="ion-no-padding" size='2.035' style="background-color: #8f15f4;">
                 <ion-row style="height: 63px">
                     <ion-col style="border-bottom: 1px solid rgba(255, 255, 255, 0.2)">
-                        <label style="position: relative; left: 45px; top: 20px; weight: 500; font-weight: 400; font-size: 18px; color: white;">MESS DASHBOARD</label>
+                        <label style="position: relative; left: 45px; top: 20px; weight: 500; font-weight: 400; font-size: 18px; color: white;">MESS DASHBOARD <%= session[:id] %></label>
                     </ion-col>
                 </ion-row>
                 <ion-row>
@@ -140,14 +140,15 @@
                     <div id="student_list" class="tabcontent" style="display:none;">
                         <ion-grid>
                             <ion-row>
-                                <ion-col size=5 offset=4>
+                                <ion-col size=5 offset=3.5>
                                     <h3 style="text-align: center">Student List</h3><br>
+                                    <div id="search_section">
                                     <ion-row><ion-col size=6>
-                                    <ion-searchbar placeholder="Type Name" id="searchbar" onInput="filterStudents(event)"></ion-searchbar></ion-col>
+                                    <ion-searchbar placeholder="Type Name" id="nameSearchBar" onInput="filterStudentsByName()"></ion-searchbar></ion-col>
                                     <ion-col size=6>
-                                    <ion-searchbar placeholder="Type Roll No" id="searchbar" onInput="filterStudents(event)"></ion-searchbar></ion-col>
+                                    <ion-searchbar placeholder="Type Roll No" id="rollSearchBar" onInput="filterStudentsByRollNo()"></ion-searchbar></ion-col>
                                     </ion-row>
-                                    <div id="list">hi</div>
+                                    <div id="list"><ion-spinner></ion-spinner></div></div>
                                 </ion-col>
                             </ion-row>
                         </ion-grid>
@@ -209,12 +210,20 @@ function getStudents()
     xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         myObj = JSON.parse(this.responseText);
-        txt += "<ion-card><ion-list>"
+        if(myObj.length==0)
+        {
+            txt+="<p style='text-align: center;'>There are no Students in this mess currently</p>"
+            document.getElementById("search_section").innerHTML = txt;
+        }
+        else
+        {
+        txt += "<p id='noMatch' style='text-align:center;display:none;'>No matching students</p><ion-card id='students_card'><ion-list>"
         for (x in myObj) {
-            txt += "<ion-item lines='none' detail='true' class='student_item' href='/accounts/login'><ion-icon name='person' style='color: #8f15f4;'></ion-icon><ion-grid><ion-row><ion-col size='6'><label style='padding-left: 15px; font-size: 17px; font-weight: 500;'>" + myObj[x].name + "</label></ion-col><ion-col size='4' offset='2'><label>"+myObj[x].rollno+"</label></ion-col></ion-row></ion-item>";
+            txt += "<ion-item class='student_item' lines='none' detail='true' href='/accounts/login'><ion-icon name='person' style='color: #8f15f4;'></ion-icon><ion-grid><ion-row><ion-col size='6'><label class='student_name' style='padding-left: 15px; font-size: 17px; font-weight: 500;'>" + myObj[x].name + "</label></ion-col><ion-col size='4' offset='2'><label class='student_roll_no'>"+myObj[x].rollno+"</label></ion-col></ion-row></ion-item>";
         }
     txt += "</ion-list></ion-card></ion-grid>";  
     document.getElementById("list").innerHTML = txt;
+}
   }
 };
 xmlhttp.open("GET", "/studentdata", true);
@@ -224,18 +233,53 @@ xmlhttp.send();
 }
 
 
-function filterStudents() {
+function filterStudentsByName() {
     var input, filter, ul, li, a, i, txtValue;
-    input = document.getElementById("searchbar");
+    input = document.getElementById("nameSearchBar");
     filter = input.value.toUpperCase();
-    li = document.getElementsByClassName("student_item");
-    for (i = 0; i < li.length; i++) {
-        txtValue = li[i].textContent || li[i].innerText;
+    names = document.getElementsByClassName("student_name");
+    items = document.getElementsByClassName("student_item");
+    var count=0
+    for (i = 0; i < names.length; i++) {
+        txtValue = names[i].textContent || names[i].innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
+            items[i].style.display = "";
+            document.getElementById("students_card").style.display="";
+            document.getElementById("noMatch").style.display="none";
         } else {
-            li[i].style.display = "none";
+            count+=1
+            items[i].style.display = "none";
         }
+    }
+    if(count==names.length)
+    {
+        document.getElementById("noMatch").style.display="";
+        document.getElementById("students_card").style.display="none";
+    }
+}
+
+function filterStudentsByRollNo() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("rollSearchBar");
+    filter = input.value.toUpperCase();
+    rolls = document.getElementsByClassName("student_roll_no");
+    items = document.getElementsByClassName("student_item");
+    var count=0
+    for (i = 0; i < rolls.length; i++) {
+        txtValue = rolls[i].textContent || rolls[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            items[i].style.display = "";
+            document.getElementById("students_card").style.display="";
+            document.getElementById("noMatch").style.display="none";
+        } else {
+            count+=1
+            items[i].style.display = "none";
+        }
+    }
+    if(count==names.length)
+    {
+        document.getElementById("noMatch").style.display="";
+        document.getElementById("students_card").style.display="none";
     }
 }
 

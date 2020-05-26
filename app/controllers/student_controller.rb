@@ -6,8 +6,9 @@ class StudentController < ApplicationController
   		redirect_to login_path
   	end
   end
-  def data
-  	@students=Student.all
-  	render json: @students
+  def dataGet
+  	@mess=Mess.find(session[:id])
+  	render json: @mess.students
   end
+
 end
