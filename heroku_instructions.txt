@@ -1,0 +1,10 @@
+to take backup:
+pg_dump DBNAME -U postgres -h localhost -F p>FILENAME.sql
+
+
+to import from a backup:
+psql -h localhost -d DBNAME -U postgres -f FILENAME.sql
+
+
+to set heroku:
+heroku pg:psql --app APPNAME < FILENAME.sql

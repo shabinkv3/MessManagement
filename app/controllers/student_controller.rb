@@ -6,4 +6,8 @@ class StudentController < ApplicationController
   		redirect_to login_path
   	end
   end
+  def data
+  	@students=Student.all
+  	render json: @students
+  end
 end

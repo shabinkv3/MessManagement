@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 	get 'student/dashboard', to: 'student#dashboard', as: 'student_dash'
 	post 'accounts/login', to: 'accounts#authenticate', as: 'authenticate'
 
+	get 'studentdata', to: 'student#data'
+
 
 
 

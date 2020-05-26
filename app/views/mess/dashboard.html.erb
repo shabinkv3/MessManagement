@@ -8,7 +8,7 @@
   <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/ionic.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core@next/css/ionic.bundle.css"/>
   <style>
-    ion-item.item:hover {
+    ion-item.side_tabs.item:hover {
   --ion-background-color: #a179d5 !important;
   border-radius: 4px;
     }
@@ -16,7 +16,7 @@
   --ion-background-color: #b88eed !important;
   border-radius: 4px;
     }
-    ion-item{
+    ion-item.side_tabs{
         --ion-background-color: #8f15f4;
         border-radius: 4px;
         margin-top: 4px;
@@ -26,7 +26,7 @@
     --ion-background-color: #b88eed;
         border-radius: 4px; 
     }
-    ion-list
+    ion-list.side_list
     {
         --ion-background-color: #8f15f4;
     }
@@ -63,7 +63,7 @@
                 </ion-row>
                 <ion-row>
                     <ion-col>
-                        <ion-list class="ion-no-padding" style="margin-top: 20px; margin-left: 15px; margin-right: 15px">
+                        <ion-list class="side_list" class="ion-no-padding" style="margin-top: 20px; margin-left: 15px; margin-right: 15px">
                             <ion-item lines='none' class="side_tabs" onClick="viewOption(event,'profile')" id="defaultOpen">
                                 <div style="height: 57px;">
                                     <a>
@@ -138,8 +138,15 @@
                     </div>
 
                     <div id="student_list" class="tabcontent" style="display:none;">
-                    <h3>Student List</h3>
-                    <p>List of all students goes here</p> 
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size=3 offset=4>
+                                    <h3 style="text-align: center">Student List</h3><br>
+                                    <ion-searchbar id="searchbar" onInput="filterStudents(event)"></ion-searchbar>
+                                    <div id="list">hi</div>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
                     </div>
 
                     <div id="staff_list" class="tabcontent" style="display:none;">
@@ -181,10 +188,56 @@ function viewOption(evt, option) {
   }
   evt.currentTarget.className += " active";
   document.getElementById(option).style.display = "block";  
+  if (option=="student_list")
+  {
+    getStudents();
+  }
 }
 
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
+
+
+function getStudents()
+{
+    var obj, dbParam, xmlhttp, myObj, x, txt = "";
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        myObj = JSON.parse(this.responseText);
+        txt += "<ion-card><ion-list>"
+        for (x in myObj) {
+            txt += "<ion-item lines='none' detail='true' class='student_item' href='/accounts/login'><ion-icon name='person'></ion-icon>" + myObj[x].name + "</ion-item>";
+        }
+    txt += "</ion-list></ion-card>";  
+    document.getElementById("list").innerHTML = txt;
+  }
+};
+xmlhttp.open("GET", "/studentdata", true);
+xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xmlhttp.send();
+
+}
+
+
+function filterStudents() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("searchbar");
+    filter = input.value.toUpperCase();
+    li = document.getElementsByClassName("student_item");
+    for (i = 0; i < li.length; i++) {
+        txtValue = li[i].textContent || li[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+
+
+
+
 
 </script>
 </html>
