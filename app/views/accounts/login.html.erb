@@ -1,0 +1,43 @@
+<script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/ionic.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core@next/css/ionic.bundle.css"/>
+<fieldset>
+
+<h1>Login</h1>
+
+
+
+<div style="width:400px;">
+    <div style="float: left; width: 60px"> 
+      <%= button_to "Student", login_path, :method => "get" %>
+    </div>
+    <div style="float: left; width: 100px"> 
+        <%= button_to "Mess", loginMess_path, :method => "get" %>
+    </div>
+</div>
+
+<br>
+<%= form_with scope: :student, url: login_path, local: true do |form| %>
+<p id=”alert”><%= flash.alert %></p>
+
+  <div>
+    <%= form.label "Roll No" %><br>
+    <%= form.text_field :rollno %><br>
+  </div>
+
+
+
+  <div>
+    <%= form.label :password %><br>
+    <%= form.password_field :password %><br>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.submit "Log in" %>
+    <%= link_to 'New Here?Register', signup_student_path %>
+  </div>
+<% end %>
+</fieldset>
+

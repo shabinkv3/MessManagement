@@ -1,0 +1,30 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+
+development:
+  <<: *default
+  database: mess_management_development
+  username: postgres
+  password: postgres
+  host: localhost
+  port: 5432
+
+
+test:
+  <<: *default
+  database: mess_management_test
+  host: localhost
+  port: 5432
+  username: postgres
+  password: postgres
+
+production:
+  <<: *default
+  database: mess_management_production
+  host: localhost
+  port: 5432
+  username: postgres
+  password: postgres

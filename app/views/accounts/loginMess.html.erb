@@ -1,0 +1,43 @@
+<fieldset>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/ionic.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core@next/css/ionic.bundle.css"/>
+<h1>Login</h1>
+<!-- <div class="btn-group btn-toggle"> 
+    <button class="btn btn-default" data-toggle="collapse" data-target="#collapsible1">Open</button>
+    <button class="btn btn-primary active" data-toggle="collapse" data-target="#collapsible2">Close</button>
+  </div>
+   -->
+   <div style="width:400px;">
+    <div style="float: left; width: 60px"> 
+      <%= button_to "Student", login_path, :method => "get" %>
+    </div>
+    <div style="float: left; width: 100px"> 
+        <%= button_to "Mess", loginMess_path, :method => "get" %>
+    </div>
+</div>
+<br>
+<%= form_with scope: :mess, url: loginMess_path, local: true do |form| %>
+<p id=”alert”><%= flash.alert %></p>
+
+  <div>
+    <%= form.label "Mess Name" %><br>
+    <%= form.text_field :mess_name %><br>
+  </div>
+
+
+
+  <div>
+    <%= form.label :password %><br>
+    <%= form.password_field :password %><br>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.submit "Log in" %>
+    <%= link_to 'New Here?Register', create_mess_path%>
+  </div>
+<% end %>
+</fieldset>
+

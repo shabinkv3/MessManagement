@@ -1,0 +1,35 @@
+<h1>Sign Up</h1>
+<%= form_with scope: :mess, url: create_mess_path, local: true do |form| %>
+  <% if @mess && @mess.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@mess.errors.count, "error") %> prohibited this mess from being saved:</h2>
+
+      <ul>
+        <% @mess.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label "Mess Name" %><br>
+    <%= form.text_field :mess_name %><br>
+  </div>
+
+
+  <div>
+    <%= form.label :password %><br>
+    <%= form.password_field :password %><br>
+  </div>
+
+  <div>
+    <%= form.label :password_confirmation %><br>
+    <%= form.password_field :password_confirmation %><br>
+  </div>
+
+  <br>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

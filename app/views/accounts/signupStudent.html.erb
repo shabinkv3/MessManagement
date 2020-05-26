@@ -1,0 +1,55 @@
+<h1>Sign Up</h1>
+<%= form_with scope: :student, url: create_student_path, local: true do |form| %>
+  <% if @student && @student.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@student.errors.count, "error") %> prohibited this student from being saved:</h2>
+
+      <ul>
+        <% @student.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div>
+    <%= form.label "Student Name" %><br>
+    <%= form.text_field :name %><br>
+  </div>
+
+  <div>
+    <%= form.label :email %><br>
+    <%= form.text_field :email %><br>
+  </div>
+
+  <div>
+    <%= form.label "Roll No" %><br>
+    <%= form.text_field :rollno %><br>
+  </div>
+
+
+  <div>
+    <%= form.label :password %><br>
+    <%= form.password_field :password %><br>
+  </div>
+
+  <div>
+    <%= form.label :password_confirmation %><br>
+    <%= form.password_field :password_confirmation %><br>
+  </div>
+
+  <div>
+    <%= form.label "Mess Name" %><br>
+    <%= form.text_field :mess_id %><br>
+  </div>
+
+  <div>
+    <%= form.label :roomno %><br>
+    <%= form.number_field :roomno %><br>
+  </div>
+  <br>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
