@@ -125,9 +125,77 @@
                 <ion-row style="height: 1000px">
                     <ion-col>
                         <div>
-                    <div id="profile" class="tabcontent" style="display:none;">
-                    <h3>Profile</h3>
-                    <p><%= @student.name %></p>
+                    
+                
+
+                    <div id="profile" class="tabcontent" style="display:none;position: absolute;left: 100px">
+                        <h1 style="position: relative;left:50px">Personal Information</h1>
+                        <br>
+                        
+                       <fieldset style="width:500px">
+                         <br>
+
+                         <ion-row>
+                           
+                            <ion-col>
+                             <ion-row text:center> 
+                                    <ion-col>
+                                        <b>Name</b>
+                                    </ion-col>
+                                    <ion-col>
+                                        :
+                                    </ion-col>
+                                    <ion-col>
+                                        <%= @student.name%></p>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row > 
+                                    <ion-col>
+                                        <b>Roll No</b>
+                                    </ion-col>
+                                    <ion-col>
+                                        :
+                                    </ion-col>
+                                    <ion-col>
+                                        <%= @student.rollno%></p>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row > 
+                                    <ion-col>
+                                        <b>E-Mail</b>
+                                    </ion-col>
+                                    <ion-col>
+                                        :
+                                    </ion-col>
+                                    <ion-col>
+                                        <%= @student.email%></p>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row > 
+                                    <ion-col>
+                                        <b>Enrolled Mess Code</b>
+                                    </ion-col>
+                                    <ion-col>
+                                        :
+                                    </ion-col>
+                                    <ion-col>
+                                        <%= @student.mess_id%></p>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row > 
+                                    <ion-col>
+                                        <b>Room No</b>
+                                    </ion-col>
+                                    <ion-col>
+                                        :
+                                    </ion-col>
+                                    <ion-col>
+                                        <%= @student.roomno%></p>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-col>
+                        </ion-row>
+                        </fieldset>
                     </div>
 
                     <div id="guests" class="tabcontent" style="display:none;">
