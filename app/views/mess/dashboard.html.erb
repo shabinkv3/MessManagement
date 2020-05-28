@@ -217,7 +217,7 @@
                             <ion-card-content>
 
                                
-                    <%= form_with scope: :extra, url: create_extra_path, local: true do |form| %>
+                    <%= form_with scope: :extra, id:'myform', url: create_extra_path, local: true do |form| %>
 
                      <ion-list lines="none" class="line-input">
                         <ion-item>
@@ -259,7 +259,9 @@
                         </ion-item>
                         </ion-list>
                         <br>
-  <%= form.submit :value => "ADD TO EXTRA", :class => 'button', :style => "width:600px;height:40px;background-color: #8f15f4;color:white;" %>
+  <%= form.submit :value => "ADD TO EXTRA",'data-disable-with' => 'ADDED SUCCESSFULLY',enable_disabled_with: true, :class => 'button', :style => "width:200px;height:40px;background-color: #8f15f4;color:white;" %>
+  
+  <%= submit_tag("RESET", { :name => 'reset', :id => 'reset_button', :type => "reset",  :style => "width:200px;height:40px;background-color: #8f15f4;color:white;" }) %>
   </ion-card-content>
   </ion-card>
   <br>
@@ -285,6 +287,9 @@
   </ion-app>
 </body>
 <script>
+
+
+
 function viewOption(evt, option) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");

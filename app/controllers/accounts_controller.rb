@@ -82,6 +82,7 @@ class AccountsController < ApplicationController
     @params[:mess_id]=session[:id]
     @extra=Extra.new(@params)
     @extra.save
+    
   end
 
   private
