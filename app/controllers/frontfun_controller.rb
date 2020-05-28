@@ -1,0 +1,2 @@
+class FrontfunController < ApplicationController
+end

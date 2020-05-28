@@ -1,0 +1,2 @@
+module FrontfunHelper
+end
