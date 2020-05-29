@@ -5,7 +5,6 @@ Rails.application.routes.draw do
 	get 'accounts/signup/student', to: 'accounts#signupStudent', as: 'signup_student'
 	post 'accounts/signup/mess', to: 'accounts#createMess', as: 'create_mess'
 
-	get 'frontfun/frontfun', to: 'frontfun#frontfun', as: 'front_fun'
 	get 'accounts/check', to: 'accounts#check', as: 'check'
 	post 'accounts/extra', to: 'accounts#createEntry', as: 'create_extra'
 
