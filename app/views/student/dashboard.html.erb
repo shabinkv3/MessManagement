@@ -8,7 +8,7 @@
   <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/ionic.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core@next/css/ionic.bundle.css"/>
   <style>
-    ion-item.item:hover {
+    ion-item.side_tabs.item:hover {
   --ion-background-color: #a179d5 !important;
   border-radius: 4px;
     }
@@ -16,7 +16,7 @@
   --ion-background-color: #b88eed !important;
   border-radius: 4px;
     }
-    ion-item{
+    ion-item.side_tabs{
         --ion-background-color: #8f15f4;
         border-radius: 4px;
         margin-top: 4px;
@@ -26,7 +26,7 @@
     --ion-background-color: #b88eed;
         border-radius: 4px; 
     }
-    ion-list
+    ion-list.side_list
     {
         --ion-background-color: #8f15f4;
     }
@@ -63,7 +63,7 @@
                 </ion-row>
                 <ion-row>
                     <ion-col>
-                        <ion-list class="ion-no-padding" style="margin-top: 20px; margin-left: 15px; margin-right: 15px">
+                        <ion-list class="side_list" class="ion-no-padding" style="margin-top: 20px; margin-left: 15px; margin-right: 15px">
                             <ion-item lines='none' class="side_tabs" onClick="viewOption(event,'profile')" id="defaultOpen">
                                 <div style="height: 57px;">
                                     <a>

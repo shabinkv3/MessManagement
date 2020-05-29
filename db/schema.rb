@@ -10,11 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 2020_05_28_201423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "guests", force: :cascade do |t|
+    t.integer "student_id"
+    t.text "name"
+    t.text "rollno"
+    t.date "date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
   create_table "extras", force: :cascade do |t|
     t.integer "mess_id"
     t.date "date"
@@ -28,6 +37,14 @@ ActiveRecord::Schema.define(version: 2020_05_28_201423) do
   create_table "messes", force: :cascade do |t|
     t.string "mess_name"
     t.string "password_digest"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "staffs", force: :cascade do |t|
+    t.text "name"
+    t.text "phoneno"
+    t.integer "mess_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

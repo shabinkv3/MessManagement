@@ -19,6 +19,9 @@ Rails.application.routes.draw do
 
 	get 'studentdata', to: 'student#dataGet'
 	post 'studentdata', to: 'student#dataPost'
+	post 'createstaff', to: 'mess#createStaff', as: 'create_staff'
+	post 'deletestaff', to: 'mess#deleteStaff', as: 'delete_staff'
+	get 'staffdata', to: 'mess#staffData'
 
 
 

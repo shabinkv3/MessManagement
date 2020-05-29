@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <%= csrf_meta_tag %>
+    <%= javascript_include_tag 'application' %>
   <meta charset="UTF-8">
   <%= csrf_meta_tag %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +10,30 @@
   <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/ionic.esm.js"></script>
   <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/ionic.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core@next/css/ionic.bundle.css"/>
+  <script type="module">
+    import { modalController } from 'https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/index.esm.js';
+    window.modalController = modalController;
+    import { alertController } from 'https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/index.esm.js';
+    window.alertController = alertController;
+  </script>
   <style>
+
+    .alertbuttonyes{
+  color: red !important;
+}
+.alertbuttonno{
+  color: #8f15f4 !important;
+}
+
+    .addstaff .modal-wrapper {
+  height: 275px !important;
+  width: 300px !important;
+  position: relative;
+  bottom: 150px;
+  left: 50px;
+
+}
+
     ion-item.side_tabs.item:hover {
   --ion-background-color: #a179d5 !important;
   border-radius: 4px;
@@ -110,11 +135,19 @@
                 <ion-row>
                     <ion-col>
                         <ion-list class="side_list" class="ion-no-padding" style="margin-top: 20px; margin-left: 15px; margin-right: 15px">
-                            <ion-item lines='none' class="side_tabs" onClick="viewOption(event,'profile')" id="defaultOpen">
+                            <ion-item lines='none' class="side_tabs" onClick="viewOption(event,'extra')" id="defaultOpen">
                                 <div style="height: 57px;">
                                     <a>
-                                        <ion-icon name="person-outline" class="side_icons"></ion-icon>
-                                        <label class="side_label">PROFILE</label>
+                                        <ion-icon name="beer-outline" class="side_icons"></ion-icon>
+                                        <label class="side_label">ADD EXTRA</label>
+                                    </a>
+                                </div>
+                            </ion-item>
+                            <ion-item lines='none' class="side_tabs" onClick="viewOption(event,'guest')">
+                                <div style="height: 57px;">
+                                    <a>
+                                        <ion-icon name="beer-outline" class="side_icons"></ion-icon>
+                                        <label class="side_label">ADD GUEST</label>
                                     </a>
                                 </div>
                             </ion-item>
@@ -139,14 +172,6 @@
                                     <a>
                                         <ion-icon name="home-outline" class="side_icons"></ion-icon>
                                         <label class="side_label">MESS CUT</label>
-                                    </a>
-                                </div>
-                            </ion-item>
-                            <ion-item lines='none' class="side_tabs"  onClick="viewOption(event,'extra')">
-                                <div style="height: 57px;">
-                                    <a>
-                                        <ion-icon name="newspaper-outline" class="side_icons"></ion-icon>
-                                        <label class="side_label">ADD EXTRA</label>
                                     </a>
                                 </div>
                             </ion-item>
@@ -178,19 +203,19 @@
                 <ion-row style="height: 1000px">
                     <ion-col>
                         <div>
-                    <div id="profile" class="tabcontent" style="display:none;">
-                    <h3>Profile</h3>
-                    <p>Profile Data Goes Here</p>
+                    <div id="guest" class="tabcontent" style="display:none;">
+                    <h3>Guest</h3>
+                    <p>Guest Data Goes Here</p>
                     </div>
 
                     <div id="student_list" class="tabcontent" style="display:none;">
                         <ion-grid>
                             <ion-row>
-                                <ion-col size=5 offset=3.5>
-                                    <h3 style="text-align: center">Student List</h3><br>
+                                <ion-col size=5 offset=3>
+                                    <h3 style="text-align: center; padding-right:34px">Student List</h3><br>
                                     <div id="search_section">
                                     <ion-row><ion-col size=6>
-                                    <ion-searchbar placeholder="Type Name" id="nameSearchBar" onInput="filterStudentsByName()"></ion-searchbar></ion-col>
+                                    <ion-searchbar placeholder="Type Name" id="nameSearchBar" onClear="alert(1)" onInput="filterStudentsByName()"></ion-searchbar></ion-col>
                                     <ion-col size=6>
                                     <ion-searchbar placeholder="Type Roll No" id="rollSearchBar" onInput="filterStudentsByRollNo()"></ion-searchbar></ion-col>
                                     </ion-row>
@@ -201,8 +226,18 @@
                     </div>
 
                     <div id="staff_list" class="tabcontent" style="display:none;">
-                    <h3>Staff List</h3>
-                    <p>List of all staff goes here</p> 
+                        <ion-grid>
+                    <ion-row>
+                        <ion-col offset=3 size=5>
+                            <h3 style="text-align: center;">Staff List 
+                            </h3><br>
+                                <div style="text-align: center;"><ion-button style="--ion-color-primary: #8f15f4;margin-right: 10px" id="addbutton">Add Staff<ion-icon slot="end" name='add'></ion-icon></ion-button></div>
+                            <div id="stafflist"><ion-spinner style="position:relative; left: 50px; top:70px"></ion-spinner></div>
+
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+
                     </div>
 
                     <div id="messcut" class="tabcontent" style="display:none;">
@@ -286,6 +321,7 @@
 </body>
 
 <script>
+
 function changeButtonColor(id) {
     document.getElementById(id).style.backgroundColor = "#8f15f4";
 }
@@ -326,107 +362,48 @@ function changeColor(btn) {
 
 
 
-function viewOption(evt, option) {
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("side_tabs");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace("active", "");
-  }
-  evt.currentTarget.className += " active";
-  document.getElementById(option).style.display = "block";  
-  if (option=="student_list")
-  {
-    getStudents();
-  }
-}
+
+
+
+
+customElements.define('modal-content', class ModalContent extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header translucent>
+            <ion-toolbar>
+              <ion-title style="text-align: center; padding-left: 70px;">Add Staff</ion-title>
+              <ion-buttons slot="end">
+                <ion-button slot="icon-only" onclick="dismissModal()"><ion-icon name="close"></ion-icon></ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content fullscreen>
+          <ion-item style="--ion-color-primary:  #8f15f4">
+          <ion-label position="floating">Staff Name</ion-label>
+            <ion-input id='staffname' required="true"></ion-input>
+            </ion-item>
+            <ion-item style="--ion-color-primary:  #8f15f4">
+            <ion-label position="floating">Mobile No</ion-label>
+            <ion-input type="number" id='staffno' required="true"></ion-input>
+            </ion-item><br>
+            <div style="text-align:center;">
+            <ion-button style="--ion-color-primary:  #8f15f4;self-align:center;" onClick="createStaff()">Add Staff</ion-button>
+            </div>
+          </ion-content>
+        `;
+      }
+    });
+
+    let currentModal = null;
+    const button = document.getElementById('addbutton');
+    button.addEventListener('click', createModal);
+
+
 
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
 
 
-function getStudents()
-{
-    var obj, dbParam, xmlhttp, myObj, x, txt = "";
-    xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        myObj = JSON.parse(this.responseText);
-        if(myObj.length==0)
-        {
-            txt+="<p style='text-align: center;'>There are no Students in this mess currently</p>"
-            document.getElementById("search_section").innerHTML = txt;
-        }
-        else
-        {
-        txt += "<p id='noMatch' style='text-align:center;display:none;'>No matching students</p><ion-card id='students_card'><ion-list>"
-        for (x in myObj) {
-            txt += "<ion-item class='student_item' lines='none' detail='true' href='/accounts/login'><ion-icon name='person' style='color: #8f15f4;'></ion-icon><ion-grid><ion-row><ion-col size='6'><label class='student_name' style='padding-left: 15px; font-size: 17px; font-weight: 500;'>" + myObj[x].name + "</label></ion-col><ion-col size='4' offset='2'><label class='student_roll_no'>"+myObj[x].rollno+"</label></ion-col></ion-row></ion-item>";
-        }
-    txt += "</ion-list></ion-card></ion-grid>";  
-    document.getElementById("list").innerHTML = txt;
-}
-  }
-};
-xmlhttp.open("GET", "/studentdata", true);
-xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-xmlhttp.send();
-
-}
-
-
-function filterStudentsByName() {
-    var input, filter, ul, li, a, i, txtValue;
-    input = document.getElementById("nameSearchBar");
-    filter = input.value.toUpperCase();
-    names = document.getElementsByClassName("student_name");
-    items = document.getElementsByClassName("student_item");
-    var count=0
-    for (i = 0; i < names.length; i++) {
-        txtValue = names[i].textContent || names[i].innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            items[i].style.display = "";
-            document.getElementById("students_card").style.display="";
-            document.getElementById("noMatch").style.display="none";
-        } else {
-            count+=1
-            items[i].style.display = "none";
-        }
-    }
-    if(count==names.length)
-    {
-        document.getElementById("noMatch").style.display="";
-        document.getElementById("students_card").style.display="none";
-    }
-}
-
-function filterStudentsByRollNo() {
-    var input, filter, ul, li, a, i, txtValue;
-    input = document.getElementById("rollSearchBar");
-    filter = input.value.toUpperCase();
-    rolls = document.getElementsByClassName("student_roll_no");
-    items = document.getElementsByClassName("student_item");
-    var count=0
-    for (i = 0; i < rolls.length; i++) {
-        txtValue = rolls[i].textContent || rolls[i].innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            items[i].style.display = "";
-            document.getElementById("students_card").style.display="";
-            document.getElementById("noMatch").style.display="none";
-        } else {
-            count+=1
-            items[i].style.display = "none";
-        }
-    }
-    if(count==names.length)
-    {
-        document.getElementById("noMatch").style.display="";
-        document.getElementById("students_card").style.display="none";
-    }
-}
 
 
 
