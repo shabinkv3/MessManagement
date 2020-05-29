@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <%= csrf_meta_tag %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grid</title>
   <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/ionic.esm.js"></script>
@@ -213,63 +214,60 @@
                     <div id="extra" class="tabcontent" style="position: relative;left: 50px">
                         <h1 style="position:absolute;left:0px">Add Extra</h1><br> <br><br><br>
                          <ion-card style = "width: 700px">
-                            
+                          <form id="myform">  
                             <ion-card-content>
-
-                               
-                    <%= form_with scope: :extra, id:'myform', url: create_extra_path, local: true do |form| %>
-
-                     <ion-list lines="none" class="line-input">
-                        <ion-item>
-                            <ion-label>
-                             <%= form.label :Date %>
-                         </ion-label>
-                         <ion-label>
-                            <%= form.date_field :date, class:'form-field' %>
-                         </ion-label>   
-                        </ion-item>
-                                    
-                        <ion-item>
-                            <ion-label>
-                             <%= form.label :rollno %>
-                         </ion-label>
-                         <ion-label>
-                             <%= form.text_field :rollno, class:'form-field'%> 
-                         </ion-label>   
-                        </ion-item>
-
-                        
-
-                        <ion-item>
-                            <ion-label>
-                             <%= form.label :item %>
-                         </ion-label>
-                         <ion-label>
-                             <%= form.text_field :item, class:'form-field' %> 
-                         </ion-label>   
-                        </ion-item>
-
-                        <ion-item>
-                            <ion-label>
-                             <%= form.label :price %>
-                         </ion-label>
-                         <ion-label>
-                             <%= form.text_field :price, class:'form-field' %> 
-                         </ion-label>   
-                        </ion-item>
-                        </ion-list>
-                        <br>
-  <%= form.submit :value => "ADD TO EXTRA",'data-disable-with' => 'ADDED SUCCESSFULLY',enable_disabled_with: true, :class => 'button', :style => "width:200px;height:40px;background-color: #8f15f4;color:white;" %>
-  
-  <%= submit_tag("RESET", { :name => 'reset', :id => 'reset_button', :type => "reset",  :style => "width:200px;height:40px;background-color: #8f15f4;color:white;" }) %>
-  </ion-card-content>
-  </ion-card>
-  <br>
-  <br>
+                            <ion-list lines="none" class="line-input">
+                            <ion-item>
+                                <ion-col>
+                                 Date
+                             </ion-col>
+                             <ion-col>
+                               <input type="date" name="date" id="date" format="dd/mm/yyyy" class="form-field">
+                             </ion-col>   
+                            </ion-item>
+                                <br>
+            
+                            <ion-item>
+                                <ion-col>
+                                 Roll No
+                             </ion-col>
+                             <ion-col>
+                               <input type="text" name="rollno" id="rollno" class="form-field">
+                             </ion-col>   
+                            </ion-item>
                             <br>
+                            <ion-item>
+                            <ion-col>
+                             Item
+                         </ion-col>
+                         <ion-col>
+                           <input type="text" name="item" id="item" class="form-field">
+                         </ion-col>   
+                        </ion-item>
+                        <br>
+                        <ion-item>
+                        <ion-col>
+                         Price
+                     </ion-col>
+                     <ion-col>
+                       <input type="text" name="price" id="price" class="form-field">
+                     </ion-col>   
+                    </ion-item>
+                    <br>
+                            </ion-list>
 
-                      
-<% end %>
+                            <ion-button id="reset" onClick="onSub(); setTimeout(changeColor(this),3000);" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">ADD EXTRA</ion-button>
+                            <ion-button id="reset1" type="reset" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">RESET</ion-button>
+                       
+  
+                        </ion-card-content>
+                        </form>
+                        </ion-card>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+
                    
 
                     <div id="fee" class="tabcontent" style="display:none;">
@@ -286,7 +284,45 @@
     </ion-content>
   </ion-app>
 </body>
+
 <script>
+function changeButtonColor(id) {
+    document.getElementById(id).style.backgroundColor = "#8f15f4";
+}
+function playball() {
+    setTimeout('changeButtonColor("reset")',2000);
+}
+
+
+function onSub(){
+  
+    var date = document.getElementById("date").value;
+    var item = document.getElementById("item").value;
+    var price = document.getElementById("price").value;
+    var rollno = document.getElementById("rollno").value;
+    document.getElementById("date").reset;
+    document.getElementById("item").reset;
+    document.getElementById("rollno").reset;
+    document.getElementById("price").reset;
+    var token = document.querySelector('meta[name="csrf-token"]').content;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var myObj = JSON.parse(this.responseText);
+            alert(myObj.val);
+        }
+    };
+    xmlhttp.open("POST", "/accounts/extra", true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.setRequestHeader('X-CSRF-Token', token);
+    xmlhttp.send("extra[date]="+date+"&extra[item]="+item+"&extra[price]="+price+"&extra[rollno]="+rollno);
+   
+}
+
+function changeColor(btn) {
+  setTimeout(btn.style.backgroundColor = "green",3000);
+  playball();
+}
 
 
 

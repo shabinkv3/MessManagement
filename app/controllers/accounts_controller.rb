@@ -5,6 +5,10 @@ class AccountsController < ApplicationController
   def loginMess
   end
 
+  def check
+    render json: {:val => 'lost'}
+  end
+
   def signupMess
     @mess=Mess.new
   end
@@ -78,9 +82,12 @@ class AccountsController < ApplicationController
   end
 
   def createEntry
-    @params=extra_params
-    @params[:mess_id]=session[:id]
-    @extra=Extra.new(@params)
+   
+    @params = extra_params
+   
+    @params[:mess_id] = session[:id]
+   
+    @extra=Extra.new( @params)
     @extra.save
     
   end
@@ -98,7 +105,7 @@ class AccountsController < ApplicationController
 
   private
   def extra_params
-    params.require(:extra).permit(:rollno,:item,:price,:date)
+    params.require(:extra).permit(:date,:rollno,:item,:price)
   end
 end
 
