@@ -4,6 +4,10 @@ Rails.application.routes.draw do
 	get 'accounts/signup/mess', to: 'accounts#signupMess', as: 'signup_mess'
 	get 'accounts/signup/student', to: 'accounts#signupStudent', as: 'signup_student'
 	post 'accounts/signup/mess', to: 'accounts#createMess', as: 'create_mess'
+
+	get 'accounts/check', to: 'accounts#check', as: 'check'
+	post 'accounts/extra', to: 'accounts#createEntry', as: 'create_extra'
+
 	get 'mess/dashboard', to: 'mess#dashboard', as: 'mess_dash'
 	get 'accounts/logout', to: 'accounts#logout', as: 'logout'
 	get 'accounts/login', to: 'accounts#login', as: 'login'
