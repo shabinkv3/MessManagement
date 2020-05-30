@@ -1,3 +1,48 @@
+function onSub(){
+  
+    var date = document.getElementById("date").value;
+    var item = document.getElementById("item").value;
+    var price = document.getElementById("price").value;
+    var rollno = document.getElementById("rollno").value;
+    document.getElementById("date").reset;
+    document.getElementById("item").reset;
+    document.getElementById("rollno").reset;
+    document.getElementById("price").reset;
+    var token = document.querySelector('meta[name="csrf-token"]').content;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var myObj = JSON.parse(this.responseText);
+            if(myObj.added)
+            {
+                showToast();
+                document.getElementById('reset1').click();
+            }
+            else
+            {
+                alert(myObj.errors.map((er)=>" "+er))
+            }
+        }
+    };
+    xmlhttp.open("POST", "/mess/extra", true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.setRequestHeader('X-CSRF-Token', token);
+    xmlhttp.send("extra[date]="+date+"&extra[item]="+item+"&extra[price]="+price+"&extra[student_id]="+rollno);
+   
+}
+
+
+
+async function showToast() {
+      const toast = await toastController.create({
+        duration: 2000,
+        message: 'Extra Added Successfully',
+        cssClass: 'extraToast',
+        position: 'top',
+      });
+
+      await toast.present();
+    }
     
 
 

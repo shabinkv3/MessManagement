@@ -11,12 +11,22 @@
   <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/ionic.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core@next/css/ionic.bundle.css"/>
   <script type="module">
+    import { toastController } from 'https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/index.esm.js';
+    window.toastController = toastController;
     import { modalController } from 'https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/index.esm.js';
     window.modalController = modalController;
     import { alertController } from 'https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/index.esm.js';
     window.alertController = alertController;
   </script>
   <style>
+    .extraToast
+    {
+        --background: green;
+    }
+
+    .searchbar-clear-icon {
+display: none !important;
+}
 
     .alertbuttonyes{
   color: red !important;
@@ -291,7 +301,7 @@
                     <br>
                             </ion-list>
 
-                            <ion-button id="reset" onClick="onSub(); setTimeout(changeColor(this),3000);" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">ADD EXTRA</ion-button>
+                            <ion-button id="reset" onClick="onSub()" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">ADD EXTRA</ion-button>
                             <ion-button id="reset1" type="reset" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">RESET</ion-button>
                        
   
@@ -321,49 +331,6 @@
 </body>
 
 <script>
-
-function changeButtonColor(id) {
-    document.getElementById(id).style.backgroundColor = "#8f15f4";
-}
-function playball() {
-    setTimeout('changeButtonColor("reset")',2000);
-}
-
-
-function onSub(){
-  
-    var date = document.getElementById("date").value;
-    var item = document.getElementById("item").value;
-    var price = document.getElementById("price").value;
-    var rollno = document.getElementById("rollno").value;
-    document.getElementById("date").reset;
-    document.getElementById("item").reset;
-    document.getElementById("rollno").reset;
-    document.getElementById("price").reset;
-    var token = document.querySelector('meta[name="csrf-token"]').content;
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            var myObj = JSON.parse(this.responseText);
-            alert(myObj.val);
-        }
-    };
-    xmlhttp.open("POST", "/accounts/extra", true);
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.setRequestHeader('X-CSRF-Token', token);
-    xmlhttp.send("extra[date]="+date+"&extra[item]="+item+"&extra[price]="+price+"&extra[rollno]="+rollno);
-   
-}
-
-function changeColor(btn) {
-  setTimeout(btn.style.backgroundColor = "green",3000);
-  playball();
-}
-
-
-
-
-
 
 
 customElements.define('modal-content', class ModalContent extends HTMLElement {

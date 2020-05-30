@@ -1,4 +1,6 @@
 class AccountsController < ApplicationController
+  before_action :go_to_dashboard_if_logged_in, except: :logout
+
   def login
   end
 
@@ -81,16 +83,6 @@ class AccountsController < ApplicationController
     end
   end
 
-  def createEntry
-   
-    @params = extra_params
-   
-    @params[:mess_id] = session[:id]
-   
-    @extra=Extra.new( @params)
-    @extra.save
-    
-  end
 
   private
   def student_params
@@ -103,9 +95,13 @@ class AccountsController < ApplicationController
     params.require(:mess).permit(:password,:password_digest,:mess_name)
   end
 
-  private
-  def extra_params
-    params.require(:extra).permit(:date,:rollno,:item,:price)
+
+  def go_to_dashboard_if_logged_in
+    if session[:mess_logged_in]
+      redirect_to mess_dash_path
+    elsif session[:student_logged_in]
+      redirect_to student_dash_path
+    end
   end
 end
 

@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 	post 'accounts/signup/mess', to: 'accounts#createMess', as: 'create_mess'
 
 	get 'accounts/check', to: 'accounts#check', as: 'check'
-	post 'accounts/extra', to: 'accounts#createEntry', as: 'create_extra'
+	post 'mess/extra', to: 'mess#createEntry', as: 'create_extra'
 
 	get 'mess/dashboard', to: 'mess#dashboard', as: 'mess_dash'
 	get 'accounts/logout', to: 'accounts#logout', as: 'logout'
