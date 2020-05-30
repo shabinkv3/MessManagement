@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fromdate: 2020-05-30
+  todate: 2020-05-30
+  no_of_days: 1
+  student_id: 1
+
+two:
+  fromdate: 2020-05-30
+  todate: 2020-05-30
+  no_of_days: 1
+  student_id: 1

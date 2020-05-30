@@ -19,6 +19,7 @@ function postData(className)
 
 
 function post(url,postdata,callback){
+  
     var token = document.querySelector('meta[name="csrf-token"]').content;
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
@@ -31,6 +32,20 @@ function post(url,postdata,callback){
     xmlhttp.setRequestHeader('X-CSRF-Token', token);
     xmlhttp.send(postdata);
    
+}
+
+function onMessCut(data){
+
+  var myObj = JSON.parse(data);
+  if(myObj.added)
+  {
+      showToast("Mess Cut Marked Successfully");
+      document.getElementById('reset').click();
+  }
+  else
+  {
+      alert(myObj.errors.map((er)=>" "+er))
+  }
 }
 
 function onPostExtra(data)

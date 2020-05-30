@@ -20,4 +20,25 @@ class StudentController < ApplicationController
     end
   end
 
+  def createMessCut
+    @params=messcut_params
+    @student_id=session[:id]
+    if @student
+      @params[:student_id]=@student.id
+    else
+      @params[:student_id]=0
+    end
+    @messcut=Messcut.new(@params)
+    if @messcut.save
+      render json: {:added=>true}
+    else
+      render json: {:added=>false,:errors=>@messcut.errors.full_messages}
+    end
+  end
 end
+
+
+private
+  def messcut_params
+    params.require(:messcut).permit(:fromdate,:todate,:no_of_days)
+  end
