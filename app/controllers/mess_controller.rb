@@ -33,6 +33,23 @@ class MessController < ApplicationController
     end
     
   end
+  def addGuest
+    @params = guest_params
+    @student=Student.find_by_rollno(@params[:student_id])
+    if @student
+      @params[:student_id]=@student.id
+    else
+      @params[:student_id]=0
+    end
+   
+    @guest=Guest.new(@params)
+    if @guest.save
+      render json: {:added=>true}
+    else
+      render json: {:added=>false,:errors=>@guest.errors.full_messages}
+    end
+    
+  end
 
 	def staffData
 		@mess=Mess.find(session[:id])
@@ -56,6 +73,10 @@ class MessController < ApplicationController
   private
   def extra_params
     params.require(:extra).permit(:date,:student_id,:item,:price)
+  end
+  private
+  def guest_params
+    params.require(:guest).permit(:student_id,:name,:rollno)
   end
 
   def enter_only_if_mess_logged_in

@@ -241,47 +241,38 @@ display: none !important;
                           <form >  
                             <ion-card-content>
                             <ion-list lines="none" class="line-input">
-                            <ion-item>
-                                <ion-col>
-                                 Date
-                             </ion-col>
-                             <ion-col>
-                               <input type="date" name="date"  format="dd/mm/yyyy" class="form-field">
-                             </ion-col>   
-                            </ion-item>
-                                <br>
             
                             <ion-item>
                                 <ion-col>
                                  Roll No
                              </ion-col>
                              <ion-col>
-                               <input type="text" name="rollno" class="form-field">
+                               <input type="text" id="guest[student_id]" class="guest-field">
                              </ion-col>   
                             </ion-item>
                             <br>
                             <ion-item>
                             <ion-col>
-                             Item
+                             Name
                          </ion-col>
                          <ion-col>
-                           <input type="text" name="item"  class="form-field">
+                           <input type="text" name="item"  id="guest[name]" class="guest-field">
                          </ion-col>   
                         </ion-item>
                         <br>
                         <ion-item>
                         <ion-col>
-                         Price
+                         Roll No
                      </ion-col>
                      <ion-col>
-                       <input type="text" name="price"  class="form-field">
+                       <input type="text" name="price" id="guest[rollno]"  class="guest-field">
                      </ion-col>   
                     </ion-item>
                     <br>
                             </ion-list>
 
-                            <ion-button  onClick="onSub()" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">ADD EXTRA</ion-button>
-                            <ion-button  type="reset" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">RESET</ion-button>
+                            <ion-button  onClick="post('/mess/addguest',postData('guest-field'),onAddGuest);" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">ADD GUEST</ion-button>
+                            <ion-button  type="reset" id='reset2' style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">RESET</ion-button>
                        
   
                         </ion-card-content>

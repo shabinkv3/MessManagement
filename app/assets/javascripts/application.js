@@ -19,7 +19,6 @@ function postData(className)
 
 
 function post(url,postdata,callback){
-
     var token = document.querySelector('meta[name="csrf-token"]').content;
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
@@ -39,8 +38,22 @@ function onPostExtra(data)
   var myObj = JSON.parse(data);
             if(myObj.added)
             {
-                showToast();
+                showToast("Extra Added Successfully");
                 document.getElementById('reset1').click();
+            }
+            else
+            {
+                alert(myObj.errors.map((er)=>" "+er))
+            }
+}
+
+function onAddGuest(data)
+{
+  var myObj = JSON.parse(data);
+            if(myObj.added)
+            {
+                showToast("Guest Added Successfully");
+                document.getElementById('reset2').click();
             }
             else
             {
@@ -64,10 +77,10 @@ function onCreateStaff(data)
 
 
 
-async function showToast() {
+async function showToast(message) {
       const toast = await toastController.create({
         duration: 2000,
-        message: 'Extra Added Successfully',
+        message: message,
         cssClass: 'extraToast',
         position: 'top',
       });
@@ -80,7 +93,7 @@ async function showToast() {
     async function addStaffModal() {
       const modal = await modalController.create({
         component: 'add-staff-form',
-        cssClass: 'addstaff'
+        cssClass: 'addstaff',
       });
 
       await modal.present();
