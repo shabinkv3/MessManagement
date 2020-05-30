@@ -1,18 +1,42 @@
-function onSub(){
-  
-    var date = document.getElementById("date").value;
-    var item = document.getElementById("item").value;
-    var price = document.getElementById("price").value;
-    var rollno = document.getElementById("rollno").value;
-    document.getElementById("date").reset;
-    document.getElementById("item").reset;
-    document.getElementById("rollno").reset;
-    document.getElementById("price").reset;
+function postData(className)
+{
+  var arr=document.getElementsByClassName(className)
+  data="";
+  var i;
+  for(i=0;i<arr.length;i++)
+  {
+    if(i!=0)
+    {
+      data+="&";
+    }
+    data+=arr[i].id+"="+arr[i].value;
+  }
+  return data;
+
+}
+
+
+
+
+function post(url,postdata,callback){
+
     var token = document.querySelector('meta[name="csrf-token"]').content;
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            var myObj = JSON.parse(this.responseText);
+            callback(this.responseText);
+        }
+    };
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.setRequestHeader('X-CSRF-Token', token);
+    xmlhttp.send(postdata);
+   
+}
+
+function onPostExtra(data)
+{
+  var myObj = JSON.parse(data);
             if(myObj.added)
             {
                 showToast();
@@ -22,14 +46,21 @@ function onSub(){
             {
                 alert(myObj.errors.map((er)=>" "+er))
             }
-        }
-    };
-    xmlhttp.open("POST", "/mess/extra", true);
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.setRequestHeader('X-CSRF-Token', token);
-    xmlhttp.send("extra[date]="+date+"&extra[item]="+item+"&extra[price]="+price+"&extra[student_id]="+rollno);
-   
 }
+
+function onCreateStaff(data)
+{
+  myObj = JSON.parse(data);
+        if(myObj.added)
+        {
+            dismissModal();
+            getStaffs();
+        }
+        else
+        {
+            alert(myObj.errors);
+        }
+        }
 
 
 
@@ -56,33 +87,7 @@ async function showToast() {
       currentModal = modal;
     }
 
-    function createStaff()
-    {
-        var token = document.querySelector('meta[name="csrf-token"]').content;
-        var xmlhttp, myObj;
-        name=document.getElementById('staffname').value;
-        phoneno=document.getElementById('staffno').value;
-    xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        myObj = JSON.parse(this.responseText);
-        if(myObj.added)
-        {
-            dismissModal();
-            getStaffs();
-        }
-        else
-        {
-            alert(myObj.errors);
-        }
-        }
-};
-xmlhttp.open("POST", "/createstaff", true);
-xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-xmlhttp.setRequestHeader('X-CSRF-Token', token);
-xmlhttp.send("staff[name]="+name+"&staff[phoneno]="+phoneno);
 
-    }
 
     function dismissModal() {
       if (currentModal) {

@@ -98,7 +98,29 @@ display: none !important;
 
 }
 
-.form-field {
+.extra-field {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    line-height: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    border-radius: 6px;
+    -webkit-appearance: none;
+    color: var(--input-color);
+    border: 1px solid var(--input-border);
+    background: var(--input-background);
+    transition: border .3s ease;
+    &::placeholder {
+        color: var(--input-placeholder);
+    }
+    &:focus {
+        outline: none;
+        border-color: var(--input-border-focus);
+    }
+}
+.guest-field {
     display: block;
     width: 100%;
     padding: 8px 16px;
@@ -212,10 +234,63 @@ display: none !important;
                 </ion-row>
                 <ion-row style="height: 1000px">
                     <ion-col>
-                        <div>
-                    <div id="guest" class="tabcontent" style="display:none;">
-                    <h3>Guest</h3>
-                    <p>Guest Data Goes Here</p>
+                    <div id="guest" class="tabcontent" style="display:none;position: relative;left: 50px">
+
+                    <h1 style="position:absolute;left:0px">Add Guest</h1><br> <br><br><br>
+                         <ion-card style = "width: 700px">
+                          <form >  
+                            <ion-card-content>
+                            <ion-list lines="none" class="line-input">
+                            <ion-item>
+                                <ion-col>
+                                 Date
+                             </ion-col>
+                             <ion-col>
+                               <input type="date" name="date"  format="dd/mm/yyyy" class="form-field">
+                             </ion-col>   
+                            </ion-item>
+                                <br>
+            
+                            <ion-item>
+                                <ion-col>
+                                 Roll No
+                             </ion-col>
+                             <ion-col>
+                               <input type="text" name="rollno" class="form-field">
+                             </ion-col>   
+                            </ion-item>
+                            <br>
+                            <ion-item>
+                            <ion-col>
+                             Item
+                         </ion-col>
+                         <ion-col>
+                           <input type="text" name="item"  class="form-field">
+                         </ion-col>   
+                        </ion-item>
+                        <br>
+                        <ion-item>
+                        <ion-col>
+                         Price
+                     </ion-col>
+                     <ion-col>
+                       <input type="text" name="price"  class="form-field">
+                     </ion-col>   
+                    </ion-item>
+                    <br>
+                            </ion-list>
+
+                            <ion-button  onClick="onSub()" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">ADD EXTRA</ion-button>
+                            <ion-button  type="reset" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">RESET</ion-button>
+                       
+  
+                        </ion-card-content>
+                        </form>
+                        </ion-card>
+                        <br>
+                        <br>
+                        <br>
+
                     </div>
 
                     <div id="student_list" class="tabcontent" style="display:none;">
@@ -267,7 +342,7 @@ display: none !important;
                                  Date
                              </ion-col>
                              <ion-col>
-                               <input type="date" name="date" id="date" format="dd/mm/yyyy" class="form-field">
+                               <input type="date" name="date" id="extra[date]" format="dd/mm/yyyy" class="extra-field"/>
                              </ion-col>   
                             </ion-item>
                                 <br>
@@ -277,7 +352,7 @@ display: none !important;
                                  Roll No
                              </ion-col>
                              <ion-col>
-                               <input type="text" name="rollno" id="rollno" class="form-field">
+                               <input type="text" name="student_id" id="extra[student_id]" class="extra-field"/>
                              </ion-col>   
                             </ion-item>
                             <br>
@@ -286,7 +361,7 @@ display: none !important;
                              Item
                          </ion-col>
                          <ion-col>
-                           <input type="text" name="item" id="item" class="form-field">
+                           <input type="text" name="item" id="extra[item]" class="extra-field"/>
                          </ion-col>   
                         </ion-item>
                         <br>
@@ -295,13 +370,13 @@ display: none !important;
                          Price
                      </ion-col>
                      <ion-col>
-                       <input type="text" name="price" id="price" class="form-field">
+                       <input type="text" name="price" id="extra[price]" class="extra-field"/>
                      </ion-col>   
                     </ion-item>
                     <br>
                             </ion-list>
 
-                            <ion-button id="reset" onClick="onSub()" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">ADD EXTRA</ion-button>
+                            <ion-button id="reset" onClick="post('/mess/extra',postData('extra-field'),onPostExtra);" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">ADD EXTRA</ion-button>
                             <ion-button id="reset1" type="reset" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">RESET</ion-button>
                        
   
@@ -320,7 +395,6 @@ display: none !important;
                     <p>Updates about mess fee happens here</p>
 
                     </div>
-                </div>
                     </ion-col>
                 </ion-row>
             </ion-col>
@@ -347,14 +421,14 @@ customElements.define('add-staff-form', class ModalContent extends HTMLElement {
           <ion-content fullscreen>
           <ion-item style="--ion-color-primary:  #8f15f4">
           <ion-label position="floating">Staff Name</ion-label>
-            <ion-input id='staffname' required="true"></ion-input>
+            <ion-input id='staff[name]' class="staff" required="true"></ion-input>
             </ion-item>
             <ion-item style="--ion-color-primary:  #8f15f4">
             <ion-label position="floating">Mobile No</ion-label>
-            <ion-input type="number" id='staffno' required="true"></ion-input>
+            <ion-input type="number" id='staff[phoneno]' class="staff" required="true"></ion-input>
             </ion-item><br>
             <div style="text-align:center;">
-            <ion-button style="--ion-color-primary:  #8f15f4;self-align:center;" onClick="createStaff()">Add Staff</ion-button>
+            <ion-button style="--ion-color-primary:  #8f15f4;self-align:center;" onClick="post('/createstaff',postData('staff'),onCreateStaff)">Add Staff</ion-button>
             </div>
           </ion-content>
         `;
