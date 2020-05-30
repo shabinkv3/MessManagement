@@ -46,9 +46,9 @@ async function showToast() {
     
 
 
-    async function createModal() {
+    async function addStaffModal() {
       const modal = await modalController.create({
-        component: 'modal-content',
+        component: 'add-staff-form',
         cssClass: 'addstaff'
       });
 

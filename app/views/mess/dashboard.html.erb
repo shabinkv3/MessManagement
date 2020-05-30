@@ -241,7 +241,7 @@ display: none !important;
                         <ion-col offset=3 size=5>
                             <h3 style="text-align: center;">Staff List 
                             </h3><br>
-                                <div style="text-align: center;"><ion-button style="--ion-color-primary: #8f15f4;margin-right: 10px" id="addbutton">Add Staff<ion-icon slot="end" name='add'></ion-icon></ion-button></div>
+                                <div style="text-align: center;"><ion-button style="--ion-color-primary: #8f15f4;margin-right: 10px" id="addbutton" onClick="addStaffModal()">Add Staff<ion-icon slot="end" name='add'></ion-icon></ion-button></div>
                             <div id="stafflist"><ion-spinner style="position:relative; left: 50px; top:70px"></ion-spinner></div>
 
                         </ion-col>
@@ -333,7 +333,7 @@ display: none !important;
 <script>
 
 
-customElements.define('modal-content', class ModalContent extends HTMLElement {
+customElements.define('add-staff-form', class ModalContent extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
           <ion-header translucent>
@@ -362,8 +362,6 @@ customElements.define('modal-content', class ModalContent extends HTMLElement {
     });
 
     let currentModal = null;
-    const button = document.getElementById('addbutton');
-    button.addEventListener('click', createModal);
 
 
 
