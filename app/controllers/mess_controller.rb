@@ -72,7 +72,7 @@ class MessController < ApplicationController
   end
   private
   def extra_params
-    params.require(:extra).permit(:date,:student_id,:item,:price)
+    params.require(:extra).permit(:student_id,:item,:price)
   end
   private
   def guest_params
