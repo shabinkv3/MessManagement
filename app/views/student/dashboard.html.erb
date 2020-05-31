@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grid</title>
+
+<%= javascript_include_tag 'application' %>
+<meta charset="UTF-8">
+<%= csrf_meta_tag %>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grid</title>
   <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/ionic.esm.js"></script>
   <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/ionic.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core@next/css/ionic.bundle.css"/>
+    <script type="module">
+    import { toastController } from 'https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/index.esm.js';
+    window.toastController = toastController;
+</script>
   <style>
+    .extraToast
+    {
+        --background: green;
+    }
     ion-item.side_tabs.item:hover {
   --ion-background-color: #a179d5 !important;
   border-radius: 4px;
@@ -46,7 +57,40 @@
     {
         color: grey;
     }
+    :root {
 
+        --input-color: #99A3BA;
+        --input-border: #CDD9ED;
+        --input-background: #fff;
+        --input-placeholder: #CBD1DC;
+    
+        --input-border-focus: #275EFE;
+    
+    }
+    
+    .form-field {
+        display: block;
+        width: 100%;
+        padding: 8px 16px;
+        line-height: 25px;
+        font-size: 14px;
+        font-weight: 500;
+        font-family: inherit;
+        border-radius: 6px;
+        -webkit-appearance: none;
+        color: var(--input-color);
+        border: 1px solid var(--input-border);
+        background: var(--input-background);
+        transition: border .3s ease;
+        &::placeholder {
+            color: var(--input-placeholder);
+        }
+        &:focus {
+            outline: none;
+            border-color: var(--input-border-focus);
+        }
+    }
+    
   </style>
 </head>
 <body>
@@ -128,74 +172,102 @@
                     
                 
 
-                    <div id="profile" class="tabcontent" style="display:none;position: absolute;left: 100px">
+                        <div id="profile" class="tabcontent" style="display:none;position: absolute;left: 100px">
                         <h1 style="position: relative;left:50px">Personal Information</h1>
                         <br>
                         
-                       <fieldset style="width:500px">
-                         <br>
+                      
+                      <ion-card style = "width: 700px">
 
-                         <ion-row>
-                           
-                            <ion-col>
-                             <ion-row text:center> 
-                                    <ion-col>
-                                        <b>Name</b>
-                                    </ion-col>
-                                    <ion-col>
-                                        :
-                                    </ion-col>
-                                    <ion-col>
-                                        <%= @student.name%></p>
-                                    </ion-col>
-                                </ion-row>
-                                <ion-row > 
-                                    <ion-col>
-                                        <b>Roll No</b>
-                                    </ion-col>
-                                    <ion-col>
-                                        :
-                                    </ion-col>
-                                    <ion-col>
-                                        <%= @student.rollno%></p>
-                                    </ion-col>
-                                </ion-row>
-                                <ion-row > 
-                                    <ion-col>
-                                        <b>E-Mail</b>
-                                    </ion-col>
-                                    <ion-col>
-                                        :
-                                    </ion-col>
-                                    <ion-col>
-                                        <%= @student.email%></p>
-                                    </ion-col>
-                                </ion-row>
-                                <ion-row > 
-                                    <ion-col>
-                                        <b>Enrolled Mess Code</b>
-                                    </ion-col>
-                                    <ion-col>
-                                        :
-                                    </ion-col>
-                                    <ion-col>
-                                        <%= @student.mess_id%></p>
-                                    </ion-col>
-                                </ion-row>
-                                <ion-row > 
-                                    <ion-col>
-                                        <b>Room No</b>
-                                    </ion-col>
-                                    <ion-col>
-                                        :
-                                    </ion-col>
-                                    <ion-col>
-                                        <%= @student.roomno%></p>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-col>
-                        </ion-row>
-                        </fieldset>
+                        <ion-card-container>
+                         <br>
+                        <ion-list lines="none">
+                            <ion-item>
+                                
+                                <ion-col>
+                                <ion-label>
+                                   &emsp;&emsp;&emsp; Name    
+                                </ion-label>
+                                </ion-col>
+                                <ion-col>
+                                    :
+                                </ion-col>
+                                <ion-col>
+                                <%= @student.name%>
+                                
+                                </ion-col>
+                            </ion-item>
+
+                            <ion-item>
+                                
+                                <ion-col>
+                                <ion-label>
+                                   &emsp;&emsp;&emsp;Roll No    
+                                </ion-label>
+                                </ion-col>
+                                <ion-col>
+                                    :
+                                </ion-col>
+                                <ion-col>
+                                <%= @student.rollno%>
+                                
+                                </ion-col>
+                            </ion-item>
+
+                            <ion-item>
+                                
+                                <ion-col>
+                                <ion-label>
+                                   &emsp;&emsp;&emsp;E-Mail   
+                                </ion-label>
+                                </ion-col>
+                                <ion-col>
+                                    :
+                                </ion-col>
+                                <ion-col>
+                                <%= @student.email%>
+                                
+                                </ion-col>
+                            </ion-item>
+
+                            <ion-item>
+                                
+                                <ion-col>
+                                
+                                   &emsp;&emsp;&emsp;Mess Code    
+                                
+                                </ion-col>
+                                <ion-col>
+                                    :
+                                </ion-col>
+                                <ion-col>
+                                <%= @student.mess_id%>
+                                
+                                </ion-col>
+                            </ion-item>
+
+                            <ion-item>
+                                
+                                <ion-col>
+                                
+                                   &emsp;&emsp;&emsp;Room No    
+                                
+                                </ion-col>
+                                <ion-col>
+                                    :
+                                </ion-col>
+                                <ion-col>
+                                <%= @student.roomno%>
+                                
+                                </ion-col>
+                            </ion-item>
+
+                        </ion-list>
+                        
+                        </ion-card-container>
+                        <br>
+                        </ion-card>
+
                     </div>
 
                     <div id="guests" class="tabcontent" style="display:none;">
@@ -208,10 +280,60 @@
                     <p>List of all staff goes here</p> 
                     </div>
 
-                    <div id="messcut" class="tabcontent" style="display:none;">
-                    <h3>Mess Cut</h3>
-                    <p>Mess cut data goes here</p>
+                    <div id="messcut" class="tabcontent" style="display:none;position: absolute;left: 60px">
+                    <h1 style="position: relative;left:50px">Mess Cut Entry</h1>
+                    <br>
+                    <ion-card style="width:900px;">
+                        <br>
+                        <ion-card-container>
+                        <form id="myform">
+                            <ion-list lines="none">
+                                <ion-item>
+                                    <ion-col>
+                                    
+                                        From Date&emsp;
+                                    </ion-col>
+                                    <ion-col>
+                                        <input  type="date"  id="messcut[from_date]" name="pickup_date" onchange="cal()" format="dd/mm/yyyy" class="form-field">
+                                    
+                                    </ion-col>
+                                    <ion-col>
+                                        &emsp;To Date&emsp;
+                                    </ion-col>
+                                    <ion-col>
+                                        <input  type="date" id="messcut[to_date]" name="dropoff_date" onchange="cal()" format="dd/mm/yyyy" class="form-field">
+                                    </ion-col>
+                                    
+                                    <ion-col>
+                                       &emsp; No Of Days&emsp;
+                                    </ion-col>
+                                    <ion-col>
+                                    <input type="text" class="form-field" id="messcut[no_of_days]" name="numdays"/>
+                                    </ion-col>
+                                </ion-item>
+
+             
+                            
+
+                                <br>
+                            <ion-item>
+                            <ion-col></ion-col>
+                            
+                            <ion-col>
+                            <ion-button id="submit" onClick="post('/student/messcut',postData('form-field'),onMessCut);" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">SUBMIT</ion-button>
+                            </ion-col>
+                            <ion-col>
+                            <ion-button id="reset" type="reset" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">RESET</ion-button>
+                            </ion-col>
+                            <ion-col></ion-col>
+                            </ion-item>
+                            </ion-list>
+                            </form>
+                        </ion-card-container>
+                        <br>
+                    </ion-card>
                     </div>
+
                     <div id="extra" class="tabcontent" style="display:none;">
                     <h3>Extras</h3>
                     <p>Extra data goes here</p>
@@ -230,6 +352,22 @@
   </ion-app>
 </body>
 <script>
+
+
+
+function GetDays(){
+    var dropdt = new Date(document.getElementById("messcut[to_date]").value);
+    var pickdt = new Date(document.getElementById("messcut[from_date]").value);
+    return parseInt((dropdt - pickdt) / (24 * 3600 * 1000));
+}
+
+function cal(){
+if(document.getElementById("messcut[to_date]")){
+document.getElementById("messcut[no_of_days]").value=GetDays();
+}  
+}
+
+
 function viewOption(evt, option) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
