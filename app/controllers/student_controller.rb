@@ -20,6 +20,26 @@ class StudentController < ApplicationController
     end
   end
 
+  def getExtraList
+    if session[:student_logged_in]
+      @student=Student.find(session[:id])
+      @extra=@student.extras
+      render json: {:data => @extra}
+    else
+  		redirect_to login_path
+  	end
+  end
+
+  def getGuestList
+    if session[:student_logged_in]
+      @student=Student.find(session[:id])
+      @guest=@student.guests
+      render json: {:data => @guest}
+    else
+      redirect_to login_path
+    end
+  end
+
   def createMessCut
     @params=messcut_params
     @params[:student_id]=session[:id]

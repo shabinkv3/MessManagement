@@ -152,6 +152,7 @@ function viewOption(evt, option) {
   }
 }
 
+
 function fillRollNoGuest(val)
 {
     document.getElementById('guest[student_id]').value=val;
@@ -177,7 +178,7 @@ function getStudents(id,callback)
         if(myObj.length==0)
         {
             txt+="<p style='text-align: center;'>There are no Students in this mess currently</p>"
-            document.getElementById("search_section").innerHTML = txt;
+            document.getElementById(id).innerHTML = txt;
         }
         else
         {
