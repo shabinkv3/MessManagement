@@ -3,6 +3,7 @@ class Student < ApplicationRecord
   belongs_to :mess
   has_many :guests
   has_many :extras
+  has_many :mess_cuts
 
   
   validates :rollno, presence: true, uniqueness: true

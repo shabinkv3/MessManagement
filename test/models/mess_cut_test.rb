@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class MesscutTest < ActiveSupport::TestCase
+class MessCutTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

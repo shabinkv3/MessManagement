@@ -31,11 +31,11 @@ ActiveRecord::Schema.define(version: 2020_05_30_142852) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "messcuts", force: :cascade do |t|
-    t.date "fromdate"
-    t.date "todate"
-    t.integer "no_of_days"
+  create_table "mess_cuts", force: :cascade do |t|
     t.integer "student_id"
+    t.date "from_date"
+    t.date "to_date"
+    t.integer "no_of_days"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
