@@ -152,6 +152,7 @@ function viewOption(evt, option) {
   }
 }
 
+
 function getStudents()
 {
     var obj, dbParam, xmlhttp, myObj, x, txt = "";
