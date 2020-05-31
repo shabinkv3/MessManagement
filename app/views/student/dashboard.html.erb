@@ -10,7 +10,15 @@
   <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/ionic.esm.js"></script>
   <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/ionic.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core@next/css/ionic.bundle.css"/>
+    <script type="module">
+    import { toastController } from 'https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/index.esm.js';
+    window.toastController = toastController;
+</script>
   <style>
+    .extraToast
+    {
+        --background: green;
+    }
     ion-item.side_tabs.item:hover {
   --ion-background-color: #a179d5 !important;
   border-radius: 4px;
@@ -299,14 +307,14 @@
                                         From Date&emsp;
                                     </ion-col>
                                     <ion-col>
-                                        <input  type="date"  id="messcut[fromdate]" name="pickup_date" onchange="cal()" format="dd/mm/yyyy" class="form-field">
+                                        <input  type="date"  id="messcut[from_date]" name="pickup_date" onchange="cal()" format="dd/mm/yyyy" class="form-field">
                                     
                                     </ion-col>
                                     <ion-col>
                                         &emsp;To Date&emsp;
                                     </ion-col>
                                     <ion-col>
-                                        <input  type="date" id="messcut[todate]" name="dropoff_date" onchange="cal()" format="dd/mm/yyyy" class="form-field">
+                                        <input  type="date" id="messcut[to_date]" name="dropoff_date" onchange="cal()" format="dd/mm/yyyy" class="form-field">
                                     </ion-col>
                                     
                                     <ion-col>
@@ -441,13 +449,13 @@ function getGuests(){
 }
 
 function GetDays(){
-    var dropdt = new Date(document.getElementById("messcut[todate]").value);
-    var pickdt = new Date(document.getElementById("messcut[fromdate]").value);
+    var dropdt = new Date(document.getElementById("messcut[to_date]").value);
+    var pickdt = new Date(document.getElementById("messcut[from_date]").value);
     return parseInt((dropdt - pickdt) / (24 * 3600 * 1000));
 }
 
 function cal(){
-if(document.getElementById("messcut[todate]")){
+if(document.getElementById("messcut[to_date]")){
 document.getElementById("messcut[no_of_days]").value=GetDays();
 }  
 }

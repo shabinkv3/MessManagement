@@ -144,7 +144,7 @@ function viewOption(evt, option) {
   document.getElementById(option).style.display = "block";  
   if (option=="student_list")
   {
-    getStudents();
+    getStudents("list_student",'');
   }
   if (option=="staff_list")
   {
@@ -153,7 +153,22 @@ function viewOption(evt, option) {
 }
 
 
-function getStudents()
+function fillRollNoGuest(val)
+{
+    document.getElementById('guest[student_id]').value=val;
+    dismissPopover();
+}
+
+function fillRollNoExtra(val)
+{
+    document.getElementById('extra[student_id]').value=val;
+    dismissPopover();
+}
+
+
+
+
+function getStudents(id,callback)
 {
     var obj, dbParam, xmlhttp, myObj, x, txt = "";
     xmlhttp = new XMLHttpRequest();
@@ -163,16 +178,16 @@ function getStudents()
         if(myObj.length==0)
         {
             txt+="<p style='text-align: center;'>There are no Students in this mess currently</p>"
-            document.getElementById("search_section").innerHTML = txt;
+            document.getElementById(id).innerHTML = txt;
         }
         else
         {
-        txt += "<p id='noMatch' style='text-align:center;display:none;'>No matching students</p><ion-card id='students_card'><ion-list>"
+        txt += "<p id='noMatch_"+id+"' style='text-align:center;display:none;'>No matching students</p><ion-card id='students_card_"+id+"'><ion-list>"
         for (x in myObj) {
-            txt += "<ion-item class='student_item' lines='none' detail='true' href='/accounts/login'><ion-icon name='person' style='color: #8f15f4;'></ion-icon><ion-grid><ion-row><ion-col size='6'><label class='student_name' style='padding-left: 15px; font-size: 17px; font-weight: 500;'>" + myObj[x].name + "</label></ion-col><ion-col size='4' offset='2'><label class='student_roll_no'>"+myObj[x].rollno+"</label></ion-col></ion-row></ion-item>";
+            txt += "<ion-item class='student_item_"+id+"' lines='none' detail='true' href=# onClick='"+callback+"(\""+myObj[x].rollno+"\")'><ion-icon name='person' style='color: #8f15f4;'></ion-icon><ion-grid><ion-row><ion-col size='6'><label class='student_name_"+id+"' style='padding-left: 15px; font-size: 17px; font-weight: 500;'>" + myObj[x].name + "</label></ion-col><ion-col size='4' offset='2'><label class='student_roll_no_"+id+"'>"+myObj[x].rollno+"</label></ion-col></ion-row></ion-item>";
         }
     txt += "</ion-list></ion-card></ion-grid>";  
-    document.getElementById("list").innerHTML = txt;
+    document.getElementById(id).innerHTML = txt;
 }
   }
 };
@@ -257,19 +272,19 @@ xmlhttp.send("staff[id]="+id);
 
 
 
-function filterStudentsByName() {
+function filterStudentsByName(id) {
     var input, filter, ul, li, a, i, txtValue;
-    input = document.getElementById("nameSearchBar");
+    input = document.getElementById("nameSearchBar_"+id);
     filter = input.value.toUpperCase();
-    names = document.getElementsByClassName("student_name");
-    items = document.getElementsByClassName("student_item");
+    names = document.getElementsByClassName("student_name_"+id);
+    items = document.getElementsByClassName("student_item_"+id);
     var count=0
     for (i = 0; i < names.length; i++) {
         txtValue = names[i].textContent || names[i].innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
             items[i].style.display = "";
-            document.getElementById("students_card").style.display="";
-            document.getElementById("noMatch").style.display="none";
+            document.getElementById("students_card_"+id).style.display="";
+            document.getElementById("noMatch_"+id).style.display="none";
         } else {
             count+=1
             items[i].style.display = "none";
@@ -277,24 +292,24 @@ function filterStudentsByName() {
     }
     if(count==names.length)
     {
-        document.getElementById("noMatch").style.display="";
-        document.getElementById("students_card").style.display="none";
+        document.getElementById("noMatch_"+id).style.display="";
+        document.getElementById("students_card_"+id).style.display="none";
     }
 }
 
-function filterStudentsByRollNo() {
+function filterStudentsByRollNo(id) {
     var input, filter, ul, li, a, i, txtValue;
-    input = document.getElementById("rollSearchBar");
+    input = document.getElementById("rollSearchBar_"+id);
     filter = input.value.toUpperCase();
-    rolls = document.getElementsByClassName("student_roll_no");
-    items = document.getElementsByClassName("student_item");
+    rolls = document.getElementsByClassName("student_roll_no_"+id);
+    items = document.getElementsByClassName("student_item_"+id);
     var count=0
     for (i = 0; i < rolls.length; i++) {
         txtValue = rolls[i].textContent || rolls[i].innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
             items[i].style.display = "";
-            document.getElementById("students_card").style.display="";
-            document.getElementById("noMatch").style.display="none";
+            document.getElementById("students_card_"+id).style.display="";
+            document.getElementById("noMatch_"+id).style.display="none";
         } else {
             count+=1
             items[i].style.display = "none";
@@ -302,7 +317,7 @@ function filterStudentsByRollNo() {
     }
     if(count==names.length)
     {
-        document.getElementById("noMatch").style.display="";
-        document.getElementById("students_card").style.display="none";
+        document.getElementById("noMatch_"+id).style.display="";
+        document.getElementById("students_card_"+id).style.display="none";
     }
 }
