@@ -1,3 +1,162 @@
+function studentDataOptionChange(event)
+{
+  var id=document.getElementById('student_data_id').value;
+  if(event.target.value=='extras')
+  {
+    post('/extradata','extra_list[student_id]='+id,(data)=>{onGetExtraList(data,'profileContent')})
+  }
+  if(event.target.value=='guests')
+  {
+    post('/guestdata','guest_list[student_id]='+id,(data)=>{onGetGuestList(data,'profileContent')})
+  }
+  if(event.target.value=='profile')
+  {
+    post('/studentprofile','student_profile[student_id]='+id,(data)=>{onGetProfile(data,'profileContent',true)})
+  }
+}
+
+
+function onGetExtraList(data,id)
+{
+  var txt="";
+  var sum=0;
+  var i;
+  var myObj = JSON.parse(data);
+
+ if(myObj.data.length==0)
+            {
+                txt += "<p id='noMatch' style='text-align:center;display:none;'>No matching students</p>"
+            }
+            else
+            {
+                txt+="<br><ion-card style='width:700px'><ion-card-container><ion-list><ion-card-header><ion-item><ion-col>S.No</ion-col><ion-col>Item</ion-col><ion-col>Price</ion-col></ion-item></ion-card-header>"
+                for(i=0;i<myObj.data.length-1;i++)
+                {
+                    sum+=myObj.data[i].price;
+                    txt+="<ion-item lines='none' ><ion-col>"+(i+1)+"."+"</ion-col><ion-col>"+myObj.data[i].item+"</ion-col><ion-col>"+myObj.data[i].price+".00"+"</ion-col></ion-item>"
+                }
+                sum+=myObj.data[i].price;
+                txt+="<ion-item><ion-col>"+(i+1)+"."+"</ion-col><ion-col>"+myObj.data[i].item+"</ion-col><ion-col>"+myObj.data[i].price+".00"+"</ion-col></ion-item></ion-list><ion-list><ion-card-footer><ion-item><ion-col></ion-col><ion-col>Total Amount</ion-col><ion-col>"+sum+".00"+"</ion-col></ion-item></ion-card-footer></ion-list></ion-card-container></ion-card>"
+                document.getElementById(id).innerHTML = txt;
+                console.log(sum);
+
+            } 
+}
+
+function onGetGuestList(data,id)
+{
+  var txt="";
+  var i;
+  var myObj = JSON.parse(data);
+            if(myObj.data.length==0)
+            {
+                txt += "<p id='noMatch' style='text-align:center;display:none;'>No matching students</p>"
+            }
+            else
+            {
+                txt+="<br><ion-card style='width:700px'><ion-card-container><ion-list><ion-card-header><ion-item><ion-col>S.No</ion-col><ion-col>Guest Name</ion-col><ion-col>Guest Roll No</ion-col></ion-item></ion-card-header>"
+                for(i=0;i<myObj.data.length-1;i++)
+                {
+                  
+                    txt+="<ion-item lines='none' ><ion-col>"+(i+1)+"."+"</ion-col><ion-col>"+myObj.data[i].name+"</ion-col><ion-col>"+myObj.data[i].rollno+"</ion-col></ion-item>"
+                }
+                console.log(txt);
+                txt+="<ion-item lines='none'><ion-col>"+(i+1)+"."+"</ion-col><ion-col>"+myObj.data[i].name+"</ion-col><ion-col>"+myObj.data[i].rollno+"</ion-col></ion-item></ion-list></ion-card-container></ion-card>"
+                document.getElementById(id).innerHTML = txt;
+              
+
+            }
+}
+
+
+
+
+function getGuests(){
+    var txt="",i;
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var myObj = JSON.parse(this.responseText);
+            if(myObj.data.length==0)
+            {
+                txt += "<p id='noMatch' style='text-align:center;display:none;'>No matching students</p>"
+            }
+            else
+            {
+                txt+="<br><ion-card style='width:700px'><ion-card-container><ion-list><ion-card-header><ion-item><ion-col>S.No</ion-col><ion-col>Guest Name</ion-col><ion-col>Guest Roll No</ion-col></ion-item></ion-card-header>"
+                for(i=0;i<myObj.data.length-1;i++)
+                {
+                  
+                    txt+="<ion-item lines='none' ><ion-col>"+(i+1)+"."+"</ion-col><ion-col>"+myObj.data[i].name+"</ion-col><ion-col>"+myObj.data[i].rollno+"</ion-col></ion-item>"
+                }
+                console.log(txt);
+                txt+="<ion-item lines='none'><ion-col>"+(i+1)+"."+"</ion-col><ion-col>"+myObj.data[i].name+"</ion-col><ion-col>"+myObj.data[i].rollno+"</ion-col></ion-item></ion-list></ion-card-container></ion-card>"
+                document.getElementById("guestz").innerHTML = txt;
+              
+
+            }
+        }
+    };
+    xmlhttp.open("GET",'/guestlist', true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send();
+
+}
+
+function GetDays(){
+    var dropdt = new Date(document.getElementById("messcut[to_date]").value);
+    var pickdt = new Date(document.getElementById("messcut[from_date]").value);
+    return parseInt((dropdt - pickdt) / (24 * 3600 * 1000));
+}
+
+function cal(){
+if(document.getElementById("messcut[to_date]")){
+document.getElementById("messcut[no_of_days]").value=GetDays();
+}  
+}
+
+
+
+
+
+let currentPopover = null;
+
+
+    async function selectRollGuest(ev) {
+      popover = await popoverController.create({
+        component: 'select-roll-guest',
+        event: ev,
+        translucent: true,
+        cssClass: 'student_select'
+      });
+      currentPopover = popover;
+      await popover.present();
+      getStudents("list_guest",'fillRollNoGuest',false);
+
+    }
+
+    async function selectRollExtra(ev) {
+      popover = await popoverController.create({
+        component: 'select-roll-extra',
+        event: ev,
+        translucent: true,
+        cssClass: 'student_select'
+      });
+      currentPopover = popover;
+      await popover.present();
+      getStudents("list_extra",'fillRollNoExtra',false);
+
+    }
+
+
+    function dismissPopover() {
+      if (currentPopover) {
+        currentPopover.dismiss().then(() => { currentPopover = null; });
+      }
+    }
+
+
 function postData(className)
 {
   var arr=document.getElementsByClassName(className)
@@ -32,6 +191,98 @@ function post(url,postdata,callback){
     xmlhttp.setRequestHeader('X-CSRF-Token', token);
     xmlhttp.send(postdata);
    
+}
+
+function onGetProfile(data,id,isOpeningModal)
+{
+
+  var student = JSON.parse(data);
+  if(isOpeningModal)
+  {
+    document.getElementById('student_data_modal_title').innerHTML=student.data.name;
+  }
+  document.getElementById(id).innerHTML=`<ion-card><ion-card-container><br><ion-list lines="none"><ion-item><ion-col><ion-label>&emsp;&emsp;&emsp; Name    
+                                </ion-label>
+                                </ion-col>
+                                <ion-col>
+                                    :
+                                </ion-col>
+                                <ion-col>
+                                ${student.data.name}
+                                
+                                </ion-col>
+                            </ion-item>
+
+                            <ion-item>
+                                
+                                <ion-col>
+                                <ion-label>
+                                   &emsp;&emsp;&emsp;Roll No    
+                                </ion-label>
+                                </ion-col>
+                                <ion-col>
+                                    :
+                                </ion-col>
+                                <ion-col>
+                                ${student.data.rollno}
+                                
+                                </ion-col>
+                            </ion-item>
+
+                            <ion-item>
+                                
+                                <ion-col>
+                                <ion-label>
+                                   &emsp;&emsp;&emsp;E-Mail   
+                                </ion-label>
+                                </ion-col>
+                                <ion-col>
+                                    :
+                                </ion-col>
+                                <ion-col>
+                                ${student.data.email}
+                                
+                                </ion-col>
+                            </ion-item>
+
+                            <ion-item>
+                                
+                                <ion-col>
+                                
+                                   &emsp;&emsp;&emsp;Mess Code    
+                                
+                                </ion-col>
+                                <ion-col>
+                                    :
+                                </ion-col>
+                                <ion-col>
+                                ${student.data.mess_id}
+                                
+                                </ion-col>
+                            </ion-item>
+
+                            <ion-item>
+                                
+                                <ion-col>
+                                
+                                   &emsp;&emsp;&emsp;Room No    
+                                
+                                </ion-col>
+                                <ion-col>
+                                    :
+                                </ion-col>
+                                <ion-col>
+                                ${student.data.roomno}
+                                
+                                </ion-col>
+                            </ion-item>
+
+                        </ion-list>
+                        
+                        </ion-card-container>
+                        <br>
+                        </ion-card>`
+
 }
 
 function onMessCut(data){
@@ -115,6 +366,18 @@ async function showToast(message) {
       currentModal = modal;
     }
 
+    async function studentDataModal(student_data_id) {
+      const modal = await modalController.create({
+        component: 'student-data',
+        cssClass: 'profileData',
+      });
+      await modal.present();
+      document.getElementById('student_data_id').value=student_data_id;
+      document.getElementById('initialSelectedSegment').click();
+
+      currentModal = modal;
+    }
+
 
 
     function dismissModal() {
@@ -144,7 +407,7 @@ function viewOption(evt, option) {
   document.getElementById(option).style.display = "block";  
   if (option=="student_list")
   {
-    getStudents("list_student",'');
+    getStudents("list_student",'studentDataModal',true);
   }
   if (option=="staff_list")
   {
@@ -168,8 +431,9 @@ function fillRollNoExtra(val)
 
 
 
-function getStudents(id,callback)
+function getStudents(id,callback,isOpeningModal)
 {
+
     var obj, dbParam, xmlhttp, myObj, x, txt = "";
     xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
@@ -182,9 +446,19 @@ function getStudents(id,callback)
         }
         else
         {
-        txt += "<p id='noMatch_"+id+"' style='text-align:center;display:none;'>No matching students</p><ion-card id='students_card_"+id+"'><ion-list>"
+          var functionCall="";
+                  txt += "<p id='noMatch_"+id+"' style='text-align:center;display:none;'>No matching students</p><ion-card id='students_card_"+id+"'><ion-list>"
         for (x in myObj) {
-            txt += "<ion-item class='student_item_"+id+"' lines='none' detail='true' href=# onClick='"+callback+"(\""+myObj[x].rollno+"\")'><ion-icon name='person' style='color: #8f15f4;'></ion-icon><ion-grid><ion-row><ion-col size='6'><label class='student_name_"+id+"' style='padding-left: 15px; font-size: 17px; font-weight: 500;'>" + myObj[x].name + "</label></ion-col><ion-col size='4' offset='2'><label class='student_roll_no_"+id+"'>"+myObj[x].rollno+"</label></ion-col></ion-row></ion-item>";
+          if(isOpeningModal==true)
+            {
+                functionCall=callback+"(\""+myObj[x].id+"\")";
+            }
+          else
+          {
+                functionCall=callback+"(\""+myObj[x].rollno+"\")"
+          }
+
+            txt += "<ion-item class='student_item_"+id+"' lines='none' detail='true' href=# onClick='"+functionCall+"'><ion-icon name='person' style='color: #8f15f4;'></ion-icon><ion-grid><ion-row><ion-col size='6'><label class='student_name_"+id+"' style='padding-left: 15px; font-size: 17px; font-weight: 500;'>" + myObj[x].name + "</label></ion-col><ion-col size='4' offset='2'><label class='student_roll_no_"+id+"'>"+myObj[x].rollno+"</label></ion-col></ion-row></ion-item>";
         }
     txt += "</ion-list></ion-card></ion-grid>";  
     document.getElementById(id).innerHTML = txt;

@@ -392,78 +392,27 @@ display: none !important;
 </body>
 
 <script>
-let currentPopover = null;
 
-
-    async function selectRollGuest(ev) {
-      popover = await popoverController.create({
-        component: 'select-roll-guest',
-        event: ev,
-        translucent: true,
-        cssClass: 'student_select'
-      });
-      currentPopover = popover;
-      await popover.present();
-      getStudents("list_guest",'fillRollNoGuest');
-
-    }
-
-    async function selectRollExtra(ev) {
-      popover = await popoverController.create({
-        component: 'select-roll-extra',
-        event: ev,
-        translucent: true,
-        cssClass: 'student_select'
-      });
-      currentPopover = popover;
-      await popover.present();
-      getStudents("list_extra",'fillRollNoExtra');
-
-    }
-
-
-    function dismissPopover() {
-      if (currentPopover) {
-        currentPopover.dismiss().then(() => { currentPopover = null; });
-      }
-    }
-
-    customElements.define('select-roll-guest', class ModalContent extends HTMLElement {
+  customElements.define('student-data', class ModalContent extends HTMLElement {
       connectedCallback() {
-        this.innerHTML = `
-      <ion-grid class="ion-no-padding">
-                            <ion-row>
-                                <ion-col class="ion-no-padding">
-                                    <ion-row><ion-col size=6>
-                                    <ion-searchbar placeholder="Type Name" id="nameSearchBar_list_guest"  onInput="filterStudentsByName('list_guest')"></ion-searchbar></ion-col>
-                                    <ion-col size=6>
-                                    <ion-searchbar placeholder="Type Roll No" id="rollSearchBar_list_guest" onInput="filterStudentsByRollNo('list_guest')"></ion-searchbar></ion-col>
-                                    </ion-row>
-                                    <div id="list_guest"><ion-spinner></ion-spinner></div>
-                                </ion-col>
-                            </ion-row>
-                        </ion-grid>
-        `;
+        this.innerHTML = `<%= render partial: 'student_data' %>`;
       }
     });
 
 
+    customElements.define('select-roll-guest', class ModalContent extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `<%= render partial: 'search_list', :locals=>{:id=>'guest'} %>`;
+      }
+    });
+
+
+
+
+
     customElements.define('select-roll-extra', class ModalContent extends HTMLElement {
       connectedCallback() {
-        this.innerHTML = `
-      <ion-grid class="ion-no-padding">
-                            <ion-row>
-                                <ion-col class="ion-no-padding">
-                                    <ion-row><ion-col size=6>
-                                    <ion-searchbar placeholder="Type Name" id="nameSearchBar_list_extra"  onInput="filterStudentsByName('list_extra')"></ion-searchbar></ion-col>
-                                    <ion-col size=6>
-                                    <ion-searchbar placeholder="Type Roll No" id="rollSearchBar_list_extra" onInput="filterStudentsByRollNo('list_extra')"></ion-searchbar></ion-col>
-                                    </ion-row>
-                                    <div id="list_extra"><ion-spinner></ion-spinner></div>
-                                </ion-col>
-                            </ion-row>
-                        </ion-grid>
-        `;
+        this.innerHTML = `<%= render partial: 'search_list', :locals=>{:id=>'extra'} %>`;
       }
     });
 
@@ -474,7 +423,7 @@ let currentPopover = null;
 
 customElements.define('add-staff-form', class ModalContent extends HTMLElement {
       connectedCallback() {
-        this.innerHTML = `<%= render partial: 'add_staff' %> `;
+        this.innerHTML = `<%= render partial: 'add_staff'%> `;
       }
     });
 
