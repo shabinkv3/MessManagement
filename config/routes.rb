@@ -24,8 +24,10 @@ Rails.application.routes.draw do
 	post 'deletestaff', to: 'mess#deleteStaff', as: 'delete_staff'
 	get 'staffdata', to: 'mess#staffData'
 
-	get 'extradata', to: 'student#getExtraList'
-	get 'guestlist', to: 'student#getGuestList'
+	post 'extradata', to: 'student#getExtraList'
+	post 'guestdata', to: 'student#getGuestList'
+	post 'studentprofile', to: 'student#studentProfile'
+
 
 
 	post 'student/messcut', to: 'student#createMessCut', as: 'create_messcut'

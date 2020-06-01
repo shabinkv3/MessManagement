@@ -1,5 +1,5 @@
 class StudentController < ApplicationController
-  before_action :enter_only_if_student_logged_in, except: :dataGet
+  before_action :enter_only_if_student_logged_in, except: [:dataGet,:getExtraList,:getGuestList,:studentProfile]
   def dashboard
   	if session[:student_logged_in]
   		@student=Student.find(session[:id])
@@ -21,23 +21,15 @@ class StudentController < ApplicationController
   end
 
   def getExtraList
-    if session[:student_logged_in]
-      @student=Student.find(session[:id])
+      @student=Student.find(extra_list_params[:student_id])
       @extra=@student.extras
       render json: {:data => @extra}
-    else
-  		redirect_to login_path
-  	end
   end
 
   def getGuestList
-    if session[:student_logged_in]
-      @student=Student.find(session[:id])
+      @student=Student.find(guest_list_params[:student_id])
       @guest=@student.guests
       render json: {:data => @guest}
-    else
-      redirect_to login_path
-    end
   end
 
   def createMessCut
@@ -50,10 +42,27 @@ class StudentController < ApplicationController
       render json: {:added=>false,:errors=>@messcut.errors.full_messages}
     end
   end
-end
+  def studentProfile
+    @student=Student.find(profile_params[:student_id])
+    render json: {:data=>@student}
+  end
 
 
 private
   def messcut_params
     params.require(:messcut).permit(:from_date,:to_date,:no_of_days)
   end
+
+private
+  def extra_list_params
+    params.require(:extra_list).permit(:student_id)
+  end
+private
+  def guest_list_params
+    params.require(:guest_list).permit(:student_id)
+  end
+private
+  def profile_params
+    params.require(:student_profile).permit(:student_id)
+  end
+end
