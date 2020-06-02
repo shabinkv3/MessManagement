@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 	post 'guestdata', to: 'student#getGuestList'
 	post 'studentprofile', to: 'student#studentProfile'
 
-	get 'feestructure', to: 'student#getFee'
+	post 'feestructure', to: 'student#getFee'
 
 
 	post 'student/messcut', to: 'student#createMessCut', as: 'create_messcut'

@@ -1,5 +1,5 @@
 class StudentController < ApplicationController
-  before_action :enter_only_if_student_logged_in, except: [:dataGet,:getExtraList,:getGuestList,:studentProfile]
+  before_action :enter_only_if_student_logged_in, except: [:dataGet,:getExtraList,:getGuestList,:studentProfile,:getFee]
   def dashboard
   	if session[:student_logged_in]
   		@student=Student.find(session[:id])
@@ -33,15 +33,11 @@ class StudentController < ApplicationController
   end
 
   def getFee
-    if session[:student_logged_in]
-      @student=Student.find(session[:id])
+      @student=Student.find(fee_params[:student_id])
       @extra=@student.extras
       @guest=@student.guests
       @messcut=@student.mess_cuts
       render json: {:extra => @extra, :guest => @guest, :messcut => @messcut}
-    else
-      redirect_to login_path
-    end
   end
   
   def createMessCut
@@ -76,5 +72,9 @@ private
 private
   def profile_params
     params.require(:student_profile).permit(:student_id)
+  end
+private
+  def fee_params
+    params.require(:fee).permit(:student_id)
   end
 end

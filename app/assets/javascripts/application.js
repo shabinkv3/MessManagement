@@ -13,6 +13,10 @@ function studentDataOptionChange(event)
   {
     post('/studentprofile','student_profile[student_id]='+id,(data)=>{onGetProfile(data,'profileContent',true)})
   }
+  if(event.target.value=='messfee')
+  {
+        post('/feestructure','fee[student_id]='+id,(data)=>{onGetFee(data,'profileContent')});  
+  }
 }
 
 
@@ -296,8 +300,9 @@ function onMessCut(data){
   }
 }
 
-function onPostExtra(data)
+function onPostExtra(data,el)
 {
+  el.innerHTML="ADD EXTRA";
   var myObj = JSON.parse(data);
             if(myObj.added)
             {
@@ -310,8 +315,9 @@ function onPostExtra(data)
             }
 }
 
-function onAddGuest(data)
+function onAddGuest(data,el)
 {
+  el.innerHTML="ADD GUEST";
   var myObj = JSON.parse(data);
             if(myObj.added)
             {
@@ -498,6 +504,94 @@ xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 xmlhttp.send();
 
 }
+
+function check(student_id,id,el){
+    if(el.previousSibling.value=='1')
+    {
+      document.getElementById('fees').innerHTML='';
+      el.previousSibling.value='0';
+      el.innerHTML="GET DETAILED FEE<ion-icon slot='end' name='chevron-down'></ion-icon>"
+    }
+    else
+    {
+            el.innerHTML="GET DETAILED FEE<ion-icon slot='end' name='chevron-up'></ion-icon'"
+      el.previousSibling.value='1';
+    var today = new Date().getDay();
+    var txt="";
+    if(today>=1){
+        post('/feestructure','fee[student_id]='+student_id,(data)=>{onGetFee(data,id)});
+    }
+    else
+    {
+       txt+="&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<ion-label color='red'><small><b>This button is disabled</b></small></ion-label>"
+       document.getElementById("fees").innerHTML = txt;
+    }
+  }
+    
+}
+
+
+function onGetFee(data,id)
+{
+    var txt="",TotalAmt=0,TotalNoOfMessCuts=0,NoOfGuests=0,i,TotalMonthFee=0,MonthBill=0,GuestFee=0,ExtraFee=0;
+    var myObj =JSON.parse(data);
+           
+            NoOfGuests=myObj.guest.length;
+            for(i=0;i<myObj.extra.length;i++){
+                TotalAmt+=myObj.extra[i].price;
+            }
+            for(i=0;i<myObj.messcut.length;i++){
+                TotalNoOfMessCuts+=myObj.messcut[i].no_of_days;
+            }
+            MonthBill = (80*30)-(80*TotalNoOfMessCuts);
+            GuestFee = (80*NoOfGuests);
+            ExtraFee = TotalAmt;
+            TotalMonthFee=(TotalAmt+(80*30)+(NoOfGuests*80))-(80*TotalNoOfMessCuts);
+            txt+="<ion-card><ion-card-container><ion-list><ion-item><ion-col>Month Fee</ion-col><ion-col>"+MonthBill+"</ion-col></ion-item><ion-item><ion-col>Guest Fee</ion-col><ion-col>"+GuestFee+"</ion-col></ion-item><ion-item><ion-col>Extra Fee</ion-col><ion-col>"+ExtraFee+"</ion-col></ion-item><ion-item lines=none><ion-col><strong>Total Month Bill</strong></ion-col><ion-col><strong>"+TotalMonthFee+"</strong></ion-col></ion-item></ion-list></ion-card-container></ion-card>"
+            document.getElementById(id).innerHTML = txt;
+
+}
+
+
+
+
+function getFeeList()
+{
+   
+    var txt="",TotalAmt=0,TotalNoOfMessCuts=0,NoOfGuests=0,i,TotalMonthFee=0,MonthBill=0,GuestFee=0,ExtraFee=0;
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function() {
+        
+        if(this.readyState == 4 && this.status == 200){
+            var myObj =JSON.parse(this.responseText);
+           
+            NoOfGuests=myObj.guest.length;
+            for(i=0;i<myObj.extra.length;i++){
+                TotalAmt+=myObj.extra[i].price;
+            }
+            for(i=0;i<myObj.messcut.length;i++){
+                TotalNoOfMessCuts+=myObj.messcut[i].no_of_days;
+            }
+            MonthBill = (80*30)-(80*TotalNoOfMessCuts);
+            GuestFee = (80*NoOfGuests);
+            ExtraFee = TotalAmt;
+            TotalMonthFee=(TotalAmt+(80*30)+(NoOfGuests*80))-(80*TotalNoOfMessCuts);
+            txt+="<ion-row><ion-col size=2 offset=2><ion-card><ion-card-container><ion-list><ion-item><ion-col>Month Fee</ion-col><ion-col>"+MonthBill+"</ion-col></ion-item><ion-item><ion-col>Guest Fee</ion-col><ion-col>"+GuestFee+"</ion-col></ion-item><ion-item><ion-col>Extra Fee</ion-col><ion-col>"+ExtraFee+"</ion-col></ion-item><ion-item><ion-col>Total Month Bill</ion-col><ion-col>"+TotalMonthFee+"</ion-col></ion-item></ion-list></ion-card-container></ion-card></ion-col></ion-row>"
+            document.getElementById("fees").innerHTML = txt;
+        }
+    };
+    xmlhttp.open("GET",'/feestructure',true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send();
+}
+
+
+
+
+
+
+
 
 async function deleteAlert(id) {
       const alert = await alertController.create({

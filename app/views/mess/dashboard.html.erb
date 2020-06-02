@@ -277,7 +277,7 @@ display: none !important;
                     <br>
                             </ion-list>
 
-                            <ion-button  onClick="post('/mess/addguest',postData('guest-field'),onAddGuest);" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">ADD GUEST</ion-button>
+                            <ion-button  onClick="this.innerHTML='<ion-spinner></ion-spinner>'; post('/mess/addguest',postData('guest-field'),(data)=>{onAddGuest(data,this)});" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">ADD GUEST</ion-button>
                             <ion-button  type="reset" id='reset2' style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">RESET</ion-button>
                        
   
@@ -363,7 +363,7 @@ display: none !important;
                     <br>
                             </ion-list>
 
-                            <ion-button id="reset" onClick="post('/mess/extra',postData('extra-field'),onPostExtra);" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">ADD EXTRA</ion-button>
+                            <ion-button id="reset" onClick="this.innerHTML='<ion-spinner></ion-spinner>';post('/mess/extra',postData('extra-field'),(data)=>{onPostExtra(data,this)});" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">ADD EXTRA</ion-button>
                             <ion-button id="reset1" type="reset" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">RESET</ion-button>
                        
   
