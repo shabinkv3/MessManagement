@@ -283,10 +283,17 @@
                     </div>
 
                     
-                    <div id="fee" class="tabcontent" style="display:none;">
-                    <h3>Fee</h3>
-                    <p>Updates about mess fee happens here</p>
+                    <div id="fee" class="tabcontent" style="display:none;position: absolute;left: 60px">
+                    <h1 style="position: relative;left:50px">MY MESS FEE</h1>
+                    <br>
+                        <br>
+                        <ion-button onClick="check();" style = "position:relative;left:100px;width:350px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">GET DETAILED FEE</ion-button>
+                        <br>
+                        <div id="fees" style="position: relative;left:100px;"></div>
+                      
+                    <br>
                     </div>
+
                 </div>
                     </ion-col>
                 </ion-row>
@@ -297,6 +304,54 @@
   </ion-app>
 </body>
 <script>
+
+
+
+function check(){
+  
+    var today = new Date().getDay();
+    var txt="";
+    if(today>=1){
+        getFeeList();
+    }
+    else
+    {
+       txt+="&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<ion-label color='red'><small><b>This button is disabled</b></small></ion-label>"
+       document.getElementById("fees").innerHTML = txt;
+    }
+    
+}
+function getFeeList()
+{
+   
+    var txt="",TotalAmt=0,TotalNoOfMessCuts=0,NoOfGuests=0,i,TotalMonthFee=0,MonthBill=0,GuestFee=0,ExtraFee=0;
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function() {
+        
+        if(this.readyState == 4 && this.status == 200){
+            var myObj =JSON.parse(this.responseText);
+           
+            NoOfGuests=myObj.guest.length;
+            for(i=0;i<myObj.extra.length;i++){
+                TotalAmt+=myObj.extra[i].price;
+            }
+            for(i=0;i<myObj.messcut.length;i++){
+                TotalNoOfMessCuts+=myObj.messcut[i].no_of_days;
+            }
+            MonthBill = (80*30)-(80*TotalNoOfMessCuts);
+            GuestFee = (80*NoOfGuests);
+            ExtraFee = TotalAmt;
+            TotalMonthFee=(TotalAmt+(80*30)+(NoOfGuests*80))-(80*TotalNoOfMessCuts);
+            txt+="<ion-card style='width:700px;'><ion-card-container><ion-list><ion-item><ion-col>Month Fee</ion-col><ion-col>"+MonthBill+"</ion-col></ion-item><ion-item><ion-col>Guest Fee</ion-col><ion-col>"+GuestFee+"</ion-col></ion-item><ion-item><ion-col>Extra Fee</ion-col><ion-col>"+ExtraFee+"</ion-col></ion-item><ion-item><ion-col>Total Month Bill</ion-col><ion-col>"+TotalMonthFee+"</ion-col></ion-item></ion-list></ion-card-container></ion-card>"
+            document.getElementById("fees").innerHTML = txt;
+        }
+    };
+    xmlhttp.open("GET",'/feestructure',true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send();
+}
+
 
     document.getElementById("defaultOpen").click();
 

@@ -32,6 +32,18 @@ class StudentController < ApplicationController
       render json: {:data => @guest}
   end
 
+  def getFee
+    if session[:student_logged_in]
+      @student=Student.find(session[:id])
+      @extra=@student.extras
+      @guest=@student.guests
+      @messcut=@student.mess_cuts
+      render json: {:extra => @extra, :guest => @guest, :messcut => @messcut}
+    else
+      redirect_to login_path
+    end
+  end
+  
   def createMessCut
     @params=messcut_params
     @params[:student_id]=session[:id]
