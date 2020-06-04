@@ -4,8 +4,6 @@ class AccountsController < ApplicationController
   def login
   end
 
-  def loginMess
-  end
 
   def check
     render json: {:val => 'lost'}
@@ -40,7 +38,7 @@ class AccountsController < ApplicationController
       redirect_to mess_dash_path
     else
       flash[:alert] = "Email or password is Invalid"
-      redirect_to loginMess_path
+      redirect_to login_path
     end
   end
 

@@ -1,3 +1,19 @@
+function loginToggle(event)
+{
+  if(event.target.value=='student')
+  {
+    document.getElementById('studentLogin').style.display='block';
+    document.getElementById('messLogin').style.display='none';
+  }
+  if(event.target.value=='mess')
+  {
+    document.getElementById('studentLogin').style.display='none';
+    document.getElementById('messLogin').style.display='block';
+  }
+
+}
+
+
 function studentDataOptionChange(event)
 {
   var id=document.getElementById('student_data_id').value;
