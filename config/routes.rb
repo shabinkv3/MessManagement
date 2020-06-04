@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-	get '', to: 'accounts#login'
+	get '', to: 'accounts#log'
 	get 'accounts/signup/mess', to: 'accounts#signupMess', as: 'signup_mess'
 	get 'accounts/signup/student', to: 'accounts#signupStudent', as: 'signup_student'
 	post 'accounts/signup/mess', to: 'accounts#createMess', as: 'create_mess'

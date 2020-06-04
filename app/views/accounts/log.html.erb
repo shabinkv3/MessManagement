@@ -16,7 +16,6 @@
 .form-field {
     display: block;
     width: 70%;
-    height: 80%;
     padding: 8px 16px;
     line-height: 25px;
     font-size: 14px;
@@ -92,70 +91,56 @@ ion-content {
     --background: #ccc url("../../assets/bg-01.jpg") no-repeat center center / cover;
 }
 </style>
-<ion-content style="background-image: url('../assets/images/bg-01.jpg');">
-
-<%= form_with scope: :student, url: create_student_path, local: true do |form| %>
-  <% if @student && @student.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@student.errors.count, "error") %> prohibited this student from being saved:</h2>
-
-      <ul>
-        <% @student.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-          <ion-grid>
-            <ion-row>
-              <ion-col></ion-col><ion-col>
-                <ion-card style="width:500px;top:50px;"><br>
-                  <ion-card-title style="position:relative;left:200px;font-size:25px">SIGN UP</ion-card-title>
-                  <br><br>
-                  <ion-list style="position:relative;left:70px;" lines="none">
-                    <ion-label>&emsp;&nbsp;<%= form.label "Student Name" %></ion-label>
-                    <ion-item>
-                      <%= form.text_field :name , class: 'form-field'%>
-                    </ion-item>
-                    <ion-label>&emsp;&nbsp;<%= form.label "E-Mail" %></ion-label>
-                    <ion-item>
-                      <%= form.text_field :email, class: 'form-field'%>
-                    </ion-item>
+<html>
+    <ion-content style="background-image: url('../assets/images/bg-01.jpg');">
+    <ion-grid>
+    <ion-row>
+    <ion-col></ion-col><ion-col>
+    <ion-card style="width:500px;top:100px;">
+        <br>
+        
+            <ion-card-content>
+                
+                <ion-card-title style="position:relative;left:200px;font-size:25px"> LOGIN </ion-card-title ><br>
+                <ion-row style="position:relative;left:100px;">
+                    <ion-col>
+                        <ion-buttons>
+                            <ion-button id="s" >STUDENT</ion-button>
+                            <ion-button id="m" onClick="messLog();">MESS</ion-button>
+                        </ion-buttons>
+                    </ion-col>
+                </ion-row>
+                <div id="myDIV">
+                <%= form_with scope: :student, url: login_path, local: true do |form| %>
+                <ion-list style="position:relative;left:70px;" lines="none">
+               
+              
                     <ion-label>&emsp;&nbsp;<%= form.label "Roll No" %></ion-label>
                     <ion-item>
-                      <%= form.text_field :rollno, class: 'form-field'%>
-                    </ion-item>
+                        <%= form.text_field :rollno , class: 'form-field'%>
+                    </ion-item><br>
                     <ion-label>&emsp;&nbsp;<%= form.label "Password" %></ion-label>
                     <ion-item>
-                      <%= form.password_field :password , class: 'form-field'%>
+                         <%= form.password_field :password, class:'form-field' %>
                     </ion-item>
-                    <ion-label>&emsp;&nbsp;<%= form.label "Password Confirmation" %></ion-label>
-                    <ion-item>
-                      <%= form.password_field :password_confirmation, class: 'form-field'%>
-                    </ion-item>
-                    <ion-label>&emsp;&nbsp;<%= form.label "Mess Name" %></ion-label>
-                    <ion-item>
-                      <%= form.text_field :mess_id, class: 'form-field'%>
-                    </ion-item>
-                    <ion-label>&emsp;&nbsp;<%= form.label "Room No" %></ion-label>
-                    <ion-item>
-                      <%= form.number_field :roomno , class: 'form-field'%>
-                    </ion-item>
-                  </ion-list>
-
-                  <div style="position:relative;left:70px;"   >
-                    <%= form.submit "Sign Up",style: "width:300px;", class: "btn-hover color-1" %>
+                   
+                </ion-list>
+                
+                <div style="position:relative;left:70px;"   >
+                    <%= form.submit "Log in",style: "width:300px;", class: "btn-hover color-1" %>
                 </div>
+                <% end %>
+                </div>
+            </ion-card-content>
+                    
+        <br>
+    </ion-card>
+    </ion-col><ion-col></ion-col>
+    </ion-row>
+    </ion-grid>
 
-                </ion-card>
-              </ion-col>
-              <ion-col></ion-col>
-            </ion-row>
-          </ion-grid>
-          
-      
-         
-
-<% end %>
-</ion-content>
+    </ion-content>
+</html>
+<script>
+ 
+</script>
