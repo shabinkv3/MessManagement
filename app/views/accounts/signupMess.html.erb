@@ -1,4 +1,99 @@
-<h1>Sign Up</h1>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/ionic.esm.js"></script>
+<script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/ionic.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core@next/css/ionic.bundle.css"/>
+<style>
+:root {
+
+    --input-color: #99A3BA;
+    --input-border: #CDD9ED;
+    --input-background: #fff;
+    --input-placeholder: #CBD1DC;
+
+    --input-border-focus: #275EFE;
+
+}
+
+.form-field {
+    display: block;
+    width: 70%;
+    height: 80%;
+    padding: 8px 16px;
+    line-height: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    border-radius: 6px;
+    -webkit-appearance: none;
+    color: var(--input-color);
+    border: 1px solid var(--input-border);
+    background: var(--input-background);
+    transition: border .3s ease;
+    &::placeholder {
+        color: var(--input-placeholder);
+    }
+    &:focus {
+        outline: none;
+        border-color: var(--input-border-focus);
+    }
+}
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.buttons {
+    margin: 10%;
+    text-align: center;
+}
+
+.btn-hover {
+    width: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+
+    border-radius: 50px;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:hover {
+    background-position: 100% 0;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:focus {
+    outline: none;
+}
+
+.btn-grad {background-image: linear-gradient(to right, #fc00ff 0%, #00dbde 51%, #fc00ff 100%)}
+.btn-grad:hover { background-position: right center; }
+
+.btn-hover.color-1 {
+    background-image: linear-gradient(to right, #fc00ff 0%, #00dbde 51%, #fc00ff 100%);
+    box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+}
+html{
+    background-image: black;
+}
+ion-content {
+    --background: #ccc url("../../assets/bg-01.jpg") no-repeat center center / cover;
+}
+</style>
+
+<ion-content style="background-image: url('../assets/images/bg-01.jpg');">
 <%= form_with scope: :mess, url: create_mess_path, local: true do |form| %>
   <% if @mess && @mess.errors.any? %>
     <div id="error_explanation">
@@ -11,25 +106,38 @@
       </ul>
     </div>
   <% end %>
+<ion-grid>
+<ion-row>
+  <ion-col></ion-col><ion-col>
+    <ion-card style="width:500px;top:120px;"><br>
+      <ion-card-title style="position:relative;left:200px;font-size:25px">SIGN UP</ion-card-title>
+      <br><br>
+      <ion-list style="position:relative;left:70px;" lines="none">
+        
+        <ion-label>&emsp;&nbsp;<%= form.label "Mess Name" %></ion-label>
+        <ion-item>
+          <%= form.text_field :mess_name, class: 'form-field'%>
+        </ion-item>
+        <ion-label>&emsp;&nbsp;<%= form.label "Password" %></ion-label>
+        <ion-item>
+          <%= form.password_field :password, class: 'form-field'%>
+        </ion-item>
+        <ion-label>&emsp;&nbsp;<%= form.label "Password Confirmation" %></ion-label>
+        <ion-item>
+          <%= form.password_field :password_confirmation , class: 'form-field'%>
+        </ion-item>
+      </ion-list>
 
-  <div>
-    <%= form.label "Mess Name" %><br>
-    <%= form.text_field :mess_name %><br>
-  </div>
+      <div style="position:relative;left:70px;"   >
+        <%= form.submit "Sign Up",style: "width:300px;", class: "btn-hover color-1" %>
+    </div>
 
+    </ion-card>
+  </ion-col>
+  <ion-col></ion-col>
+</ion-row>
+</ion-grid>
 
-  <div>
-    <%= form.label :password %><br>
-    <%= form.password_field :password %><br>
-  </div>
+</ion-content>
 
-  <div>
-    <%= form.label :password_confirmation %><br>
-    <%= form.password_field :password_confirmation %><br>
-  </div>
-
-  <br>
-  <div>
-    <%= form.submit %>
-  </div>
 <% end %>
