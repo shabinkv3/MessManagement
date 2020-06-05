@@ -100,7 +100,7 @@ ion-content {
     <ion-grid>
     <ion-row>
     <ion-col></ion-col><ion-col>
-    <ion-card style="width:500px;top:100px;">
+    <ion-card style="width:500px;top:70px;">
         <br>
         
             <ion-card-content>
@@ -146,6 +146,9 @@ ion-content {
                 <ion-row><ion-col offset=1.6><div>
                     <%= form.submit "Log in",style: "width:300px;", class: "btn-hover color-1" %>
                 </div></ion-col></ion-row>
+                <ion-col style="position:relative;left:120px;" ><a onMouseOver="this.style.color='purple'" onMouseOut="this.style.color='rgba(0, 0, 0, 0.6)'" style="text-decoration: none; font-size: 17px; color: rgba(0, 0, 0, 0.6);" href="/accounts/signup/student">New Here? Student Sign Up</a></ion-col>
+                
+
                 <% end %>
                 </div>
 
@@ -170,13 +173,11 @@ ion-content {
                 <ion-row><ion-col offset=1.6><div>
                     <%= form.submit "Log in",style: "width:300px;", class: "btn-hover color-1" %>
                 </div></ion-col></ion-row>
+                <ion-col style="position:relative;left:120px;"><a style="text-decoration: none; font-size: 17px; color: rgba(0, 0, 0, 0.6);" onMouseOver="this.style.color='purple'" onMouseOut="this.style.color='rgba(0, 0, 0, 0.6)'" href="/accounts/signup/mess">New Here? Mess Sign Up</a></ion-col>
+
                 <% end %>
                 </div>
-                <div style="text-align: center;"><p>Or sign up as</p></div>
-                <ion-row>
-                    <ion-col size=2 offset=4.3><a style="text-decoration: none; font-size: 17px; color: rgba(0, 0, 0, 0.6);" onMouseOver="this.style.color='purple'" onMouseOut="this.style.color='rgba(0, 0, 0, 0.6)'" href="/accounts/signup/mess">Mess</a></ion-col>
-                    <ion-col size=2 ><a onMouseOver="this.style.color='purple'" onMouseOut="this.style.color='rgba(0, 0, 0, 0.6)'" style="text-decoration: none; font-size: 17px; color: rgba(0, 0, 0, 0.6);" href="/accounts/signup/student">Student</a></ion-col>
-                </ion-row>
+               
             </ion-card-content>
                     
         <br>

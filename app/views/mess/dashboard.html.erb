@@ -322,8 +322,13 @@ display: none !important;
                     </div>
 
                     <div id="messcut" class="tabcontent" style="display:none;">
-                    <h3>Mess Cut</h3>
-                    <p>Mess cut data goes here</p>
+                    <h3 style="position:relative;left:80px;">Mess Cut</h3>
+                        
+                    <br><br>
+                    <ion-button onClick="messCut();" style = "position:relative;left:100px;width:350px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">GET DETAILED FEE</ion-button>
+                    <br><br>
+                    <div id="ms" style="position: relative;left:100px;"></div>
+                  
                     </div>
 
 
@@ -378,9 +383,13 @@ display: none !important;
                    
 
                     <div id="fee" class="tabcontent" style="display:none;">
-                    <h3>Fee</h3>
+                    <h3 style="position:relative;left:100px;">Fee</h3>
                     
-
+                    <br><br>
+                    <ion-button onClick="Fee();" style = "position:relative;left:100px;width:350px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">GET DETAILED FEE</ion-button>
+                    <br><br>
+                    <div id="fees" style="position: relative;left:100px;"></div>
+                  
                     </div>
                     </ion-col>
                 </ion-row>
@@ -392,6 +401,41 @@ display: none !important;
 </body>
 
 <script>
+
+function Fee(){
+    var txt="";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            var 
+        }
+    };
+}
+function messCut(){
+     
+    var txt="",i=0,j=0;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if( this.readyState == 4 && this.status ==200){
+            var myObj = JSON.parse(this.responseText);
+            txt+="<ion-card style='width:700px;'><ion-card-content><ion-list><ion-item><ion-col>Roll No</ion-col><ion-col>From Date</ion-col><ion-col>To Date</ion-col><ion-col>No Of Days</ion-col></ion-item>";
+            for(j=0;j<myObj.messcutCount;j++){
+            for(i=0;i<myObj.studentCount;i++){
+                if(myObj.student[i].id == myObj.messcut[j].student_id)
+                {
+                    txt+="<ion-item><ion-col>"+myObj.student[i].rollno+"</ion-col><ion-col>"+myObj.messcut[j].from_date+"</ion-col><ion-col>"+myObj.messcut[j].to_date+"</ion-col><ion-col>"+myObj.messcut[j].no_of_days+"</ion-col></ion-item>"
+                }
+            }
+           
+        }
+        txt+="</ion-list></ion-card-content></ion-card>"
+        document.getElementById("ms").innerHTML = txt;
+        }
+    };
+    xmlhttp.open("GET",'/messCut',true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send();
+}
 
   customElements.define('student-data', class ModalContent extends HTMLElement {
       connectedCallback() {
