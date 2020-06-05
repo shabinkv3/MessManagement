@@ -61,6 +61,14 @@ class MessController < ApplicationController
 		render json: {:deleted=>true}
 	end
 
+  def messcutMess
+    @mess=Mess.find(session[:id])
+    @student=Student.all
+    @messcut=MessCut.all
+    @studentCount=Student.count
+    @messcutCount=MessCut.count
+    render json: {:messcut => @messcut, :student => @student, :messcutCount => @messcutCount, :studentCount => @studentCount}
+  end
 
   private
   def staff_params
