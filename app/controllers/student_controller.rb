@@ -1,5 +1,7 @@
 class StudentController < ApplicationController
+  
   before_action :enter_only_if_student_logged_in, except: [:changePassword,:dataGet,:getExtraList,:getGuestList,:studentProfile,:getFee,:messCutData]
+
   def dashboard
   	if session[:student_logged_in]
   		@student=Student.find(session[:id])
