@@ -148,14 +148,6 @@ display: none !important;
         border-color: var(--input-border-focus);
     }
 }
-#x{
-  --ion-background-color: #8f15f4;
-  color: white;
-}
-#y{
-  background-color: #8f15f4;
-  height: 64px;
-}
 
 
 
@@ -205,7 +197,7 @@ display: none !important;
                             <ion-item lines='none' class="side_tabs" onClick="viewOptionMess(event,'extra')" id="defaultOpen">
                                 <div style="height: 57px;">
                                     <a>
-                                        <ion-icon name="fast-food-outline" class="side_icons"></ion-icon>
+                                        <ion-icon name="beer-outline" class="side_icons"></ion-icon>
                                         <label class="side_label">ADD EXTRA</label>
                                     </a>
                                 </div>
@@ -269,9 +261,9 @@ display: none !important;
                 </ion-row>
                 <ion-row style="height: 1000px">
                     <ion-col>
-                    <div id="guest" class="tabcontent" style="display:none;">
-                    <ion-row><ion-col offset=2 size=8>
-                    <div style="text-align : center;"><h1>Add Guest</h1></div><br> <br><br><br>
+                    <div id="guest" class="tabcontent" style="display:none;position: relative;left: 50px">
+
+                    <h1 style="position:absolute;left:0px">Add Guest</h1><br> <br><br><br>
                          <ion-card style = "width: 700px">
                           <form >  
                             <ion-card-content>
@@ -305,15 +297,14 @@ display: none !important;
                     </ion-item>
                     <br>
                             </ion-list>
-                            <ion-col offset='2.3'>
+
                             <ion-button  onClick="this.innerHTML='<ion-spinner></ion-spinner>'; post('/mess/addguest',postData('guest-field'),(data)=>{onAddGuest(data,this)});" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">ADD GUEST</ion-button>
                             <ion-button  type="reset" id='reset2' style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">RESET</ion-button>
-                            </ion-col>
+                       
   
                         </ion-card-content>
                         </form>
                         </ion-card>
-                        </ion-col></ion-row>
                         <br>
                         <br>
                         <br>
@@ -355,7 +346,6 @@ display: none !important;
                     <ion-row><ion-col offset=2 size=8>
                     <div style="text-align: center;"><h3>Mess Cut</h3></div><br>
 
-
                     <div id="mess_cut_area">
                       <ion-row><ion-col size=6 offset=3><input type="date" placeholder="Date" class="mess-cut-field" onChange="filterMessCuts();" id="filter_date" /></ion-col></ion-row>
                       <div id="noMatch" style="text-align: center;display: none;">There are no mess cuts on this date</div>
@@ -366,7 +356,6 @@ display: none !important;
                             <ion-item><ion-col size=3>Student Name</ion-col><ion-col offset=0.5>Roll No</ion-col><ion-col>From Date</ion-col><ion-col>To Date</ion-col><ion-col size=1.5>No Of Days</ion-col>
                             </ion-item>
                             
-
                       <% @mess.students.each do |student| %>
                       <% student.mess_cuts.each do |messcut| %>
                       <ion-item class="mess_cut_items">
@@ -388,7 +377,7 @@ display: none !important;
                         </ion-item>
                       <% end %>
                       <% end %>
-                      </ion-list></ion-card-content></ion-card> <% end %>
+                      </ion-list></ion-card-content></ion-card>
                     </div>
                   </div>
 
@@ -399,13 +388,8 @@ display: none !important;
                   
                     </div>
 
-
-
-                    <div id="extra" class="tabcontent" >
-                    <ion-row><ion-col offset=2 size=8>
-                        <div style="text-align: center;"><h1>Add Extra</h1></div><br> <br><br><br>
-                       
-
+                    <div id="extra" class="tabcontent" style="position: relative;left: 50px">
+                        <h1 style="position:absolute;left:0px">Add Extra</h1><br> <br><br><br>
                          <ion-card style = "width: 700px">
                           <form id="myform">  
                             <ion-card-content>
@@ -439,16 +423,14 @@ display: none !important;
                     </ion-item>
                     <br>
                             </ion-list>
-                            <ion-col offset='2.3'>
+
                             <ion-button id="reset" onClick="this.innerHTML='<ion-spinner></ion-spinner>';post('/mess/extra',postData('extra-field'),(data)=>{onPostExtra(data,this)});" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">ADD EXTRA</ion-button>
-                            </ion-col><ion-col>
                             <ion-button id="reset1" type="reset" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">RESET</ion-button>
-                            </ion-col>
+                       
   
                         </ion-card-content>
                         </form>
                         </ion-card>
-                        </ion-col></ion-row>
                         <br>
                         <br>
                         <br>
@@ -457,38 +439,13 @@ display: none !important;
                    
 
                     <div id="fee" class="tabcontent" style="display:none;">
-                    <ion-row><ion-col offset=2 size=8>
-                    <div style="text-align: center;"><h3>Monthly Mess Fee</h3></div><br>
-
+                    <h3 style="position:relative;left:100px;">Fee</h3>
+                    
                     <br><br>
-                    <% if @mess.students.count == 0%>
-                        <div style="text-align: center;"><%= "The Mess is Empty!"%></div>
-                    <% else %>
-                      <ion-card>
-                        <ion-card-header id="y">
-                          
-                            <ion-item id="x" lines="none"><ion-col><b>S.No</b></ion-col><ion-col><b>Roll No</b></ion-col><ion-col><b>Total Amount</b></ion-col>
-                            </ion-item></ion-card-header>
-                            <ion-card-content><ion-list>
-                            <% i =0 %>
-                            <% @mess.students.each do |student| %>
-                              <% sum = 80*30 %>
-                              <% n = 0 %>
-                              <% student.extras.each do |extra| %>
-                                  <% sum +=extra.price%>
-                              <% end %>
-                              <% sum += (student.guests.count)*80 %>
-                              <% student.mess_cuts.each do |messcut| %>
-                                  <% n+= messcut.no_of_days %>
-                              <% end %>
-                              <% sum -= n*80%>
-                              <% i = i+1 %>
-                              <ion-item><ion-col><%= i %></ion-col><ion-col><%= student.rollno %></ion-col><ion-col><%= sum %></ion-col></ion-item>
-                              
-                          <% end %>
-                          </ion-list>
-                        </ion-card-content>
-                      </ion-card><% end %>
+                    <ion-button onClick="Fee();" style = "position:relative;left:100px;width:350px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">GET DETAILED FEE</ion-button>
+                    <br><br>
+                    <div id="fees" style="position: relative;left:100px;"></div>
+                  
                     </div>
                     </ion-col>
                 </ion-row>
