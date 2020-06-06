@@ -136,7 +136,7 @@ ion-content {
                     </ion-item>
                     <ion-label>&emsp;&nbsp;<%= form.label "Mess Name" %></ion-label>
                     <ion-item>
-                      <%= form.text_field :mess_id, class: 'form-field'%>
+                      <%=form.select :mess_id, Mess.all.collect { |c| [ c.mess_name.upcase, c.mess_name ] } ,class: 'form-field'%>
                     </ion-item>
                     <ion-label>&emsp;&nbsp;<%= form.label "Room No" %></ion-label>
                     <ion-item>
