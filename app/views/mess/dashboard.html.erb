@@ -336,12 +336,18 @@ display: none !important;
 
 
                     <div id="mess_cut_data" style="display:none;">
+                    <% if @mess.students.count==0 %>
+                    <div style="text-align: center;">
+                        <%= "None of the students have taken a Mess Cut"%>
+                    </div>
+                     <% else %>
                       <ion-card>
                         <ion-card-header id="y">
                             <ion-item id="x"><ion-col size=3>Student Name</ion-col><ion-col offset=0.5>Roll No</ion-col><ion-col>From Date</ion-col><ion-col>To Date</ion-col><ion-col size=1.5>No Of Days</ion-col>
                             </ion-item></ion-card-header>
                       <ion-card-content>
                       <ion-list>
+                      
                       <% @mess.students.each do |student| %>
                       <% student.mess_cuts.each do |messcut| %>
                       <ion-item>
@@ -363,7 +369,7 @@ display: none !important;
                         </ion-item>
                       <% end %>
                       <% end %>
-                      </ion-list></ion-card-content></ion-card>
+                      </ion-list></ion-card-content></ion-card> <% end %>
                     </div>
 
 
@@ -433,7 +439,9 @@ display: none !important;
                     <div style="text-align: center;"><h3>Monthly Mess Fee</h3></div><br>
 
                     <br><br>
-                
+                    <% if @mess.students.count == 0%>
+                        <div style="text-align: center;"><%= "The Mess is Empty!"%></div>
+                    <% else %>
                       <ion-card>
                         <ion-card-header id="y">
                           
@@ -458,7 +466,7 @@ display: none !important;
                           <% end %>
                           </ion-list>
                         </ion-card-content>
-                      </ion-card>
+                      </ion-card><% end %>
                     </div>
                     </ion-col>
                 </ion-row>
