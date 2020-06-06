@@ -90,7 +90,14 @@
             border-color: var(--input-border-focus);
         }
     }
-    
+ #x{
+    --ion-background-color: #8f15f4;
+    color: white;
+  }
+  #y{
+    background-color: #8f15f4;
+    height: 64px;
+  }   
   </style>
 </head>
 <body>
@@ -175,9 +182,10 @@
                 
 
                         <div id="profile" class="tabcontent" style="display:none;">
-                            <ion-row style="height: 400px;">
-                                <ion-col offset=1 size=6>
-                                        <h1 style="text-align: center;">Personal Information</h1><br>
+                            <ion-row>
+                                <ion-col offset=2 size=8>
+                                        <div style="text-align: center;"><h1>Personal Information</h1></div><br>
+                            <br><br>            
                             <div id="profile_content">
                                 <ion-spinner></ion-spinner>
                             </div>
@@ -189,7 +197,7 @@
                     </div>
 
                     <div id="guests" class="tabcontent" style="display:none;position: absolute;left: 60px">
-                    <h1 style="position: relative;left:50px">MY GUESTS</h1>
+                    <div style="text-align: center;"><h1 >MY GUESTS</h1></div>
                     <br>
                         
                         
@@ -209,10 +217,10 @@
                     </div>
 
                     <div id="messcut" class="tabcontent" style="display:none;position: absolute;left: 60px">
-                    <h1 style="position: relative;left:50px">Mess Cut Entry</h1>
-                    <br>
+                    <div style="text-align: center;"><h1>Mess Cut Entry</h1></div>
+                    <br><br>
                     <ion-card style="width:900px;">
-                        <br>
+                        <br><br>
                         <ion-card-container>
                         <form id="myform">
                             <ion-list lines="none">
@@ -239,10 +247,7 @@
                                     <input type="text" class="form-field" id="messcut[no_of_days]" name="numdays"/>
                                     </ion-col>
                                 </ion-item>
-
-             
-                            
-
+                                <br>
                                 <br>
                             <ion-item>
                             <ion-col></ion-col>
@@ -264,7 +269,7 @@
 
                     
                     <div id="extra" class="tabcontent" style="display:none;position: absolute;left: 60px">
-                    <h1 style="position: relative;left:50px">MY EXTRAS</h1>
+                    <div style="text-align: center;"><h1>MY EXTRAS</h1></div>
                         <br>
                         
                         
@@ -282,7 +287,7 @@
                     <div id="fee" class="tabcontent">
                         <ion-row>
                             <ion-col size=4 offset=3>
-                                <ion-row><ion-col offset=1><h1>My Mess Fee</h1><br><br></ion-col></ion-row>
+                                <ion-row><ion-col offset=1><div style="text-align: center;"><h1>My Mess Fee</h1></div><br><br></ion-col></ion-row>
                                 <input type=hidden value='0'/><ion-button expand="block" value=0 onClick="check(<%= session[:id] %>,'fees',this);" style = "height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">GET DETAILED FEE<ion-icon slot="end" name='chevron-down'></ion-icon></ion-button>
                                 <br>
                                 <div id="fees"></div>
