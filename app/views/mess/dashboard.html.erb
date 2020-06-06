@@ -151,7 +151,28 @@ display: none !important;
 
 
 
-
+.mess-cut-field {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    line-height: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    border-radius: 6px;
+    -webkit-appearance: none;
+    color: var(--input-color);
+    border: 1px solid var(--input-border);
+    background: var(--input-background);
+    transition: border .3s ease;
+    &::placeholder {
+        color: var(--input-placeholder);
+    }
+    &:focus {
+        outline: none;
+        border-color: var(--input-border-focus);
+    }
+}
 
 
 
@@ -325,27 +346,29 @@ display: none !important;
                     <ion-row><ion-col offset=2 size=8>
                     <div style="text-align: center;"><h3>Mess Cut</h3></div><br>
 
-
-                    <div id="mess_cut_data" style="display:none;">
+                    <div id="mess_cut_area">
+                      <ion-row><ion-col size=6 offset=3><input type="date" placeholder="Date" class="mess-cut-field" onChange="filterMessCuts();" id="filter_date" /></ion-col></ion-row>
+                      <div id="noMatch" style="text-align: center;display: none;">There are no mess cuts on this date</div>
+                    <div id="mess_cut_data">
                       <ion-card>
                         <ion-card-content>
                           <ion-list>
                             <ion-item><ion-col size=3>Student Name</ion-col><ion-col offset=0.5>Roll No</ion-col><ion-col>From Date</ion-col><ion-col>To Date</ion-col><ion-col size=1.5>No Of Days</ion-col>
                             </ion-item>
-
+                            
                       <% @mess.students.each do |student| %>
                       <% student.mess_cuts.each do |messcut| %>
-                      <ion-item>
+                      <ion-item class="mess_cut_items">
                         <ion-col size=3>
                           <%= student.name %>
                         </ion-col>
                         <ion-col offset=0.5>
                           <%= student.rollno %>
                         </ion-col>
-                        <ion-col>
+                        <ion-col class="mess_cut_from">
                           <%= messcut.from_date.to_time.strftime("%d-%m-%Y") %>
                         </ion-col>
-                        <ion-col>
+                        <ion-col class="mess_cut_to">
                           <%= messcut.to_date.to_time.strftime("%d-%m-%Y") %>
                         </ion-col>
                         <ion-col size=1.5>
@@ -356,6 +379,7 @@ display: none !important;
                       <% end %>
                       </ion-list></ion-card-content></ion-card>
                     </div>
+                  </div>
 
 
 
@@ -363,7 +387,6 @@ display: none !important;
                   </ion-col></ion-row>
                   
                     </div>
-
 
                     <div id="extra" class="tabcontent" style="position: relative;left: 50px">
                         <h1 style="position:absolute;left:0px">Add Extra</h1><br> <br><br><br>
