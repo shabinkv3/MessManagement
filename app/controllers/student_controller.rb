@@ -1,6 +1,7 @@
 class StudentController < ApplicationController
-  before_action :enter_only_if_student_logged_in, except: [:dataGet,:getExtraList,:getGuestList,:studentProfile,:getFee,:messCutData]
- 
+  
+  before_action :enter_only_if_student_logged_in, except: [:changePassword,:dataGet,:getExtraList,:getGuestList,:studentProfile,:getFee,:messCutData]
+
   def dashboard
   	if session[:student_logged_in]
   		@student=Student.find(session[:id])
@@ -8,6 +9,23 @@ class StudentController < ApplicationController
   		redirect_to login_path
   	end
   end
+
+  def changePassword
+    @student=Student.find(session[:id])
+    current=change_password_params[:current]
+    if BCrypt::Password.new(@student.password_digest)!=current
+      render json: {:change=>false,:errors=>['Current Password is wrong']}
+    else
+      newPassword=change_password_params[:new]
+      @student.password=newPassword
+      if @student.save
+        render json: {:changed=>true}
+      else
+        render json: {:changed=>false,:errors=>@student.errors.full_messages}
+      end
+    end
+  end
+
   def dataGet
   	@mess=Mess.find(session[:id])
   	render json: @mess.students
@@ -82,5 +100,9 @@ private
 private
   def fee_params
     params.require(:fee).permit(:student_id)
+  end
+private
+  def change_password_params
+    params.require(:change_password).permit(:current,:new)
   end
 end

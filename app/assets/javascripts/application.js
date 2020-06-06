@@ -146,7 +146,7 @@ let currentPopover = null;
 
     }
 
-    async function changePassword(ev) {
+    async function changePasswordPopover(ev) {
       popover = await popoverController.create({
         component: 'change-password',
         event: ev,
@@ -322,6 +322,56 @@ function onPostExtra(data,el)
                 alert(myObj.errors.map((er)=>" "+er))
             }
 }
+
+function onChangePassword(data)
+{
+  document.getElementById('change_button').innerHTML="Change";
+  var myObj = JSON.parse(data);
+            if(myObj.changed)
+            {
+                showToast("Password Changed Successfully");
+                dismissPopover();
+            }
+            else
+            {
+              var i,txt="";
+              txt="<ul>";
+                errors=myObj.errors.map((er)=>" "+er)
+                for(i=0;i<errors.length;i++)
+                {
+                  txt+="<li style='color:red'>"+errors[i]+"</li>"
+                }
+                txt+="</ul>";
+                document.getElementById('change_password_errors').innerHTML=txt;
+
+            }
+}
+
+function changePassword(user)
+{
+  document.getElementById('change_button').innerHTML="<ion-spinner></ion-spinner>";
+  errors=document.getElementById('change_password_errors');
+  errors.innerHTML="";
+  var newPassword=document.getElementById('change_password[new]').value;
+  var confirmation=document.getElementById('change_password_confirm').value;
+  if(newPassword!=confirmation)
+  {
+    errors.innerHTML="<ul><li style='color: red;'>Passwords dont match</li></ul>";
+    document.getElementById('change_button').innerHTML="Change";
+
+  }
+  else
+  {
+
+  post('/'+user+'/changepassword',postData('changepassword'),onChangePassword);
+
+  }
+
+  
+
+
+}
+
 
 function onAddGuest(data,el)
 {

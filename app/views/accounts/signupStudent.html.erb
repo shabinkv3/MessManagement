@@ -136,14 +136,9 @@ ion-content {
                     </ion-item>
                     <ion-label>&emsp;&nbsp;<%= form.label "Mess Name" %></ion-label>
                     <ion-item>
-                      <select id="messes" class='form-field'>
-                        <% i = 0 %>
-                        <option value=0>--Select</option>
-                        <% @mess.each do |m| %>
-                          <% i=i+1 %>
-                          <option value="i"><%= m.mess_name%></option>
-                        <% end %>
-                      </select>
+
+                      <%=form.select :mess_id, Mess.all.collect { |c| [ c.mess_name.upcase, c.mess_name ] } ,class: 'form-field'%>
+
                     </ion-item>
                     <ion-label>&emsp;&nbsp;<%= form.label "Room No" %></ion-label>
                     <ion-item>

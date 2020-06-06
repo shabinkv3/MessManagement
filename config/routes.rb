@@ -33,6 +33,9 @@ Rails.application.routes.draw do
 
 	post 'student/messcut', to: 'student#createMessCut', as: 'create_messcut'
 	post 'messcutdata', to: 'student#messCutData'
+	post 'mess/changepassword', to: 'mess#changePassword'
+	post 'student/changepassword', to: 'student#changePassword'
+
 
 
 

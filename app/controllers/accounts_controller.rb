@@ -19,7 +19,7 @@ class AccountsController < ApplicationController
   end
 
   def authenticate
-    @student=Student.find_by_rollno(student_params[:rollno])
+    @student=Student.find_by_rollno(student_params[:rollno].upcase)
     if @student && @student.authenticate(student_params[:password])
       session[:student_logged_in]=true
       session[:id]=@student.id
@@ -68,6 +68,7 @@ class AccountsController < ApplicationController
     @params=student_params
     @params[:mess_id]=0
     @params[:name]=@params[:name].split.map(&:capitalize).join(' ')
+    @params[:rollno]=@params[:rollno].upcase
     @mess=Mess.find_by_mess_name(student_params[:mess_id].downcase)
     if @mess
       @params[:mess_id]=@mess.id
