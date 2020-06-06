@@ -66,56 +66,6 @@ function onGetMessCuts(data,id)
 }
 
 
-function onGetExtraList(data,id)
-{
-  var txt="";
-  var sum=0;
-  var i;
-  var myObj = JSON.parse(data);
-
-            if(myObj.data.length==0)
-            {
-                txt += "<p style='text-align:center;''>No Extra Taken</p>"
-            }
-            else
-            {
-                txt+="<br><ion-card style='width:700px'><ion-card-container><ion-list><ion-card-header><ion-item><ion-col>S.No</ion-col><ion-col>Item</ion-col><ion-col>Price</ion-col></ion-item></ion-card-header>"
-                for(i=0;i<myObj.data.length-1;i++)
-                {
-                    sum+=myObj.data[i].price;
-                    txt+="<ion-item lines='none' ><ion-col>"+(i+1)+"."+"</ion-col><ion-col>"+myObj.data[i].item+"</ion-col><ion-col>"+myObj.data[i].price+".00"+"</ion-col></ion-item>"
-                }
-                sum+=myObj.data[i].price;
-                txt+="<ion-item><ion-col>"+(i+1)+"."+"</ion-col><ion-col>"+myObj.data[i].item+"</ion-col><ion-col>"+myObj.data[i].price+".00"+"</ion-col></ion-item></ion-list><ion-list><ion-card-footer><ion-item><ion-col></ion-col><ion-col>Total Amount</ion-col><ion-col>"+sum+".00"+"</ion-col></ion-item></ion-card-footer></ion-list></ion-card-container></ion-card>"
-                document.getElementById(id).innerHTML = txt;
-
-            } 
-            document.getElementById(id).innerHTML = txt;
-
-}
-
-function onGetGuestList(data,id)
-{
-  var txt="";
-  var i;
-  var myObj = JSON.parse(data);
-            if(myObj.data.length==0)
-            {
-                    txt += "<p style='text-align:center;''>No Guests Taken</p>"            }
-            else
-            {
-                txt+="<br><ion-card style='width:700px'><ion-card-container><ion-list><ion-card-header><ion-item><ion-col>S.No</ion-col><ion-col>Guest Name</ion-col><ion-col>Guest Roll No</ion-col></ion-item></ion-card-header>"
-                for(i=0;i<myObj.data.length-1;i++)
-                {
-                  
-                    txt+="<ion-item lines='none' ><ion-col>"+(i+1)+"."+"</ion-col><ion-col>"+myObj.data[i].name+"</ion-col><ion-col>"+myObj.data[i].rollno+"</ion-col></ion-item>"
-                }
-                txt+="<ion-item lines='none'><ion-col>"+(i+1)+"."+"</ion-col><ion-col>"+myObj.data[i].name+"</ion-col><ion-col>"+myObj.data[i].rollno+"</ion-col></ion-item></ion-list></ion-card-container></ion-card>";
-            }
-            document.getElementById(id).innerHTML = txt;
-}
-
-
 
 
 function getGuests(){

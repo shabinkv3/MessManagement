@@ -124,7 +124,7 @@
                                     </a>
                                 </div>
                             </ion-item>
-                            <ion-item lines='none' class="side_tabs" onClick="document.getElementById('extras').innerHTML='<ion-spinner></ion-spinner>';viewOptionStudent(event,'extra'); post('/extradata','extra_list[student_id]=<%= session[:id] %>',(data)=>{onGetExtraList(data,'extras')}); ">
+                            <ion-item lines='none' class="side_tabs" onClick="viewOptionStudent(event,'extra');  ">
                                 <div style="height: 57px;">
                                     <a>
                                         <ion-icon name="beer-outline" class="side_icons"></ion-icon>
@@ -132,8 +132,8 @@
                                     </a>
                                 </div>
                             </ion-item>
-                            <ion-item lines='none' class="side_tabs" onClick="document.getElementById('guestss').innerHTML='<ion-spinner></ion-spinner>';  
-                            viewOptionStudent(event,'guests'); post('/guestdata','guest_list[student_id]=<%= session[:id] %>',(data)=>{onGetGuestList(data,'guestss')});">
+                            <ion-item lines='none' class="side_tabs" onClick="  
+                            viewOptionStudent(event,'guests');">
                                 <div style="height: 57px;">
                                     <a>
                                         <ion-icon name="people-outline" class="side_icons"></ion-icon>
@@ -201,11 +201,10 @@
                     <br>
                         
                     <ion-row><ion-col offset=1 size=8>
-                    <div id="guestss"></div>
                     <ion-card>
                     <ion-card-header id="y"><ion-item id="x"><ion-col>S.No</ion-col><ion-col>Guest Name</ion-col><ion-col>Student Roll No</ion-col></ion-item></ion-card-header>
-                    <ion-card-content>
-                    <ion-list>
+                    <ion-card-content style="padding-bottom: 0px;">
+                    <ion-list style="padding-bottom: 0px">
                     <% if @student.guests.count == 0 %>
                         <%= "No Guests have been recorded yet."%>
                     <% else %>
@@ -294,7 +293,6 @@
                         
                         <ion-row><ion-col offset=1 size=8>
 
-                        <div id="extras" style="position: relative;left:100px;"></div>
                         <% i = 0 %>
                         <% sum = 0 %>
                         <% if @student.extras.count == 0%>
