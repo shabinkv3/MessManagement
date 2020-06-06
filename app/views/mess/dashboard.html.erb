@@ -84,11 +84,11 @@ display: none !important;
     {
         position: relative; left: 15px;bottom: 5px; color: white; font-size: 14px
     }
-    a.navlink:hover
+    .navlink:hover
     {
         color: black;
     }
-    a.navlink
+    .navlink
     {
         color: grey;
     }
@@ -262,7 +262,7 @@ display: none !important;
                         <label style="position: relative; left: 300px; top: 20px; weight: 500; font-weight: 400; font-size: 19px; color: grey">MESS MANAGEMENT</label>
                     </ion-col>
                     <ion-col offset='6' size='3'>
-                        <a style="color: grey; position: relative; left: 45px; top: 20px; font-size: 16px;">Change Password</a>
+                        <a style="text-decoration: none; position: relative; left: 45px; top: 20px; font-size: 16px;" onClick="changePassword(event)" class="navlink">Change Password</a>
                         <a class="navlink" href="/accounts/logout" style="text-decoration:none; position: relative; left: 75px; top: 20px; font-size: 16px;">Logout</a>
                     </ion-col>
                 </ion-row>
@@ -270,9 +270,10 @@ display: none !important;
                     <ion-col>
                     <div id="guest" class="tabcontent" style="display:none;">
                     
-                    <div style="text-align: center;"><h1 >ADD GUEST</h1></div><br> <br>
                     <ion-row>
                     <ion-col size=4 offset=1.5>
+                     <div style="text-align: center;"><h1 >ADD GUEST</h1></div><br> <br>
+
                          <ion-card style = "width: 700px">
                           <form >  
                             <ion-card-content>
@@ -362,7 +363,7 @@ display: none !important;
                     <div  style="text-align: center;"><small id="blink"><b>Select a date for a Sorted List</b></small></div>
                       <ion-row>
                       
-                      <ion-col size=6 offset=0.2><input type="date" placeholder="Date" class="mess-cut-field" onChange="filterMessCuts();" id="filter_date" /></ion-col></ion-row>
+                      <ion-col size=6 offset=0.2><input onfocus="this.type='date'" onblur="this.type='date'"  type="date" placeholder="Date" class="mess-cut-field" onChange="filterMessCuts();" id="filter_date" /></ion-col></ion-row>
                       <div id="noMatch" style="text-align: center;display: none;">There are no mess cuts on this date</div>
                     <div id="mess_cut_data">
                     <br>
@@ -370,8 +371,8 @@ display: none !important;
                         
                            <ion-card-header id="y"><ion-item id="x"><ion-col size=3>Student Name</ion-col><ion-col offset=0.5>Roll No</ion-col><ion-col>From Date</ion-col><ion-col>To Date</ion-col><ion-col size=1.5>No Of Days</ion-col>
                             </ion-item></ion-card-header>
-                            <ion-card-content>
-                            <ion-list>    
+                            <ion-card-content style="padding-bottom: 0px;">
+                            <ion-list style="padding-bottom: 0px;">    
                       <% @mess.students.each do |student| %>
                       <% student.mess_cuts.each do |messcut| %>
                       <ion-item class="mess_cut_items">
@@ -405,9 +406,10 @@ display: none !important;
                     </div>
 
                     <div id="extra" class="tabcontent" style="display: none;">
-                        <div style="text-align: center;"><h1>ADD EXTRA</h1></div><br><br>
+                        
                         <ion-row>
                         <ion-col size=4 offset=1.5> 
+                            <div style="text-align: center;"><h1>ADD EXTRA</h1></div><br><br>
                         <ion-card style = "width: 700px">
                           <form id="myform">  
                           
@@ -471,7 +473,7 @@ display: none !important;
                           
                             <ion-item id="x" lines="none"><ion-col><b>S.No</b></ion-col><ion-col><b>Roll No</b></ion-col><ion-col><b>Total Amount</b></ion-col>
                             </ion-item></ion-card-header>
-                            <ion-card-content><ion-list>
+                            <ion-card-content style="padding-bottom: 0px;"><ion-list style="padding-bottom: 0px;">
                             <% i =0 %>
                             <% @mess.students.each do |student| %>
                               <% sum = 80*30 %>
@@ -513,6 +515,13 @@ display: none !important;
     customElements.define('select-roll-guest', class ModalContent extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `<%= render partial: 'search_list', :locals=>{:id=>'guest'} %>`;
+      }
+    });
+
+
+    customElements.define('change-password', class ModalContent extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML =  `<%= render partial: 'change_password'%> `;
       }
     });
 

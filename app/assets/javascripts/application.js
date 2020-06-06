@@ -196,6 +196,18 @@ let currentPopover = null;
 
     }
 
+    async function changePassword(ev) {
+      popover = await popoverController.create({
+        component: 'change-password',
+        event: ev,
+        translucent: true,
+        cssClass: 'change_password'
+      });
+      currentPopover = popover;
+      await popover.present();
+
+    }
+
 
     function dismissPopover() {
       if (currentPopover) {
