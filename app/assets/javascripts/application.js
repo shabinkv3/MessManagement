@@ -325,6 +325,7 @@ function onPostExtra(data,el)
 
 function onChangePassword(data)
 {
+  document.getElementById('change_button').innerHTML="Change";
   var myObj = JSON.parse(data);
             if(myObj.changed)
             {
@@ -348,6 +349,7 @@ function onChangePassword(data)
 
 function changePassword(user)
 {
+  document.getElementById('change_button').innerHTML="<ion-spinner></ion-spinner>";
   errors=document.getElementById('change_password_errors');
   errors.innerHTML="";
   var newPassword=document.getElementById('change_password[new]').value;
@@ -355,15 +357,17 @@ function changePassword(user)
   if(newPassword!=confirmation)
   {
     errors.innerHTML="<ul><li style='color: red;'>Passwords dont match</li></ul>";
+    document.getElementById('change_button').innerHTML="Change";
+
   }
   else
   {
-    
+
   post('/'+user+'/changepassword',postData('changepassword'),onChangePassword);
 
   }
 
-  document.getElementById('change_button').innerHTML="Change";
+  
 
 
 }
