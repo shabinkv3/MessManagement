@@ -438,14 +438,39 @@ display: none !important;
 
                    
 
-                    <div id="fee" class="tabcontent" style="display:none;">
-                    <h3 style="position:relative;left:100px;">Fee</h3>
-                    
+                   <div id="fee" class="tabcontent" style="display:none;">
+                    <ion-row><ion-col offset=2 size=8>
+                    <div style="text-align: center;"><h3>Monthly Mess Fee</h3></div><br>
+
                     <br><br>
-                    <ion-button onClick="Fee();" style = "position:relative;left:100px;width:350px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">GET DETAILED FEE</ion-button>
-                    <br><br>
-                    <div id="fees" style="position: relative;left:100px;"></div>
-                  
+                    <% if @mess.students.count == 0%>
+                        <div style="text-align: center;"><%= "The Mess is Empty!"%></div>
+                    <% else %>
+                      <ion-card>
+                        <ion-card-header id="y">
+                          
+                            <ion-item id="x" lines="none"><ion-col><b>S.No</b></ion-col><ion-col><b>Roll No</b></ion-col><ion-col><b>Total Amount</b></ion-col>
+                            </ion-item></ion-card-header>
+                            <ion-card-content><ion-list>
+                            <% i =0 %>
+                            <% @mess.students.each do |student| %>
+                              <% sum = 80*30 %>
+                              <% n = 0 %>
+                              <% student.extras.each do |extra| %>
+                                  <% sum +=extra.price%>
+                              <% end %>
+                              <% sum += (student.guests.count)*80 %>
+                              <% student.mess_cuts.each do |messcut| %>
+                                  <% n+= messcut.no_of_days %>
+                              <% end %>
+                              <% sum -= n*80%>
+                              <% i = i+1 %>
+                              <ion-item><ion-col><%= i %></ion-col><ion-col><%= student.rollno %></ion-col><ion-col><%= sum %></ion-col></ion-item>
+                              
+                          <% end %>
+                          </ion-list>
+                        </ion-card-content>
+                      </ion-card><% end %>
                     </div>
                     </ion-col>
                 </ion-row>
