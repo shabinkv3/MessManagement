@@ -111,7 +111,7 @@ ion-content {
 
 
 
-                        <ion-segment style="--ion-color-primary: #8f15f4" scrollable value="student">
+                        <ion-segment style="--ion-color-primary: #8f15f4;" scrollable value="student">
         <ion-segment-button id="loginToggleInitial" onClick="loginToggle(event)" value="student" layout="icon-start">
           <ion-label>Student</ion-label>
         </ion-segment-button>
@@ -146,7 +146,7 @@ ion-content {
                 <ion-row><ion-col offset=1.6><div>
                     <%= form.submit "Log in",style: "width:300px;", class: "btn-hover color-1" %>
                 </div></ion-col></ion-row>
-                <ion-col style="position:relative;left:120px;" ><a onMouseOver="this.style.color='purple'" onMouseOut="this.style.color='rgba(0, 0, 0, 0.6)'" style="text-decoration: none; font-size: 17px; color: rgba(0, 0, 0, 0.6);" href="/accounts/signup/student">New Here? Student Sign Up</a></ion-col>
+                <div style="text-align: center;"><a onMouseOver="this.style.color='purple'" onMouseOut="this.style.color='rgba(0, 0, 0, 0.6)'" style="text-decoration: none; font-size: 17px; color: rgba(0, 0, 0, 0.6);" href="/accounts/signup/student">Student Sign Up</a></div>
                 
 
                 <% end %>
@@ -173,7 +173,7 @@ ion-content {
                 <ion-row><ion-col offset=1.6><div>
                     <%= form.submit "Log in",style: "width:300px;", class: "btn-hover color-1" %>
                 </div></ion-col></ion-row>
-                <ion-col style="position:relative;left:120px;"><a style="text-decoration: none; font-size: 17px; color: rgba(0, 0, 0, 0.6);" onMouseOver="this.style.color='purple'" onMouseOut="this.style.color='rgba(0, 0, 0, 0.6)'" href="/accounts/signup/mess">New Here? Mess Sign Up</a></ion-col>
+               <div style="text-align:center;"><a style="text-decoration: none; font-size: 17px; color: rgba(0, 0, 0, 0.6);" onMouseOver="this.style.color='purple'" onMouseOut="this.style.color='rgba(0, 0, 0, 0.6)'" href="/accounts/signup/mess">Mess Sign Up</a></div>
 
                 <% end %>
                 </div>

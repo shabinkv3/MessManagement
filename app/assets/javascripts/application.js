@@ -131,7 +131,7 @@ function getGuests(){
             }
             else
             {
-                txt+="<br><ion-card style='width:700px'><ion-card-container><ion-list><ion-card-header><ion-item><ion-col>S.No</ion-col><ion-col>Guest Name</ion-col><ion-col>Guest Roll No</ion-col></ion-item></ion-card-header>"
+                txt+="<br><ion-card style='width:700px'><ion-card-container><ion-list><ion-card-header><ion-item --ion-color-primary='#8f15f4'><ion-col>S.No</ion-col><ion-col>Guest Name</ion-col><ion-col>Guest Roll No</ion-col></ion-item></ion-card-header>"
                 for(i=0;i<myObj.data.length-1;i++)
                 {
                   

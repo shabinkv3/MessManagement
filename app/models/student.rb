@@ -8,5 +8,5 @@ class Student < ApplicationRecord
   
   validates :rollno, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
-
+  validates :password,length: { minimum: 6, maximum: 20 }
 end

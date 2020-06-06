@@ -6,5 +6,6 @@ class Mess < ApplicationRecord
   
   
   validates :mess_name, presence: true, uniqueness: true
+  validates :password,length: { minimum: 6, maximum: 20 }
 
 end
