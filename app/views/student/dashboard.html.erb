@@ -201,13 +201,31 @@
                     <br>
                         
                     <ion-row><ion-col offset=1 size=8>
-                    <div id="s2">
-                    
-                    
-                    <div id="guestss" style="position: relative;left:140px;"></div>
-                    
-                    </div>
-                    
+                    <div id="guestss"></div>
+                    <ion-card>
+                    <ion-card-header id="y"><ion-item id="x"><ion-col>S.No</ion-col><ion-col>Guest Name</ion-col><ion-col>Student Roll No</ion-col></ion-item></ion-card-header>
+                    <ion-card-content>
+                    <ion-list>
+                    <% if @student.guests.count == 0 %>
+                        <%= "No Guests have been recorded yet."%>
+                    <% else %>
+                    <% i = 0 %>
+                    <% @student.guests.each do |guest| %>
+                        <ion-item>
+                        <ion-col>
+                            &emsp;<%= i= i+1 %>
+                        </ion-col>
+                       <ion-col>
+                        <%= guest.name%>
+                       </ion-col>
+                        <ion-col>
+                            <%= guest.rollno %>
+                        </ion-col>
+                        </ion-item>
+                    <% end %>
+                    </ion-list>
+                    </ion-card-content>
+                    </ion-card><% end %>
                     <br>
                     </ion-col></ion-row>
                     </div>
@@ -276,13 +294,27 @@
                         
                         <ion-row><ion-col offset=1 size=8>
 
-                        <div id="s1">
-                        
-                       
                         <div id="extras" style="position: relative;left:100px;"></div>
-                        
-                        </div>
-                        
+                        <% i = 0 %>
+                        <% sum = 0 %>
+                        <% if @student.extras.count == 0%>
+                            <%= "No extras have been recorded in this account." %>
+                        <% else %>
+                            <ion-card>
+                            <ion-card-header id="y"><ion-item id="x"><ion-col>S.no</ion-col><ion-col>Item Name</ion-col><ion-col>Item Price</ion-col></ion-item></ion-card-header>
+                            <ion-card-content>
+                            <% @student.extras.each do |extra| %>
+                                <ion-list><ion-item>
+                                <ion-col>&emsp;<%= i=i+1 %></ion-col>
+                                <ion-col><%= extra.item %></ion-col>
+                                <ion-col><%= extra.price%><ion-col>
+                                <% sum += extra.price %>
+                                </ion-item>
+                            <% end %>
+                            </ion-list></ion-card-content>
+                            <ion-card-footer id="y"><ion-item id="x"><ion-col></ion-col><ion-col>Total Amount</ion-col><ion-col><%= sum%></ion-col></ion-item></ion-card-footer>
+                        <% end %>
+                        </ion-card>
                         <br>
                         </ion-col></ion-row>
                     </div>
