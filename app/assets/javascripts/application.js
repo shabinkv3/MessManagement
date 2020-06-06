@@ -17,6 +17,7 @@ function loginToggle(event)
 function studentDataOptionChange(event)
 {
   var id=document.getElementById('student_data_id').value;
+  document.getElementById('profileContent').innerHTML="<ion-spinner></ion-spinner>";
   if(event.target.value=='extras')
   {
     post('/extradata','extra_list[student_id]='+id,(data)=>{onGetExtraList(data,'profileContent')})
@@ -27,12 +28,41 @@ function studentDataOptionChange(event)
   }
   if(event.target.value=='profile')
   {
+
     post('/studentprofile','student_profile[student_id]='+id,(data)=>{onGetProfile(data,'profileContent',true)})
   }
   if(event.target.value=='messfee')
   {
         post('/feestructure','fee[student_id]='+id,(data)=>{onGetFee(data,'profileContent')});  
   }
+  if(event.target.value=='messcuts')
+  {
+        post('/messcutdata','student_profile[student_id]='+id,(data)=>{onGetMessCuts(data,'profileContent')});  
+  }
+}
+
+function onGetMessCuts(data,id)
+{
+  var txt="";
+  var sum=0;
+  var i;
+  var myObj = JSON.parse(data);
+
+            if(myObj.data.length==0)
+            {
+                txt += "<p style='text-align:center;''>No Mess Cuts Given</p>"
+            }
+            else
+            {
+                txt+="<br><ion-card><ion-card-container><ion-list><ion-card-header><ion-item><ion-col>From</ion-col><ion-col>To</ion-col><ion-col>No of Days</ion-col></ion-item></ion-card-header>"
+                for(i=0;i<myObj.data.length;i++)
+                {
+                    txt+="<ion-item lines='none' ><ion-col>"+myObj.data[i].from_date+"</ion-col><ion-col>"+myObj.data[i].to_date+"</ion-col><ion-col>"+myObj.data[i].no_of_days+"</ion-col></ion-item>"
+                }
+
+            } 
+            document.getElementById(id).innerHTML = txt;
+
 }
 
 
@@ -392,6 +422,7 @@ async function showToast(message) {
       });
       await modal.present();
       document.getElementById('student_data_id').value=student_data_id;
+      document.getElementById('student_data_modal_title').innerHTML='<ion-spinner></ion-spinner>';
       document.getElementById('initialSelectedSegment').click();
 
       currentModal = modal;
@@ -715,5 +746,33 @@ function filterStudentsByRollNo(id) {
     {
         document.getElementById("noMatch_"+id).style.display="";
         document.getElementById("students_card_"+id).style.display="none";
+    }
+}
+
+function filterMessCuts() {
+    filterDate = new Date(document.getElementById('filter_date').value);
+    from_dates = document.getElementsByClassName("mess_cut_from");
+    to_dates = document.getElementsByClassName("mess_cut_to");
+    items = document.getElementsByClassName("mess_cut_items");
+    var count=0
+    var fromDate,toDate;
+    for (i = 0; i < items.length; i++) {
+        fromDate=from_dates[i].innerHTML.trim().split("-")
+        fromDate=new Date(fromDate[2],fromDate[1]-1,fromDate[0]);
+
+        toDate=to_dates[i].innerHTML.trim().split("-")
+        toDate=new Date(toDate[2],toDate[1]-1,toDate[0]);
+
+
+        if ((filterDate.getTime()!==filterDate.getTime()) || (filterDate>=fromDate && filterDate<=toDate)) {
+            items[i].style.display = "";
+        } else {
+            count+=1
+            items[i].style.display = "none";
+        }
+    }
+    if(count==items.length)
+    {
+
     }
 }
