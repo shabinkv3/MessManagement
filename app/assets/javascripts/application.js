@@ -750,7 +750,8 @@ function filterStudentsByRollNo(id) {
 }
 
 function filterMessCuts() {
-    filterDate = new Date(document.getElementById('filter_date').value);
+    filterDate = document.getElementById('filter_date').value.split('-');
+    filterDate=new Date(filterDate[0],filterDate[1]-1,filterDate[2])
     from_dates = document.getElementsByClassName("mess_cut_from");
     to_dates = document.getElementsByClassName("mess_cut_to");
     items = document.getElementsByClassName("mess_cut_items");
@@ -762,7 +763,6 @@ function filterMessCuts() {
 
         toDate=to_dates[i].innerHTML.trim().split("-")
         toDate=new Date(toDate[2],toDate[1]-1,toDate[0]);
-
 
         if ((filterDate.getTime()!==filterDate.getTime()) || (filterDate>=fromDate && filterDate<=toDate)) {
             items[i].style.display = "";
