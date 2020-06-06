@@ -108,7 +108,7 @@
                 <ion-row>
                     <ion-col>
                         <ion-list class="side_list" class="ion-no-padding" style="margin-top: 20px; margin-left: 15px; margin-right: 15px">
-                            <ion-item lines='none' class="side_tabs" onClick="viewOption(event,'profile');
+                            <ion-item lines='none' class="side_tabs" onClick="viewOptionStudent(event,'profile');
                             document.getElementById('profile_content').innerHTML='<ion-spinner></ion-spinner>'; post('/studentprofile','student_profile[student_id]=<%= @student.id %>',(data)=>{onGetProfile(data,'profile_content',false)})" id="defaultOpen">
                                 <div style="height: 57px;">
                                     <a>
@@ -117,7 +117,7 @@
                                     </a>
                                 </div>
                             </ion-item>
-                            <ion-item lines='none' class="side_tabs" onClick="document.getElementById('extras').innerHTML='<ion-spinner></ion-spinner>';viewOption(event,'extra'); post('/extradata','extra_list[student_id]=<%= session[:id] %>',(data)=>{onGetExtraList(data,'extras')}); ">
+                            <ion-item lines='none' class="side_tabs" onClick="document.getElementById('extras').innerHTML='<ion-spinner></ion-spinner>';viewOptionStudent(event,'extra'); post('/extradata','extra_list[student_id]=<%= session[:id] %>',(data)=>{onGetExtraList(data,'extras')}); ">
                                 <div style="height: 57px;">
                                     <a>
                                         <ion-icon name="beer-outline" class="side_icons"></ion-icon>
@@ -125,8 +125,8 @@
                                     </a>
                                 </div>
                             </ion-item>
-                            <ion-item lines='none' class="side_tabs" onClick="document.getElementById('extras').innerHTML='<ion-spinner></ion-spinner>';  
-                            viewOption(event,'guests'); post('/guestdata','guest_list[student_id]=<%= session[:id] %>',(data)=>{onGetGuestList(data,'guestss')});">
+                            <ion-item lines='none' class="side_tabs" onClick="document.getElementById('guestss').innerHTML='<ion-spinner></ion-spinner>';  
+                            viewOptionStudent(event,'guests'); post('/guestdata','guest_list[student_id]=<%= session[:id] %>',(data)=>{onGetGuestList(data,'guestss')});">
                                 <div style="height: 57px;">
                                     <a>
                                         <ion-icon name="people-outline" class="side_icons"></ion-icon>
@@ -134,7 +134,7 @@
                                     </a>
                                 </div>
                             </ion-item>
-                            <ion-item lines='none' class="side_tabs" onClick="viewOption(event,'messcut')">
+                            <ion-item lines='none' class="side_tabs" onClick="viewOptionStudent(event,'messcut')">
                                 <div style="height: 57px;">
                                     <a>
                                         <ion-icon name="home-outline" class="side_icons"></ion-icon>
@@ -143,7 +143,7 @@
                                 </div>
                             </ion-item>
                         
-                            <ion-item lines='none' class="side_tabs"  onClick="viewOption(event,'fee')">
+                            <ion-item lines='none' class="side_tabs"  onClick="viewOptionStudent(event,'fee')">
                                 <div style="height: 57px;">
                                     <a>
                                         <ion-icon name="newspaper-outline" class="side_icons"></ion-icon>

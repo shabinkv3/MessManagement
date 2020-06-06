@@ -173,7 +173,7 @@ display: none !important;
                 <ion-row>
                     <ion-col>
                         <ion-list class="side_list" class="ion-no-padding" style="margin-top: 20px; margin-left: 15px; margin-right: 15px">
-                            <ion-item lines='none' class="side_tabs" onClick="viewOption(event,'extra')" id="defaultOpen">
+                            <ion-item lines='none' class="side_tabs" onClick="viewOptionMess(event,'extra')" id="defaultOpen">
                                 <div style="height: 57px;">
                                     <a>
                                         <ion-icon name="beer-outline" class="side_icons"></ion-icon>
@@ -181,7 +181,7 @@ display: none !important;
                                     </a>
                                 </div>
                             </ion-item>
-                            <ion-item lines='none' class="side_tabs" onClick="viewOption(event,'guest')">
+                            <ion-item lines='none' class="side_tabs" onClick="viewOptionMess(event,'guest')">
                                 <div style="height: 57px;">
                                     <a>
                                         <ion-icon name="beer-outline" class="side_icons"></ion-icon>
@@ -189,7 +189,7 @@ display: none !important;
                                     </a>
                                 </div>
                             </ion-item>
-                            <ion-item lines='none' class="side_tabs" onClick="viewOption(event,'student_list')">
+                            <ion-item lines='none' class="side_tabs" onClick="viewOptionMess(event,'student_list')">
                                 <div style="height: 57px;">
                                     <a>
                                         <ion-icon name="list-outline" class="side_icons"></ion-icon>
@@ -197,7 +197,7 @@ display: none !important;
                                     </a>
                                 </div>
                             </ion-item>
-                            <ion-item lines='none' class="side_tabs" onClick="viewOption(event,'staff_list')">
+                            <ion-item lines='none' class="side_tabs" onClick="viewOptionMess(event,'staff_list')">
                                 <div style="height: 57px;">
                                     <a>
                                         <ion-icon name="people-outline" class="side_icons"></ion-icon>
@@ -205,7 +205,7 @@ display: none !important;
                                     </a>
                                 </div>
                             </ion-item>
-                            <ion-item lines='none' class="side_tabs" onClick="viewOption(event,'messcut')">
+                            <ion-item lines='none' class="side_tabs" onClick="viewOptionMess(event,'messcut');document.getElementById('mess_cut_data').style.display='block';">
                                 <div style="height: 57px;">
                                     <a>
                                         <ion-icon name="home-outline" class="side_icons"></ion-icon>
@@ -213,7 +213,7 @@ display: none !important;
                                     </a>
                                 </div>
                             </ion-item>
-                            <ion-item lines='none' class="side_tabs"  onClick="viewOption(event,'fee')">
+                            <ion-item lines='none' class="side_tabs"  onClick="viewOptionMess(event,'fee')">
                                 <div style="height: 57px;">
                                     <a>
                                         <ion-icon name="newspaper-outline" class="side_icons"></ion-icon>
@@ -322,12 +322,45 @@ display: none !important;
                     </div>
 
                     <div id="messcut" class="tabcontent" style="display:none;">
-                    <h3 style="position:relative;left:80px;">Mess Cut</h3>
-                        
-                    <br><br>
-                    <ion-button onClick="messCut();" style = "position:relative;left:100px;width:350px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">GET DETAILED FEE</ion-button>
-                    <br><br>
-                    <div id="ms" style="position: relative;left:100px;"></div>
+                    <ion-row><ion-col offset=2 size=8>
+                    <div style="text-align: center;"><h3>Mess Cut</h3></div><br>
+
+
+                    <div id="mess_cut_data" style="display:none;">
+                      <ion-card>
+                        <ion-card-content>
+                          <ion-list>
+                            <ion-item><ion-col size=3>Student Name</ion-col><ion-col offset=0.5>Roll No</ion-col><ion-col>From Date</ion-col><ion-col>To Date</ion-col><ion-col size=1.5>No Of Days</ion-col>
+                            </ion-item>
+
+                      <% @mess.students.each do |student| %>
+                      <% student.mess_cuts.each do |messcut| %>
+                      <ion-item>
+                        <ion-col size=3>
+                          <%= student.name %>
+                        </ion-col>
+                        <ion-col offset=0.5>
+                          <%= student.rollno %>
+                        </ion-col>
+                        <ion-col>
+                          <%= messcut.from_date.to_time.strftime("%d-%m-%Y") %>
+                        </ion-col>
+                        <ion-col>
+                          <%= messcut.to_date.to_time.strftime("%d-%m-%Y") %>
+                        </ion-col>
+                        <ion-col size=1.5>
+                          <%= messcut.no_of_days %>
+                        </ion-col>
+                        </ion-item>
+                      <% end %>
+                      <% end %>
+                      </ion-list></ion-card-content></ion-card>
+                    </div>
+
+
+
+
+                  </ion-col></ion-row>
                   
                     </div>
 
@@ -401,31 +434,6 @@ display: none !important;
 </body>
 
 <script>
-function messCut(){
-     
-    var txt="",i=0,j=0;
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function(){
-        if( this.readyState == 4 && this.status ==200){
-            var myObj = JSON.parse(this.responseText);
-            txt+="<ion-card style='width:700px;'><ion-card-content><ion-list><ion-item><ion-col>Roll No</ion-col><ion-col>From Date</ion-col><ion-col>To Date</ion-col><ion-col>No Of Days</ion-col></ion-item>";
-            for(j=0;j<myObj.messcutCount;j++){
-            for(i=0;i<myObj.studentCount;i++){
-                if(myObj.student[i].id == myObj.messcut[j].student_id)
-                {
-                    txt+="<ion-item><ion-col>"+myObj.student[i].rollno+"</ion-col><ion-col>"+myObj.messcut[j].from_date+"</ion-col><ion-col>"+myObj.messcut[j].to_date+"</ion-col><ion-col>"+myObj.messcut[j].no_of_days+"</ion-col></ion-item>"
-                }
-            }
-           
-        }
-        txt+="</ion-list></ion-card-content></ion-card>"
-        document.getElementById("ms").innerHTML = txt;
-        }
-    };
-    xmlhttp.open("GET",'/messCut',true);
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send();
-}
 
   customElements.define('student-data', class ModalContent extends HTMLElement {
       connectedCallback() {
@@ -467,7 +475,6 @@ customElements.define('add-staff-form', class ModalContent extends HTMLElement {
 
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
-
 
 
 

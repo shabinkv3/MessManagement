@@ -127,7 +127,7 @@ ion-content {
                 <div style="text-align: center;"><p id=”alert”><%= flash.alert %></p></div>
 
                 <div id="studentLogin">
-                <%= form_with scope: :student, url: authenticate_path, local: true do |form| %>
+                <%= form_with scope: :student, url: authenticate_path, remote: true do |form| %>
                 <ion-row><ion-col size=12 offset=1.7><ion-list lines="none">
 
                
