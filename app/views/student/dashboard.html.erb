@@ -13,6 +13,8 @@
     <script type="module">
     import { toastController } from 'https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/index.esm.js';
     window.toastController = toastController;
+    import { popoverController } from 'https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/index.esm.js';
+    window.popoverController = popoverController;
 </script>
   <style>
     .extraToast
@@ -49,11 +51,11 @@
     {
         position: relative; left: 15px;bottom: 5px; color: white; font-size: 14px
     }
-    a.navlink:hover
+    .navlink:hover
     {
         color: black;
     }
-    a.navlink
+    .navlink
     {
         color: grey;
     }
@@ -171,7 +173,7 @@
                         <label style="position: relative; left: 350px; top: 20px; weight: 500; font-weight: 400; font-size: 19px; color: grey">MESS MANAGEMENT</label>
                     </ion-col>
                     <ion-col offset='6' size='3'>
-                        <a style="color: grey; position: relative; left: 45px; top: 20px; font-size: 16px;">Change Password</a>
+                        <a style="text-decoration: none; position: relative; left: 45px; top: 20px; font-size: 16px;" onClick="changePasswordPopover(event)" class="navlink">Change Password</a>
                         <a class="navlink" href="/accounts/logout" style="text-decoration:none; position: relative; left: 75px; top: 20px; font-size: 16px;">Logout</a>
                     </ion-col>
                 </ion-row>
@@ -344,7 +346,11 @@
 
 
 
-
+    customElements.define('change-password', class ModalContent extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML =  `<%= render partial: 'change_password'%> `;
+      }
+    });
     document.getElementById("defaultOpen").click();
 
 

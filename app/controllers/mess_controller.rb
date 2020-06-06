@@ -16,6 +16,23 @@ class MessController < ApplicationController
   	end
   end
 
+  def changePassword
+    @mess=Mess.find(session[:id])
+    current=change_password_params[:current]
+    if BCrypt::Password.new(@mess.password_digest)!=current
+      render json: {:change=>false,:errors=>['Current Password is wrong']}
+    else
+      newPassword=change_password_params[:new]
+      @mess.password=newPassword
+      if @mess.save
+        render json: {:changed=>true}
+      else
+        render json: {:changed=>false,:errors=>@mess.errors.full_messages}
+      end
+    end
+  end
+
+
   def createEntry
     @params = extra_params
     @student=Student.find_by_rollno(@params[:student_id])
@@ -85,6 +102,10 @@ class MessController < ApplicationController
   private
   def guest_params
     params.require(:guest).permit(:student_id,:name,:rollno)
+  end
+  private
+  def change_password_params
+    params.require(:change_password).permit(:current,:new)
   end
 
   def enter_only_if_mess_logged_in
