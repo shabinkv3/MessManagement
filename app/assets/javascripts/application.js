@@ -580,14 +580,9 @@ function check(student_id,id,el){
       el.previousSibling.value='1';
     var today = new Date().getDay();
     var txt="";
-    if(today>=1){
+    
         post('/feestructure','fee[student_id]='+student_id,(data)=>{onGetFee(data,id)});
-    }
-    else
-    {
-       txt+="&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<ion-label color='red'><small><b>This button is disabled</b></small></ion-label>"
-       document.getElementById("fees").innerHTML = txt;
-    }
+    
   }
     
 }

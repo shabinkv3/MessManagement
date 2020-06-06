@@ -153,7 +153,7 @@ display: none !important;
 
 .mess-cut-field {
     display: block;
-    width: 100%;
+    width: 195%;
     padding: 8px 16px;
     line-height: 25px;
     font-size: 14px;
@@ -173,7 +173,14 @@ display: none !important;
         border-color: var(--input-border-focus);
     }
 }
-
+#x{
+  --ion-background-color: #8f15f4;
+  color: white;
+}
+#y{
+  background-color: #8f15f4;
+  height: 64px;
+}
 
 
 
@@ -197,7 +204,7 @@ display: none !important;
                             <ion-item lines='none' class="side_tabs" onClick="viewOptionMess(event,'extra')" id="defaultOpen">
                                 <div style="height: 57px;">
                                     <a>
-                                        <ion-icon name="beer-outline" class="side_icons"></ion-icon>
+                                        <ion-icon name="fast-food-outline" class="side_icons"></ion-icon>
                                         <label class="side_label">ADD EXTRA</label>
                                     </a>
                                 </div>
@@ -261,9 +268,11 @@ display: none !important;
                 </ion-row>
                 <ion-row style="height: 1000px">
                     <ion-col>
-                    <div id="guest" class="tabcontent" style="display:none;position: relative;left: 50px">
-
-                    <h1 style="position:absolute;left:0px">Add Guest</h1><br> <br><br><br>
+                    <div id="guest" class="tabcontent" style="display:none;">
+                    
+                    <div style="text-align: center;"><h1 >ADD GUEST</h1></div><br> <br>
+                    <ion-row>
+                    <ion-col size=4 offset=1.5>
                          <ion-card style = "width: 700px">
                           <form >  
                             <ion-card-content>
@@ -297,14 +306,15 @@ display: none !important;
                     </ion-item>
                     <br>
                             </ion-list>
-
+                            <ion-col offset="2.3">
                             <ion-button  onClick="this.innerHTML='<ion-spinner></ion-spinner>'; post('/mess/addguest',postData('guest-field'),(data)=>{onAddGuest(data,this)});" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">ADD GUEST</ion-button>
                             <ion-button  type="reset" id='reset2' style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">RESET</ion-button>
-                       
+                          </ion-col>
   
                         </ion-card-content>
                         </form>
                         </ion-card>
+                        </ion-col></ion-row>
                         <br>
                         <br>
                         <br>
@@ -343,19 +353,25 @@ display: none !important;
                     </div>
 
                     <div id="messcut" class="tabcontent" style="display:none;">
-                    <ion-row><ion-col offset=2 size=8>
-                    <div style="text-align: center;"><h3>Mess Cut</h3></div><br>
-
+                    <ion-row>
+                   
+                    <ion-col offset=2 size=8>
+                    <div style="text-align: center;"><h3>MESS CUT: DETAILED LIST</h3></div><br>
+                    <br>
                     <div id="mess_cut_area">
-                      <ion-row><ion-col size=6 offset=3><input type="date" placeholder="Date" class="mess-cut-field" onChange="filterMessCuts();" id="filter_date" /></ion-col></ion-row>
+                    <div  style="text-align: center;"><small id="blink"><b>Select a date for a Sorted List</b></small></div>
+                      <ion-row>
+                      
+                      <ion-col size=6 offset=0.2><input type="date" placeholder="Date" class="mess-cut-field" onChange="filterMessCuts();" id="filter_date" /></ion-col></ion-row>
                       <div id="noMatch" style="text-align: center;display: none;">There are no mess cuts on this date</div>
                     <div id="mess_cut_data">
+                    <br>
                       <ion-card>
-                        <ion-card-content>
-                          <ion-list>
-                            <ion-item><ion-col size=3>Student Name</ion-col><ion-col offset=0.5>Roll No</ion-col><ion-col>From Date</ion-col><ion-col>To Date</ion-col><ion-col size=1.5>No Of Days</ion-col>
-                            </ion-item>
-                            
+                        
+                           <ion-card-header id="y"><ion-item id="x"><ion-col size=3>Student Name</ion-col><ion-col offset=0.5>Roll No</ion-col><ion-col>From Date</ion-col><ion-col>To Date</ion-col><ion-col size=1.5>No Of Days</ion-col>
+                            </ion-item></ion-card-header>
+                            <ion-card-content>
+                            <ion-list>    
                       <% @mess.students.each do |student| %>
                       <% student.mess_cuts.each do |messcut| %>
                       <ion-item class="mess_cut_items">
@@ -388,10 +404,13 @@ display: none !important;
                   
                     </div>
 
-                    <div id="extra" class="tabcontent" style="position: relative;left: 50px">
-                        <h1 style="position:absolute;left:0px">Add Extra</h1><br> <br><br><br>
-                         <ion-card style = "width: 700px">
+                    <div id="extra" class="tabcontent" style="display: none;">
+                        <div style="text-align: center;"><h1>ADD EXTRA</h1></div><br><br>
+                        <ion-row>
+                        <ion-col size=4 offset=1.5> 
+                        <ion-card style = "width: 700px">
                           <form id="myform">  
+                          
                             <ion-card-content>
                             <ion-list lines="none" class="line-input">
             
@@ -423,14 +442,15 @@ display: none !important;
                     </ion-item>
                     <br>
                             </ion-list>
-
+                            <ion-col offset="2.3">
                             <ion-button id="reset" onClick="this.innerHTML='<ion-spinner></ion-spinner>';post('/mess/extra',postData('extra-field'),(data)=>{onPostExtra(data,this)});" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">ADD EXTRA</ion-button>
                             <ion-button id="reset1" type="reset" style = "width:200px;height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">RESET</ion-button>
-                       
+                            </ion-col>
   
                         </ion-card-content>
                         </form>
                         </ion-card>
+                        </ion-col></ion-row>
                         <br>
                         <br>
                         <br>
@@ -525,7 +545,10 @@ customElements.define('add-staff-form', class ModalContent extends HTMLElement {
 document.getElementById("defaultOpen").click();
 
 
-
+var blink = document.getElementById('blink');
+setInterval(function() {
+   blink.style.opacity = (blink.style.opacity == 0 ? 1 : 0);
+}, 3000); 
 
 
 
