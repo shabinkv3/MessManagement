@@ -50,7 +50,7 @@ function onGetMessCuts(data,id)
 
             if(myObj.data.length==0)
             {
-                txt += "<p style='text-align:center;''>No Extra Taken</p>"
+                txt += "<p style='text-align:center;''>No Mess Cuts Given</p>"
             }
             else
             {
