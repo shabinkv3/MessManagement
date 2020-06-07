@@ -131,7 +131,7 @@
                             <ion-item lines='none' class="side_tabs" onClick="viewOptionStudent(event,'extra');  ">
                                 <div style="height: 57px;">
                                     <a>
-                                        <ion-icon name="beer-outline" class="side_icons"></ion-icon>
+                                        <ion-icon name="fast-food-outline" class="side_icons"></ion-icon>
                                         <label class="side_label">EXTRAS</label>
                                     </a>
                                 </div>
@@ -189,10 +189,10 @@
                         
                             <ion-row>
                             
-                                <ion-col offset=2 size=8>
+                                <ion-col offset=1 size=8>
                                 <br>
-                                        <div  style="text-align: center;"><h1>PERSONAL INFORMATION</h1></div><br>
-                            <br><br>            
+                                        <div  style="text-align: center;"><h2>PERSONAL INFORMATION</h2></div>
+                            <br>           
                             <div id="profile_content" >
                                 <ion-spinner ></ion-spinner>
                             </div>
@@ -302,11 +302,13 @@
                     </div>
 
                     
-                    <div id="extra" class="tabcontent" style="display:none;"><br>
-                    <div style="text-align: center;"><h1>MY EXTRAS</h1></div>
+                    <div id="extra" class="tabcontent" style="display:none;">
                         <br>
              
-                        <ion-row><ion-col offset=2 size=8>
+                        <ion-row><ion-col offset=1 size=8>
+
+                         <div style="text-align: center;"><h2>MY EXTRAS</h2></div><br>
+
 
                         <% i = 0 %>
                         <% sum = 0 %>
@@ -333,10 +335,10 @@
                     </div>
 
                     
-                    <div id="fee" class="tabcontent">
+                    <div id="fee" class="tabcontent"><br>
                         <ion-row>
                             <ion-col size=4 offset=3>
-                                <ion-row><ion-col offset=1><div style="text-align: center;"><h1>My Mess Fee</h1></div><br><br></ion-col></ion-row>
+                                <div style="text-align: center;"><h2>MY MESS FEE</h2></div><br>
                                 <input type=hidden value='0'/><ion-button expand="block" value=0 onClick="check(<%= session[:id] %>,'fees',this);" style = "height:40px;background-color: #8f15f4;color:white;" color="#8f15f4">GET DETAILED FEE<ion-icon slot="end" name='chevron-down'></ion-icon></ion-button>
                                 <br>
                                 <div id="fees"></div>
