@@ -15,6 +15,7 @@ class AccountsController < ApplicationController
 
   def signupStudent
     @student=Student.new
+    @mess=Mess.all
   end
 
   def authenticate

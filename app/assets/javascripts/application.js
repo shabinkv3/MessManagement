@@ -54,7 +54,7 @@ function onGetMessCuts(data,id)
             }
             else
             {
-                txt+="<br><ion-card><ion-card-container><ion-list><ion-card-header><ion-item><ion-col>From</ion-col><ion-col>To</ion-col><ion-col>No of Days</ion-col></ion-item></ion-card-header>"
+                txt+="<br><ion-card ><ion-card-container><ion-list><ion-card-header><ion-item><ion-col>From</ion-col><ion-col>To</ion-col><ion-col>No of Days</ion-col></ion-item></ion-card-header>"
                 for(i=0;i<myObj.data.length;i++)
                 {
                     txt+="<ion-item lines='none' ><ion-col>"+myObj.data[i].from_date+"</ion-col><ion-col>"+myObj.data[i].to_date+"</ion-col><ion-col>"+myObj.data[i].no_of_days+"</ion-col></ion-item>"
