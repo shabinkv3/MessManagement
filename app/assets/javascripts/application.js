@@ -66,6 +66,38 @@ function onGetMessCuts(data,id)
 }
 
 
+function onGetMyMessCuts(data)
+{
+  var txt="";
+  var i;
+  var myObj = JSON.parse(data);
+
+            if(myObj.data.length==0)
+            {
+                txt += "<p style='text-align:center;''>No Mess Cuts Given</p>"
+            }
+            else
+            {
+                txt+="<br><ion-card ><ion-card-header id='y'><ion-item id='x'><ion-col>S No</ion-col><ion-col>From</ion-col><ion-col>To</ion-col><ion-col>No of Days</ion-col><ion-item></ion-card-header><ion-list>"
+                for(i=0;i<myObj.data.length;i++)
+                {
+                    txt+="<ion-item lines='none' ><ion-col>"+(i+1)+"</ion-col><ion-col>"+formatDate(myObj.data[i].from_date)+"</ion-col><ion-col>"+formatDate(myObj.data[i].to_date)+"</ion-col><ion-col>"+myObj.data[i].no_of_days+"</ion-col></ion-item>"
+                }
+                txt+="</ion-list></ion-card>";
+
+            } 
+            document.getElementById("my_mess_cuts").innerHTML = txt;
+
+}
+
+function formatDate(dateString)
+{
+  var split=dateString.split('-');
+  return [split[2],split[1],split[0]].join('-');
+}
+
+
+
 
 function onGetExtraList(data,id)
 {
@@ -344,12 +376,14 @@ function onGetProfile(data,id,isOpeningModal)
 
 }
 
-function onMessCut(data){
-
+function onMessCut(data,id){
   var myObj = JSON.parse(data);
   if(myObj.added)
   {
+      document.getElementById('mess_cut_submit').innerHTML='ADD ENTRY';
       showToast("Mess Cut Marked Successfully");
+      document.getElementById('my_mess_cuts').innerHTML='<ion-spinner></ion-spinner>';
+      post('/messcutdata','student_profile[student_id]='+id,onGetMyMessCuts);
       document.getElementById('reset').click();
   }
   else
