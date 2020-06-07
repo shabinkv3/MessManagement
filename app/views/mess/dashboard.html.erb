@@ -116,7 +116,7 @@ display: none !important;
     -webkit-appearance: none;
     color: var(--input-color);
     border: 1px solid var(--input-border);
-    background: var(--input-background);
+    background: var(--input-backgro und);
     transition: border .3s ease;
     &::placeholder {
         color: var(--input-placeholder);
@@ -259,7 +259,7 @@ display: none !important;
             <ion-col>
                 <ion-row style="height: 63px; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">
                     <ion-col size='3'>
-                        <label style="position: relative; left: 300px; top: 20px; weight: 500; font-weight: 400; font-size: 19px; color: grey">MESS MANAGEMENT</label>
+                        <label style="position: relative; left: 500px; top: 20px; weight: 500; font-weight: 400; font-size: 19px; color: grey">MESS MANAGEMENT</label>
                     </ion-col>
                     <ion-col offset='6' size='3'>
                         <a style="text-decoration: none; position: relative; left: 45px; top: 20px; font-size: 16px;" onClick="changePasswordPopover(event)" class="navlink">Change Password</a>
@@ -270,10 +270,10 @@ display: none !important;
                     <ion-col>
                     <div id="guest" class="tabcontent" style="display:none;">
                     
-                    <ion-row>
-                    <ion-col size=4 offset=1.5>
+                    
+                  
                      <div style="text-align: center;"><h1 >ADD GUEST</h1></div><br> <br>
-
+                     <ion-row><ion-col size=4 offset=2.5>
                          <ion-card style = "width: 700px">
                           <form >  
                             <ion-card-content>
@@ -326,7 +326,7 @@ display: none !important;
                         <ion-grid>
                             <ion-row>
                                 <ion-col size=5 offset=3>
-                                    <h3 style="text-align: center; padding-right:34px">Student List</h3><br>
+                                    <h3 style="text-align: center; padding-right:34px">STUDENT LIST</h3><br>
                                     <ion-row><ion-col size=6>
                                     <ion-searchbar placeholder="Type Name" id="nameSearchBar_list_student"  onInput="filterStudentsByName('list_student')"></ion-searchbar></ion-col>
                                     <ion-col size=6>
@@ -342,7 +342,7 @@ display: none !important;
                         <ion-grid>
                     <ion-row>
                         <ion-col offset=3 size=5>
-                            <h3 style="text-align: center;">Staff List 
+                            <h3 style="text-align: center;">STAFF LIST
                             </h3><br>
                                 <div style="text-align: center;"><ion-button style="--ion-color-primary: #8f15f4;margin-right: 10px" id="addbutton" onClick="addStaffModal()">Add Staff<ion-icon slot="end" name='add'></ion-icon></ion-button></div>
                             <div id="stafflist"><ion-spinner style="position:relative; left: 50px; top:70px"></ion-spinner></div>
@@ -407,9 +407,10 @@ display: none !important;
 
                     <div id="extra" class="tabcontent" style="display: none;">
                         
-                        <ion-row>
-                        <ion-col size=4 offset=1.5> 
+                        
+                        
                             <div style="text-align: center;"><h1>ADD EXTRA</h1></div><br><br>
+                            <ion-row><ion-col size=4 offset=2.5> 
                         <ion-card style = "width: 700px">
                           <form id="myform">  
                           
@@ -462,7 +463,7 @@ display: none !important;
 
                    <div id="fee" class="tabcontent" style="display:none;">
                     <ion-row><ion-col offset=2 size=8>
-                    <div style="text-align: center;"><h3>Monthly Mess Fee</h3></div><br>
+                    <div style="text-align: center;"><h3>MONTHLY MESS FEE</h3></div><br>
 
                     <br><br>
                     <% if @mess.students.count == 0%>
