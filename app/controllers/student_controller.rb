@@ -76,7 +76,8 @@ class StudentController < ApplicationController
   end
   def studentProfile
     @student=Student.find(profile_params[:student_id])
-    render json: {:data=>@student}
+    @mess=Mess.find(@student.mess_id)
+    render json: {:data=>@student,:mess=>@mess.mess_name.upcase}
   end
 
 

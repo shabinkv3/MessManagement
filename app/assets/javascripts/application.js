@@ -67,6 +67,56 @@ function onGetMessCuts(data,id)
 
 
 
+function onGetExtraList(data,id)
+{
+  var txt="";
+  var sum=0;
+  var i;
+  var myObj = JSON.parse(data);
+
+            if(myObj.data.length==0)
+            {
+                txt += "<p style='text-align:center;''>No Extra Taken</p>"
+            }
+            else
+            {
+                txt+="<br><ion-card><ion-card-container><ion-list><ion-card-header><ion-item><ion-col><strong>S.No</strong></ion-col><ion-col><strong>Item</strong></ion-col><ion-col><strong>Price</strong></ion-col></ion-item></ion-card-header>"
+                for(i=0;i<myObj.data.length-1;i++)
+                {
+                    sum+=myObj.data[i].price;
+                    txt+="<ion-item lines='none' ><ion-col>&emsp;"+(i+1)+"."+"</ion-col><ion-col>&nbsp;"+myObj.data[i].item+"</ion-col><ion-col>"+myObj.data[i].price+".00"+"</ion-col></ion-item>"
+                }
+                sum+=myObj.data[i].price;
+                txt+="<ion-item><ion-col>&emsp;"+(i+1)+"."+"</ion-col><ion-col>&nbsp;"+myObj.data[i].item+"</ion-col><ion-col>"+myObj.data[i].price+".00"+"</ion-col></ion-item></ion-list><ion-list><ion-card-footer><ion-item><ion-col></ion-col><ion-col>Total Amount</ion-col><ion-col>"+sum+".00"+"</ion-col></ion-item></ion-card-footer></ion-list></ion-card-container></ion-card>"
+
+            } 
+            document.getElementById(id).innerHTML = txt;
+
+}
+
+function onGetGuestList(data,id)
+{
+  var txt="";
+  var i;
+  var myObj = JSON.parse(data);
+            if(myObj.data.length==0)
+            {
+                    txt += "<p style='text-align:center;''>No Guests Taken</p>"            }
+            else
+            {
+                txt+="<br><ion-card><ion-card-container><ion-list><ion-card-header><ion-item><ion-col><strong>S.No</strong></ion-col><ion-col><strong>Guest Name</strong></ion-col><ion-col><strong>Guest Roll No</strong></ion-col></ion-item></ion-card-header>"
+                for(i=0;i<myObj.data.length-1;i++)
+                {
+                  
+                    txt+="<ion-item lines='none' ><ion-col>&emsp;"+(i+1)+"."+"</ion-col><ion-col>&emsp;"+myObj.data[i].name+"</ion-col><ion-col>"+myObj.data[i].rollno+"</ion-col></ion-item>"
+                }
+                txt+="<ion-item lines='none'><ion-col>&emsp;"+(i+1)+"."+"</ion-col><ion-col>&emsp;"+myObj.data[i].name+"</ion-col><ion-col>"+myObj.data[i].rollno+"</ion-col></ion-item></ion-list></ion-card-container></ion-card>";
+            }
+            document.getElementById(id).innerHTML = txt;
+}
+
+
+
 
 function getGuests(){
     var txt="",i;
@@ -210,13 +260,13 @@ function onGetProfile(data,id,isOpeningModal)
   {
     document.getElementById('student_data_modal_title').innerHTML=student.data.name;
   }
-  document.getElementById(id).innerHTML=`<ion-card><ion-card-container><br><ion-list lines="none"><ion-item><ion-col><ion-label>&emsp;&emsp;&emsp; Name    
+  document.getElementById(id).innerHTML=`<ion-card><ion-card-container><br><ion-list lines="none"><ion-item><ion-col size=4.5><ion-label> Name    
                                 </ion-label>
                                 </ion-col>
-                                <ion-col>
+                                <ion-col size=2>
                                     :
                                 </ion-col>
-                                <ion-col>
+                                <ion-col size=5.5>
                                 ${student.data.name}
                                 
                                 </ion-col>
@@ -224,15 +274,15 @@ function onGetProfile(data,id,isOpeningModal)
 
                             <ion-item>
                                 
-                                <ion-col>
+                                <ion-col size=4.5>
                                 <ion-label>
-                                   &emsp;&emsp;&emsp;Roll No    
+                                   Roll No    
                                 </ion-label>
                                 </ion-col>
-                                <ion-col>
+                                <ion-col size=2>
                                     :
                                 </ion-col>
-                                <ion-col>
+                                <ion-col size=5.5>
                                 ${student.data.rollno}
                                 
                                 </ion-col>
@@ -240,15 +290,15 @@ function onGetProfile(data,id,isOpeningModal)
 
                             <ion-item>
                                 
-                                <ion-col>
+                                <ion-col size=4.5>
                                 <ion-label>
-                                   &emsp;&emsp;&emsp;E-Mail   
+                                   E-Mail   
                                 </ion-label>
                                 </ion-col>
-                                <ion-col>
+                                <ion-col size=2>
                                     :
                                 </ion-col>
-                                <ion-col>
+                                <ion-col size=5.5>
                                 ${student.data.email}
                                 
                                 </ion-col>
@@ -256,31 +306,31 @@ function onGetProfile(data,id,isOpeningModal)
 
                             <ion-item>
                                 
-                                <ion-col>
+                                <ion-col size=4.5>
                                 
-                                   &emsp;&emsp;&emsp;Mess Code    
+                                  Mess    
                                 
                                 </ion-col>
-                                <ion-col>
+                                <ion-col size=2>
                                     :
                                 </ion-col>
-                                <ion-col>
-                                ${student.data.mess_id}
+                                <ion-col size=5.5>
+                                ${student.mess}
                                 
                                 </ion-col>
                             </ion-item>
 
                             <ion-item>
                                 
-                                <ion-col>
+                                <ion-col size=4.5>
                                 
-                                   &emsp;&emsp;&emsp;Room No    
+                                   Room No    
                                 
                                 </ion-col>
-                                <ion-col>
+                                <ion-col size=2>
                                     :
                                 </ion-col>
-                                <ion-col>
+                                <ion-col size=5.5>
                                 ${student.data.roomno}
                                 
                                 </ion-col>
